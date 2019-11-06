@@ -5,7 +5,7 @@ const dbConnection = require("./mongoConnection");
 const getCollectionFn = collection => {
     let _col = undefined;
 
-    return async () => {
+    return async() => {
         if (!_col) {
             const db = await dbConnection();
             _col = await db.collection(collection);
@@ -17,5 +17,8 @@ const getCollectionFn = collection => {
 
 /* Now, you can list your collections here: */
 module.exports = {
-    users: getCollectionFn("users")
+    posts: getCollectionFn("posts"),
+    dogs: getCollectionFn("dogs"),
+    employee: getCollectionFn("employee"),
+    manager: getCollectionFn("manager")
 };
