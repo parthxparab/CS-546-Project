@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const owasp = require('owasp-password-strength-test');
 const mongoCollections = require("../database-utils/mongoCollections");
 const users = mongoCollections.users;
+const utils = require("./utils");
 
 
 const saltRounds = 10;
@@ -14,7 +15,7 @@ owasp.config({
     minOptionalTestsToPass: 4,
 });
 
-function createAcc(firstname, lastname, email, username, password) {
+async function createAcc(firstname, lastname, email, username, password) {
 
     if (!username) {
         console.log("Username field is empty!");
@@ -36,15 +37,22 @@ function createAcc(firstname, lastname, email, username, password) {
 
     if (!email) {
         console.log("Email field is empty!");
+        return;
         //TODO: display message to user saying that email field is empty
 
+    }
+
+    if (await utils.usernameExists(username)){
+        console.log("Username already taken!");
+        return;
     }
 
 
     if (owasp.test(password)["strong"]) {
         bcrypt.hash(password, saltRounds, function (err, hash) {
-            console.log("Account ");
+
             //TODO: store in database
+            console.log("Account created successfully!");
         });
     } else {
         console.log("Password is too weak!");
@@ -54,12 +62,6 @@ function createAcc(firstname, lastname, email, username, password) {
 
 }
 
-function usernameExists(username){
-
-
-
-
-}
 
 
 
