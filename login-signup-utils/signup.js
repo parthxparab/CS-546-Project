@@ -42,17 +42,33 @@ async function createAcc(firstname, lastname, email, username, password) {
 
     }
 
-    if (await utils.usernameExists(username)){
+    const usersCollection = await users();
+
+    if (await utils.usernameExists(username)) {
         console.log("Username already taken!");
         return;
     }
 
 
     if (owasp.test(password)["strong"]) {
-        bcrypt.hash(password, saltRounds, function (err, hash) {
+        bcrypt.hash(password, saltRounds, async function (err, hash) {
 
+            let usersObj = {
+                firstName: firstname,
+                lastName: lastname,
+                email: email,
+                username: username.toLowerCase(),
+                hash: hash
+            };
+
+            const insert = await usersCollection.insertOne(usersObj);
+            if (insert.insertedCount === 0) throw "Could not add user";
+
+            const id = insert.insertedId;
+            const result = await usersCollection.findOne({username: username});
             //TODO: store in database
             console.log("Account created successfully!");
+            console.log(result);
         });
     } else {
         console.log("Password is too weak!");
@@ -61,6 +77,8 @@ async function createAcc(firstname, lastname, email, username, password) {
 
 
 }
+
+
 
 
 
