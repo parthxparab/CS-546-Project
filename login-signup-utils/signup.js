@@ -61,7 +61,6 @@ function usernameExists(username){
 
 }
 
-createAcc("parthisgay", "letmein182ty18ob3h801g31uo");
 
 
 
