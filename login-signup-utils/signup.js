@@ -19,25 +19,27 @@ async function createAcc(firstname, lastname, email, username, password) {
 
     if (!username) {
         console.log("Username field is empty!");
+        throw "Username field is empty!";
         //TODO: display message to user saying that username field is empty
-        return false;
     }
 
     if (!firstname) {
         console.log("First name is empty!");
+        throw "First name field is empty!";
+
         //TODO: display message to user saying that firstname field is empty
-        return false;
     }
 
     if (!lastname) {
         console.log("Last name is empty!");
+        throw "Last name field is empty!";
+
         //TODO: display message to user saying that lastname field is empty
-        return false;
     }
 
     if (!email) {
         console.log("Email field is empty!");
-        return false;
+        throw "Email field is empty!";
         //TODO: display message to user saying that email field is empty
 
     }
@@ -46,7 +48,7 @@ async function createAcc(firstname, lastname, email, username, password) {
 
     if (await utils.usernameExists(username)) {
         console.log("Username already taken!");
-        return false;
+        throw "Username already taken";
     }
 
 
@@ -66,14 +68,11 @@ async function createAcc(firstname, lastname, email, username, password) {
 
             const id = insert.insertedId;
             const result = await usersCollection.findOne({username: username});
-            //TODO: store in database
             console.log("Account created successfully!");
             console.log(result);
-            return true;
         });
     } else {
-        console.log("Password is too weak!");
-        return false;
+        throw "Password is too weak!";
         //TODO: display message to user saying that password is too weak
     }
 
