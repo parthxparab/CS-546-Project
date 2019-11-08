@@ -1,6 +1,7 @@
 const dbConnection = require('./mongoConnection');
 const data = require('./Employee.js');
-//const employee = data.employee;HHH
+const man = require('./Manager')
+    //const employee = data.employee;HHH
 
 
 async function main() {
@@ -8,8 +9,12 @@ async function main() {
 
     // await db.dropDatabase();
 
-    const phil = await data.addEmployee('Zack', 'Barresi', "zack@gmail.com", 45, "millenium", 1000, "parth parab", "2019-10-1", "Software developer", "5512639010", "Zack123", "Zackishell");
+    const phil = await data.addEmployee('Dharika', 'Kapil', "dk@gmail.com", 45, "millenium", 1000, "dharika kapil", "2019-10-1", "Software developer", "5512639010", "Zack123", "Zackishell");
     const id = phil._id;
+
+
+    const philgh = await man.addManager('Neel', 'Barresi', "neel@gmail.com", "millenium", 7000, "Zack123", "Zackishell", ['Zack', 'Dharika', 'Parth']);
+    // const id = philgh._id;
 
     // await posts.addPost('Hello, class!', 'Today we are creating a blog!', [], id);
 

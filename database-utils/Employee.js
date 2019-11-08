@@ -16,8 +16,9 @@ const exportedMethods = {
         // if (typeof id !== 'string') throw 'I aint got nobody!';
         if (typeof payDate !== "string") throw 'I aint got nobody!';
         if (typeof job_title !== 'string') throw 'I aint got nobody!';
-
-
+        if (isNaN(emergency_contact)) throw 'I aint got nobody!';
+        if (typeof user_login_id !== 'string') throw 'I aint got nobody!';
+        if (typeof hashed_password !== 'string') throw 'I aint got nobody!';
         const postCollection = await employee();
 
         // const userThatPosted = await users.getUserById(posterId);
