@@ -1,9 +1,25 @@
 const mongoCollections = require('./mongoCollections');
 const manager = mongoCollections.manager;
-//const users = require('./users');
-//const uuid = require('uuid/v4');
+const ObjectId = require('mongodb').ObjectId
+    //const users = require('./users');
+    //const uuid = require('uuid/v4');
 
 const exportedMethods = {
+
+    async getManagerById(id) {
+        if (!id) throw "You must provide an id to search for";
+        //if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
+        if (typeof id !== 'string') throw "Please provide proper id"
+        if (id.length == 0) throw "Please provide proper length of the id";
+        if (typeof id === 'undefined') throw "Please provide proper type of id"
+        const managerCollection = await manager();
+        const managerdata = await managerCollection.findOne({ _id: ObjectId(id) });
+        if (managerdata === null) throw "No Manager found of following id";
+
+        return managerdata;
+
+    },
+
 
     async addManager(firstName, lastName, email, office, budget, user_login_id, hashed_password, employees) {
         if (typeof firstName !== 'string') throw 'No title provided';
@@ -38,6 +54,27 @@ const exportedMethods = {
         return newId
             //return await this.getPostById(newId);
     },
+
+    async removeManager(id) {
+        if (!id) throw "You must provide an id to search for";
+        // if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
+        if (id.length === 0) throw "Please provide proper legth of the id";
+        if (typeof id !== 'string') throw "Please provide proper id"
+        if (typeof id === 'undefined') throw "Please provide proper type of id"
+        const removecontent = await this.getManagerById(id.toString());
+        const managerCollection = await manager();
+
+        const deletionInfo = await managerCollection.deleteOne({ _id: ObjectId(id) });
+
+        if (deletionInfo.deletedCount === 0) {
+            throw `Could not delete manager with id of ${id}`;
+        }
+        return removecontent
+
+    }
+
+
+
 
 };
 
