@@ -7,7 +7,8 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 require('./routes/users')(app);
-
+const configRoutes = require('./routes');
+configRoutes(app);
 app.use("/public", staticFiles);
 
 app.engine("handlebars", handlebars({defaultLayout: "main"}));
