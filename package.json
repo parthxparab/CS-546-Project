@@ -1,10 +1,10 @@
 {
-    "name": "PROJECT_FINAL",
+    "name": "cs_546_project_final",
     "version": "1.0.0",
     "description": "",
     "main": "app.js",
     "scripts": {
-        "seed": "node ./tasks/seed.js",
+        "seed": "node ./database-utils/seed.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node app.js"
     },
