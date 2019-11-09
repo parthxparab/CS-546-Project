@@ -55,6 +55,35 @@ const exportedMethods = {
             //return await this.getPostById(newId);
     },
 
+    async renameManager(id, firstName, lastName) {
+        if (!id) throw "You must provide an id to search for";
+        // if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
+        if (id.length === 0) throw "Please provide proper legth of the id";
+        if (typeof id !== 'string') throw "Please provide proper id"
+        if (typeof id === 'undefined') throw "Please provide proper type of id"
+        const renamecontent = await this.getManagerById(id.toString());
+        const postCollection = await manager();
+        const updatedData = {
+            firstName: firstName,
+            lastName: lastName,
+            email: renamecontent.email,
+            office: renamecontent.office,
+            budget: renamecontent.budget,
+            user_login_id: renamecontent.user_login_id,
+            hashed_password: renamecontent.hashed_password,
+            employees: renamecontent.employees
+        };
+        const updatedInfo = await postCollection.replaceOne({ _id: ObjectId(id) }, updatedData);
+        if (updatedInfo.modifiedCount === 0) {
+            throw "could not update dog successfully";
+        }
+
+        const upID = updatedInfo.updatedID;
+        const updatedDat = await this.getManagerById(id.toString());
+        return updatedDat;
+
+    },
+
     async removeManager(id) {
         if (!id) throw "You must provide an id to search for";
         // if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";

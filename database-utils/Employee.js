@@ -111,7 +111,7 @@ const exportedMethods = {
         }
 
         const upID = updatedInfo.updatedID;
-        const updatedDat = await getEmployeeById(upID.toString());
+        const updatedDat = await this.getEmployeeById(id.toString());
         return updatedDat;
 
     },
@@ -123,6 +123,7 @@ const exportedMethods = {
         if (typeof id !== 'string') throw "Please provide proper id"
         if (typeof id === 'undefined') throw "Please provide proper type of id"
         const updated = await this.getEmployeeById(id.toString());
+        console.log(updated)
         const employeeCollection = await employee();
         const updatedHours = {
             firstName: updated.firstName,
@@ -144,7 +145,7 @@ const exportedMethods = {
         }
 
         const upID = updatedInfo.updatedID;
-        const updatedData = await getEmployeeById(upID.toString());
+        const updatedData = await this.getEmployeeById(id.toString());
         return updatedData;
     },
 

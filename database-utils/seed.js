@@ -13,7 +13,16 @@ async function main() {
     //const content = await data.calculatePayroll("5dc368f8de3c270fefc2b7bb");
     //console.log(content);
 
-    const phil = await data.addEmployee('Dharika', 'Kapil', "dk", 45, "millenium", 13, "dharika kapil", "2019-10-1", "Software developer", "5512639010", "Zack123", "Zackishell");
+    // const phil = await data.addEmployee('Dharika', 'Kapil', "dk", 45, "millenium", 13, "dharika kapil", "2019-10-1", "Software developer", "5512639010", "Zack123", "Zackishell");
+    // const id = phil._id;
+
+    // const phil = await data.updateHours("5dc368f8de3c270fefc2b7bb", 40);
+    // const id = phil._id;
+
+    // const phil = await data.renameEmployee("5dc368f8de3c270fefc2b7bb", "DHARIKA", "KAPIL");
+    // const id = phil._id;
+
+    const phil = await man.renameManager("5dc36b3cc915b310b8aa2787", "DHARIKA", "KAPIL");
     const id = phil._id;
 
 
