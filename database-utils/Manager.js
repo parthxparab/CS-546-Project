@@ -22,9 +22,10 @@ const exportedMethods = {
 
 
     async addManager(firstName, lastName, email, office, budget, user_login_id, hashed_password, employees) {
+        var mailformat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (typeof firstName !== 'string') throw 'No title provided';
         if (typeof lastName !== 'string') throw 'I aint got nobody!1';
-        if (typeof email !== 'string') throw 'I aint got nobody!2';
+        if (mailformat.test(email) == false) throw 'Please provide proper  mailid';
         if (typeof office !== 'string') throw 'I aint got nobody!3';
         if (isNaN(budget)) throw 'I aint got nobody!';
         if (typeof user_login_id !== 'string') throw 'I aint got nobody!4';

@@ -22,20 +22,20 @@ const exportedMethods = {
     },
 
     async addEmployee(firstName, lastName, email, total_hours, office, basic_salary, manager_name, payDate, job_title, emergency_contact, user_login_id, hashed_password) {
-        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        var mailformat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if ((!firstName) || (!lastName) || (!email) || (!total_hours) || (!office) || (!basic_salary) || (!manager_name) || (!payDate) || (!job_title) || (!emergency_contact) || (!user_login_id) || (!hashed_password)) throw 'Please provide all the feilds'
         if (typeof firstName !== 'string') throw 'No title provided';
         if (typeof lastName !== 'string') throw 'I aint got nobody!';
-        if (email.value.match(mailformat)) throw 'Please provide proper  mailid';
+        if (mailformat.test(email) == false) throw 'Please provide proper  mailid';
         if (typeof email !== 'string') throw 'I aint got nobody!';
         if (isNaN(total_hours)) throw 'I aint got nobody!';
         if (typeof office !== 'string') throw 'I aint got nobody!';
         if (isNaN(basic_salary)) throw 'I aint got nobody!';
         if (typeof manager_name !== 'string') throw 'I aint got nobody!';
-        // if (typeof id !== 'string') throw 'I aint got nobody!';
         if (typeof payDate !== "string") throw 'I aint got nobody!';
         if (typeof job_title !== 'string') throw 'I aint got nobody!';
         if (isNaN(emergency_contact)) throw 'I aint got nobody!';
-        if (typeof user_login_id !== 'string') throw 'I aint got nobody!';
+        if (typeof user_login_id !== 'string') throw 'I aint got nobody!'
         if (typeof hashed_password !== 'string') throw 'I aint got nobody!';
         const postCollection = await employee();
 
