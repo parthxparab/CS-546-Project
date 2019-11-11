@@ -39,6 +39,8 @@ async function main() {
     // await posts.addPost('Using routes', 'The purpose of today is to simply look at some GET routes', [], id);
 
     console.log('Done seeding database');
+    console.log('testing git');
+
     //await db.serverConfig.close();
 }
 
