@@ -1,19 +1,22 @@
 const mongoCollections = require('./mongoCollections');
 const employee = mongoCollections.employee;
 const ObjectId = require('mongodb').ObjectId
-    //const users = require('./users');
-    //const uuid = require('uuid/v4');
+const sala = require('./Salary');
+//const users = require('./users');
+//const uuid = require('uuid/v4');
 
 const exportedMethods = {
 
     async getEmployeeById(id) {
         if (!id) throw "You must provide an id to search for";
-        //if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
+        if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
         if (typeof id !== 'string') throw "Please provide proper id"
         if (id.length == 0) throw "Please provide proper length of the id";
         if (typeof id === 'undefined') throw "Please provide proper type of id"
+
         const employeeCollection = await employee();
-        const employeedata = await employeeCollection.findOne({ _id: ObjectId(id) });
+        const employeedata = await employeeCollection.findOne({ _id: id });
+        console.log(employeedata)
         if (employeedata === null) throw "No employee found of following id";
 
 
@@ -150,19 +153,29 @@ const exportedMethods = {
     },
 
 
-    async calculatePayroll(id) {
-        if (!id) throw "You must provide an id to search for";
-        // if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
-        if (id.length === 0) throw "Please provide proper legth of the id";
-        if (typeof id !== 'string') throw "Please provide proper id"
-        if (typeof id === 'undefined') throw "Please provide proper type of id"
-        const content = await this.getEmployeeById(id.toString());
-        const total_payroll = (content.basic_salary * content.total_hours)
+    async calculatePayroll(firstname, lastname) {
+        if (!firstname) throw "You must provide the firstname ";
+        if (!lastname) throw "You must provide the lastname";
+        if (typeof firstname != "string") throw "Not of proper type";
+        if (typeof lastname != "string") throw "Not of proper type";
+
+        const employeeCollection = await employee();
+        const employeedata = await employeeCollection.findOne({
+            $and: [{ firstName: firstname }, { lastName: lastname }]
+        });
+        console.log(employeedata)
+        console.log(employeedata.total_payroll)
+        console.log(employeedata.total_hours)
+
+        const total_payroll = (employeedata.total_payroll * employeedata.total_hours)
         if (total_payroll == 0) {
-            throw `Could not calculate the payroll for the employee with id of ${id}`;
+            throw `Could not calculate the payroll for the employee with id of ${firstname}`;
         }
 
-        return total_payroll
+        const salarydata = await sala.updateSalary(firstname, lastname, total_payroll)
+
+        return salarydata
+
     }
 
 };
