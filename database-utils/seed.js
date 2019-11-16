@@ -1,6 +1,7 @@
 const dbConnection = require('./mongoConnection');
 const data = require('./Employee.js');
 const man = require('./Manager')
+const sala = require('./Salary');
 
 
 async function main() {
@@ -8,13 +9,16 @@ async function main() {
 
     // await db.dropDatabase();
 
-    // const content = await data.getEmployeeById("5dc3500c6687730a45d74a51");
+    // const content = await data.getEmployeeById("Dharika");
     // console.log(content);
-    //const content = await data.calculatePayroll("5dc368f8de3c270fefc2b7bb");
-    //console.log(content);
+    const content = await data.calculatePayroll("Dharika", "Kapil");
+    console.log(content);
 
-    const phil = await data.addEmployee('Dharika', 'Kapil', "dk@gmail.com", 45, "millenium", 13, "dharika kapil", "2019-10-1", "Software developer", "5512639010", "Zack123", "Zackishell");
-    const id = phil._id;
+    // const phil = await data.addEmployee('Dharika', 'Kapil', "dk@gmail.com", 45, "millenium", 13, "dharika kapil", "2019-10-1", "Software developer", "5512639010", "Zack123", "Zackishell");
+    // const id = phil._id;
+
+    // const phil = await sala.addSalary('Dharika', 'Kapil', 5000, 'neilfdbdbsgfdbs');
+    // const id = phil._id;
 
     // const phil = await data.updateHours("5dc368f8de3c270fefc2b7bb", 40);
     // const id = phil._id;
@@ -39,7 +43,6 @@ async function main() {
     // await posts.addPost('Using routes', 'The purpose of today is to simply look at some GET routes', [], id);
 
     console.log('Done seeding database');
-    console.log('testing git');
 
     //await db.serverConfig.close();
 }
