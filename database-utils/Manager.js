@@ -82,7 +82,6 @@ const exportedMethods = {
         const upID = updatedInfo.updatedID;
         const updatedDat = await this.getManagerById(id.toString());
         return updatedDat;
-
     },
 
     async removeManager(id) {
@@ -100,7 +99,6 @@ const exportedMethods = {
             throw `Could not delete manager with id of ${id}`;
         }
         return removecontent
-
     }
 
 

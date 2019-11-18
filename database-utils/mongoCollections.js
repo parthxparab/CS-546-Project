@@ -20,5 +20,6 @@ module.exports = {
     posts: getCollectionFn("posts"),
     dogs: getCollectionFn("dogs"),
     employee: getCollectionFn("employee"),
-    manager: getCollectionFn("manager")
+    manager: getCollectionFn("manager"),
+    salary: getCollectionFn("salary")
 };
