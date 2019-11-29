@@ -1,0 +1,43 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Working Hours</title>
+    <h1>Working Hours</h1>
+  <link rel="stylesheet" href="/public/site.css"  type="text/css" >
+</head>
+<body>    
+
+    <form  action="/employee/successhours" class="form" id="form" method="POST" >
+    <div>
+        <label for="Startdate">Startdate </label>
+        <input type= "date" id="Startdate" name="date" placeholder="date" class="text" required="required"/>
+    </div>
+    <div>
+        <label for="Enddate">Enddate </label>
+        <input type= "date" id="Enddate" name="date" placeholder="date" class="text" required="required"/>
+    </div>
+    <div>
+        <label for="Hours">Working Hours </label>
+        <input type= "number" id="Hours" name="Workinghours" placeholder="hours" class="number" required="required"/>
+    </div>
+    <div>
+        <label for="Hours">Manager</label>
+        <select  name="names" class="text" placeholder="names" id="managerhours" required="required">
+          <option >Manager 1</option>
+          <option>Manager 2</option>
+          <option>Manager 3</option>
+        </select>        
+    </div>
+    <div>
+        <button type="submit" class="button">Submit</button>
+    </div>
+
+    {{#if hasErrors}}              
+        <p class="error">{{errors}}</p>            
+     {{/if}}
+
+   </form>
+
+    
+</body>

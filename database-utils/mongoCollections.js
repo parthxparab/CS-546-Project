@@ -19,5 +19,6 @@ const getCollectionFn = collection => {
 module.exports = {
 
     employee: getCollectionFn("employee"),
-    manager: getCollectionFn("manager")
+    manager: getCollectionFn("manager"),
+    salary: getCollectionFn("salary")
 };

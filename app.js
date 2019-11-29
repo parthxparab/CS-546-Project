@@ -11,7 +11,7 @@ const configRoutes = require('./routes');
 configRoutes(app);
 app.use("/public", staticFiles);
 
-app.engine("handlebars", handlebars({defaultLayout: "main"}));
+app.engine("handlebars", handlebars({ defaultLayout: "main" }));
 app.set('view engine', 'handlebars');
 
 
