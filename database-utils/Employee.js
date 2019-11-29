@@ -1,69 +1,63 @@
 const mongoCollections = require('./mongoCollections');
 const employee = mongoCollections.employee;
 const ObjectId = require('mongodb').ObjectId
-const sala = require('./Salary');
-//const users = require('./users');
-//const uuid = require('uuid/v4');
+const manager = require("./manager");
+
 
 const exportedMethods = {
 
     async getEmployeeById(id) {
         if (!id) throw "You must provide an id to search for";
-        if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
-        if (typeof id !== 'string') throw "Please provide proper id"
         if (id.length == 0) throw "Please provide proper length of the id";
-        if (typeof id === 'undefined') throw "Please provide proper type of id"
+        if (typeof id === 'undefined' || id == null) throw "Please provide proper type of id"
 
         const employeeCollection = await employee();
-        const employeedata = await employeeCollection.findOne({ _id: id });
-        console.log(employeedata)
-        if (employeedata === null) throw "No employee found of following id";
+        const empdata = await employeeCollection.findOne({ _id: ObjectId(id) });
+        if (empdata === null || empdata == undefined) throw "No Manager found of following id";
 
-
-        return employeedata;
+        return empdata;
 
     },
 
-    async addEmployee(firstName, lastName, email, total_hours, office, basic_salary, manager_name, payDate, job_title, emergency_contact, user_login_id, hashed_password) {
+    async addEmployee(firstName, lastName, email, total_hours, basic_salary, manager_name, payDate, job_title, user_login_id, hashed_password) {
         var mailformat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if ((!firstName) || (!lastName) || (!email) || (!total_hours) || (!office) || (!basic_salary) || (!manager_name) || (!payDate) || (!job_title) || (!emergency_contact) || (!user_login_id) || (!hashed_password)) throw 'Please provide all the feilds'
+        if ((!firstName) || (!lastName) || (!email) || (!total_hours) || (!basic_salary) || (!manager_name) || (!payDate) || (!job_title) || (!user_login_id) || (!hashed_password)) throw 'Please provide all the feilds'
         if (typeof firstName !== 'string') throw 'No title provided';
         if (typeof lastName !== 'string') throw 'I aint got nobody!';
         if (mailformat.test(email) == false) throw 'Please provide proper  mailid';
         if (typeof email !== 'string') throw 'I aint got nobody!';
         if (isNaN(total_hours)) throw 'I aint got nobody!';
-        if (typeof office !== 'string') throw 'I aint got nobody!';
         if (isNaN(basic_salary)) throw 'I aint got nobody!';
         if (typeof manager_name !== 'string') throw 'I aint got nobody!';
         if (typeof payDate !== "string") throw 'I aint got nobody!';
         if (typeof job_title !== 'string') throw 'I aint got nobody!';
-        if (isNaN(emergency_contact)) throw 'I aint got nobody!';
         if (typeof user_login_id !== 'string') throw 'I aint got nobody!'
         if (typeof hashed_password !== 'string') throw 'I aint got nobody!';
-        const postCollection = await employee();
+        const employeeCollection = await employee();
 
         // const userThatPosted = await users.getUserById(posterId);
 
-        const newPost = {
+        const newEmployee = {
             firstName: firstName,
             lastName: lastName,
             email: email,
             total_hours: total_hours,
-            office: office,
             basic_salary: basic_salary,
             manager_name: manager_name,
             payDate: payDate,
             job_title: job_title,
-            emergency_contact: emergency_contact,
             user_login_id: user_login_id,
             hashed_password: hashed_password
         };
 
-        const newInsertInformation = await postCollection.insertOne(newPost);
+        const newInsertInformation = await employeeCollection.insertOne(newEmployee);
         const newId = newInsertInformation.insertedId;
 
-        // await users.addPostToUser(posterId, newId, title);
-        return newId
+        await manager.addEmptoManager(manager_name, newId, firstName);
+
+
+        const newEmployeeDetails = await this.getEmployeeById(newId);
+        return newEmployeeDetails;
             //return await this.getPostById(newId);
     },
 
@@ -104,7 +98,6 @@ const exportedMethods = {
             manager_name: renamecontent.manager_name,
             payDate: renamecontent.payDate,
             job_title: renamecontent.job_title,
-            emergency_contact: renamecontent.emergency_contact,
             user_login_id: renamecontent.user_login_id,
             hashed_password: renamecontent.hashed_password
         };
@@ -132,13 +125,11 @@ const exportedMethods = {
             firstName: updated.firstName,
             lastName: updated.lastName,
             email: updated.email,
-            total_hours: total_hours,
-            office: updated.office,
+            total_hours: updated.total_hours + total_hours,
             basic_salary: updated.basic_salary,
             manager_name: updated.manager_name,
             payDate: updated.payDate,
             job_title: updated.job_title,
-            emergency_contact: updated.emergency_contact,
             user_login_id: updated.user_login_id,
             hashed_password: updated.hashed_password
         };
@@ -147,7 +138,6 @@ const exportedMethods = {
             throw "could not update dog successfully";
         }
 
-        const upID = updatedInfo.updatedID;
         const updatedData = await this.getEmployeeById(id.toString());
         return updatedData;
     },
