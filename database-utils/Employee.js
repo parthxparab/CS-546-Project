@@ -55,7 +55,7 @@ const exportedMethods = {
         const newInsertInformation = await employeeCollection.insertOne(newEmployee);
         const newId = newInsertInformation.insertedId;
 
-        await manager.addEmptoManager(manager_name, newId, firstName);
+        await manager.addEmptoManager(manager_name, newId, firstName, newEmployee.total_salary, newEmployee.paidFlag);
 
 
         const newEmployeeDetails = await this.getEmployeeById(newId);
@@ -114,22 +114,23 @@ const exportedMethods = {
 
     },
 
-    async updateHours(id, total_hours) {
+    async updateHours(id, total_hour_new) {
+        console.log(typeof id)
         if (!id) throw "You must provide an id to search for";
         // if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
         if (id.length === 0) throw "Please provide proper legth of the id";
         if (typeof id !== 'string') throw "Please provide proper id"
         if (typeof id === 'undefined') throw "Please provide proper type of id"
         const updated = await this.getEmployeeById(id.toString());
-        console.log(updated)
+        console.log(typeof updated._id)
         const employeeCollection = await employee();
         const updatedHours = {
             firstName: updated.firstName,
             lastName: updated.lastName,
             email: updated.email,
-            total_hours: updated.total_hours + total_hours,
+            total_hours: updated.total_hours + total_hour_new,
             basic_salary: updated.basic_salary,
-            total_salary: updated.total_salary,
+            total_salary: updated.basic_salary * (updated.total_hours + total_hour_new),
             paidFlag: updated.paidFlag,
             manager_name: updated.manager_name,
             payDate: updated.payDate,
@@ -141,6 +142,12 @@ const exportedMethods = {
         if (updatedInfo.modifiedCount === 0) {
             throw "could not update dog successfully";
         }
+
+        const managerCollection = await manager();
+        const search = await managerCollection.findOne({ firstName: updated.manager_name });
+        if (search === null) throw 'cannnnnnnooot be null. dungoofed'
+
+
 
         const updatedData = await this.getEmployeeById(id.toString());
         return updatedData;
