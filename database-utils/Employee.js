@@ -43,6 +43,8 @@ const exportedMethods = {
             email: email,
             total_hours: total_hours,
             basic_salary: basic_salary,
+            total_salary: total_hours * basic_salary,
+            paidFlag: "Not Paid",
             manager_name: manager_name,
             payDate: payDate,
             job_title: job_title,
@@ -127,6 +129,8 @@ const exportedMethods = {
             email: updated.email,
             total_hours: updated.total_hours + total_hours,
             basic_salary: updated.basic_salary,
+            total_salary: updated.total_salary,
+            paidFlag: updated.paidFlag,
             manager_name: updated.manager_name,
             payDate: updated.payDate,
             job_title: updated.job_title,
@@ -141,32 +145,6 @@ const exportedMethods = {
         const updatedData = await this.getEmployeeById(id.toString());
         return updatedData;
     },
-
-
-    async calculatePayroll(firstname, lastname) {
-        if (!firstname) throw "You must provide the firstname ";
-        if (!lastname) throw "You must provide the lastname";
-        if (typeof firstname != "string") throw "Not of proper type";
-        if (typeof lastname != "string") throw "Not of proper type";
-
-        const employeeCollection = await employee();
-        const employeedata = await employeeCollection.findOne({
-            $and: [{ firstName: firstname }, { lastName: lastname }]
-        });
-        console.log(employeedata)
-        console.log(employeedata.total_payroll)
-        console.log(employeedata.total_hours)
-
-        const total_payroll = (employeedata.total_payroll * employeedata.total_hours)
-        if (total_payroll == 0) {
-            throw `Could not calculate the payroll for the employee with id of ${firstname}`;
-        }
-
-        const salarydata = await sala.updateSalary(firstname, lastname, total_payroll)
-
-        return salarydata
-
-    }
 
 };
 
