@@ -1,5 +1,6 @@
 const mongoCollections = require('./mongoCollections');
 const employee = mongoCollections.employee;
+const managerCollect = mongoCollections.manager;
 const ObjectId = require('mongodb').ObjectId
 const manager = require("./manager");
 
@@ -43,6 +44,8 @@ const exportedMethods = {
             email: email,
             total_hours: total_hours,
             basic_salary: basic_salary,
+            total_salary: total_hours * basic_salary,
+            paidFlag: "Not Paid",
             manager_name: manager_name,
             payDate: payDate,
             job_title: job_title,
@@ -53,7 +56,7 @@ const exportedMethods = {
         const newInsertInformation = await employeeCollection.insertOne(newEmployee);
         const newId = newInsertInformation.insertedId;
 
-        await manager.addEmptoManager(manager_name, newId, firstName);
+        await manager.addEmptoManager(manager_name, newId, firstName, newEmployee.total_salary, newEmployee.paidFlag);
 
 
         const newEmployeeDetails = await this.getEmployeeById(newId);
@@ -112,21 +115,22 @@ const exportedMethods = {
 
     },
 
-    async updateHours(id, total_hours) {
+    async updateHours(id, total_hour_new) {
         if (!id) throw "You must provide an id to search for";
         // if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
         if (id.length === 0) throw "Please provide proper legth of the id";
         if (typeof id !== 'string') throw "Please provide proper id"
         if (typeof id === 'undefined') throw "Please provide proper type of id"
         const updated = await this.getEmployeeById(id.toString());
-        console.log(updated)
         const employeeCollection = await employee();
         const updatedHours = {
             firstName: updated.firstName,
             lastName: updated.lastName,
             email: updated.email,
-            total_hours: updated.total_hours + total_hours,
+            total_hours: updated.total_hours + total_hour_new,
             basic_salary: updated.basic_salary,
+            total_salary: updated.basic_salary * (updated.total_hours + total_hour_new),
+            paidFlag: updated.paidFlag,
             manager_name: updated.manager_name,
             payDate: updated.payDate,
             job_title: updated.job_title,
@@ -138,35 +142,30 @@ const exportedMethods = {
             throw "could not update dog successfully";
         }
 
-        const updatedData = await this.getEmployeeById(id.toString());
-        return updatedData;
-    },
+        const managerCollection = await managerCollect();
+        const search = await managerCollection.findOne({ firstName: updated.manager_name });
+        if (search === null) throw 'cannnnnnnooot be null. dungoofed'
 
-
-    async calculatePayroll(firstname, lastname) {
-        if (!firstname) throw "You must provide the firstname ";
-        if (!lastname) throw "You must provide the lastname";
-        if (typeof firstname != "string") throw "Not of proper type";
-        if (typeof lastname != "string") throw "Not of proper type";
-
-        const employeeCollection = await employee();
-        const employeedata = await employeeCollection.findOne({
-            $and: [{ firstName: firstname }, { lastName: lastname }]
-        });
-        console.log(employeedata)
-        console.log(employeedata.total_payroll)
-        console.log(employeedata.total_hours)
-
-        const total_payroll = (employeedata.total_payroll * employeedata.total_hours)
-        if (total_payroll == 0) {
-            throw `Could not calculate the payroll for the employee with id of ${firstname}`;
+        let i = 0;
+        newSal = (updated.basic_salary * (updated.total_hours + total_hour_new))
+        for (i; i < search.employees.length; i++) {
+            if (search.employees[i].id.toString() == updated._id.toString()) {
+                search.employees[i].Name = updated.firstName;
+                search.employees[i].total_salary = newSal
+                search.employees[i].paidFlag = updated.paidFlag
+            }
         }
 
-        const salarydata = await sala.updateSalary(firstname, lastname, total_payroll)
+            //console.log(search.employees)
 
-        return salarydata
+        const something = await managerCollection.updateOne({ firstName: updated.manager_name }, { $set: { employees: search.employees } })
+        return this.getEmployeeById(updated._id);;
 
-    }
+    //    return("works")
+
+   //     const updatedData = await this.getEmployeeById(id.toString());
+   //     return updatedData;
+    },
 
 };
 
