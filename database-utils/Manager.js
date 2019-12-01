@@ -1,6 +1,8 @@
 const mongoCollections = require('./mongoCollections');
 const manager = mongoCollections.manager;
 const emp = mongoCollections.employee;
+const employee = require("./employee");
+
 const ObjectId = require('mongodb').ObjectID;
 
 const exportedMethods = {
@@ -150,8 +152,50 @@ const exportedMethods = {
             throw `Could not delete manager with id of ${id}`;
         }
         return removecontent
-    }
+    },
 
+    async isPaid(empId)
+    {
+        if (!empId || empId === undefined || empId=== null) throw 'Invalid Entry';
+        const employeeCollection = await emp();
+        const managerCollection = await manager();
+        const updated = await employee.getEmployeeById(empId.toString());
+
+        const updatedPay = {
+            firstName: updated.firstName,
+            lastName: updated.lastName,
+            email: updated.email,
+            total_hours: 0,
+            basic_salary: updated.basic_salary,
+            total_salary: 0,
+            paidFlag: "SALARY PAID",
+            manager_name: updated.manager_name,
+            payDate: updated.payDate,
+            job_title: updated.job_title,
+            user_login_id: updated.user_login_id,
+            hashed_password: updated.hashed_password
+        };
+        const updatedInfo = await employeeCollection.replaceOne({ _id: ObjectId(empId) }, updatedPay);
+        if (updatedInfo.modifiedCount === 0) {
+            throw "could not update dog successfully";
+        }
+
+        const search = await managerCollection.findOne({ firstName: updated.manager_name });
+        if (search === null) throw 'cannnnnnnooot be null. dungoofed'
+
+        let i = 0;
+        for (i; i < search.employees.length; i++) {
+            if (search.employees[i].id.toString() == updated._id.toString()) {
+                search.employees[i].Name = updated.firstName;
+                search.employees[i].total_salary = 0
+                search.employees[i].paidFlag = "SALARY PAID"
+            }
+        }
+
+        const something = await managerCollection.updateOne({ firstName: updated.manager_name }, { $set: { employees: search.employees } })
+        return employee.getEmployeeById(updated._id);;
+
+    }
 
 
 

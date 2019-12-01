@@ -38,9 +38,20 @@ async function main() {
     //  }
 
 
+    //  try {
+    //     var dharika = await emp.updateHours("5de2e5a7f7fd930507fc7645", 1);
+    //     console.log(dharika);
+    //     }
+    //     catch(e)
+    //     {
+    //         console.log("Error occured: ")
+    //         console.log(e);
+    
+    //      }
+
      try {
-        var dharika = await emp.updateHours("5de2e5a7f7fd930507fc7645", 1);
-        console.log(dharika);
+        var pay = await manager.isPaid("5de2e5a7f7fd930507fc7645");
+        console.log(pay);
         }
         catch(e)
         {
@@ -48,6 +59,7 @@ async function main() {
             console.log(e);
     
          }
+
 
      const db = await connection();
      await db.serverConfig.close();
