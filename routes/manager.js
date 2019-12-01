@@ -1,15 +1,44 @@
 const express = require('express');
+const manager = require('../database-utils/Manager')
 const router = express.Router();
 
 
-router.get('/', async (req, res) => {
-  try{
-  res.render('templates/manager_main');
-  res.status(200);
-    }catch (e) {
-    res.status(500).json({error: e});
-  }
+router.get('/', async(req, res) => {
+    try {
+        const man = await manager.getAllManager();
+        if (man.length == 0) {
+            res.render('error', { errorMsg: "No data to display" });
+        } else {
+            res.render('templates/manager_main', { searchDetail: man });
+        }
+        res.status(200);
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
 });
+
+router.get('/:id', async(req, res) => {
+    try {
+        if (!req.params.id) {
+            res.status(400).render("error", { errorMsg: "Something wrong with parameters" })
+        }
+        // if (isNaN(req.params.id)) {
+        //     res.status(400).render("error", { errorMsg: "Please provide a proper id" })
+        // }
+
+        const man = await manager.getManagerById(req.params.id);
+        if (man.length == 0) {
+            res.render('error', { errorMsg: "No manager found for the respective id" });
+        } else {
+            res.render('templates/manager_details', { searchDetail: man });
+        }
+        res.status(200);
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+
 
 
 module.exports = router;

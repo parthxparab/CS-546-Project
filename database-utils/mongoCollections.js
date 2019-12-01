@@ -20,5 +20,5 @@ module.exports = {
 
     employee: getCollectionFn("employee"),
     manager: getCollectionFn("manager"),
-    salary: getCollectionFn("salary")
+
 };

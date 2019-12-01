@@ -15,7 +15,6 @@
         "bcrypt": "^3.0.6",
         "body-parser": "^1.18.3",
         "bson": "^4.0.2",
-        "express": "^4.17.1",
         "express-handlebars": "^3.1.0",
         "handlebars": "^4.1.2",
         "mongodb": "^3.3.0-beta2",
