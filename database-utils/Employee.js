@@ -1,5 +1,6 @@
 const mongoCollections = require('./mongoCollections');
 const employee = mongoCollections.employee;
+const managerCollect = mongoCollections.manager;
 const ObjectId = require('mongodb').ObjectId
 const manager = require("./manager");
 
@@ -115,14 +116,12 @@ const exportedMethods = {
     },
 
     async updateHours(id, total_hour_new) {
-        console.log(typeof id)
         if (!id) throw "You must provide an id to search for";
         // if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
         if (id.length === 0) throw "Please provide proper legth of the id";
         if (typeof id !== 'string') throw "Please provide proper id"
         if (typeof id === 'undefined') throw "Please provide proper type of id"
         const updated = await this.getEmployeeById(id.toString());
-        console.log(typeof updated._id)
         const employeeCollection = await employee();
         const updatedHours = {
             firstName: updated.firstName,
@@ -143,14 +142,29 @@ const exportedMethods = {
             throw "could not update dog successfully";
         }
 
-        const managerCollection = await manager();
+        const managerCollection = await managerCollect();
         const search = await managerCollection.findOne({ firstName: updated.manager_name });
         if (search === null) throw 'cannnnnnnooot be null. dungoofed'
 
+        let i = 0;
+        newSal = (updated.basic_salary * (updated.total_hours + total_hour_new))
+        for (i; i < search.employees.length; i++) {
+            if (search.employees[i].id.toString() == updated._id.toString()) {
+                search.employees[i].Name = updated.firstName;
+                search.employees[i].total_salary = newSal
+                search.employees[i].paidFlag = updated.paidFlag
+            }
+        }
 
+            //console.log(search.employees)
 
-        const updatedData = await this.getEmployeeById(id.toString());
-        return updatedData;
+        const something = await managerCollection.updateOne({ firstName: updated.manager_name }, { $set: { employees: search.employees } })
+        return this.getEmployeeById(updated._id);;
+
+    //    return("works")
+
+   //     const updatedData = await this.getEmployeeById(id.toString());
+   //     return updatedData;
     },
 
 };

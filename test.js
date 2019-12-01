@@ -39,7 +39,7 @@ async function main() {
 
 
      try {
-        var dharika = await emp.updateHours("5de2e5a7f7fd930507fc7645", 8);
+        var dharika = await emp.updateHours("5de2e5a7f7fd930507fc7645", 1);
         console.log(dharika);
         }
         catch(e)
