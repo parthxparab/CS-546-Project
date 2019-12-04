@@ -1,6 +1,7 @@
 const mongoCollections = require('./mongoCollections');
 const manager = mongoCollections.manager;
 const emp = mongoCollections.employee;
+const transaction = mongoCollections.transaction;
 const employee = require("./employee");
 
 const ObjectId = require('mongodb').ObjectID;
@@ -179,6 +180,24 @@ const exportedMethods = {
         if (updatedInfo.modifiedCount === 0) {
             throw "could not update dog successfully";
         }
+
+        //adding transaction
+        const transactionCollection = await transaction();
+
+        const newTransaction = {
+            by: updated.manager_name,
+            byPosition: "Manager",
+            to: updated.firstName,
+            toPosition: "Employee",
+            typeOfTransaction: "Paying Salary",
+            amount: updated.total_salary,
+            hours: "not required"
+        };
+
+        const newTransactionInformation = await transactionCollection.insertOne(newTransaction);
+        
+        //adding transaction
+
 
         const search = await managerCollection.findOne({ firstName: updated.manager_name });
         if (search === null) throw 'cannnnnnnooot be null. dungoofed'

@@ -3,6 +3,7 @@ const employee = mongoCollections.employee;
 const managerCollect = mongoCollections.manager;
 const ObjectId = require('mongodb').ObjectId
 const manager = require("./manager");
+const transaction = mongoCollections.transaction;
 
 
 const exportedMethods = {
@@ -142,6 +143,25 @@ const exportedMethods = {
             throw "could not update dog successfully";
         }
 
+
+        //adding transaction
+        const transactionCollection = await transaction();
+
+        const newTransaction = {
+            by: updated.firstName,
+            byPosition: "Employee",
+            to: updated.manager_name,
+            toPosition: "Manager",
+            typeOfTransaction: "Adding Hours",
+            amount: "not required",
+            hours: updated.total_hours + total_hour_new
+        };
+
+        const newTransactionInformation = await transactionCollection.insertOne(newTransaction);
+
+        //adding transaction
+
+
         const managerCollection = await managerCollect();
         const search = await managerCollection.findOne({ firstName: updated.manager_name });
         if (search === null) throw 'cannnnnnnooot be null. dungoofed'
@@ -155,16 +175,9 @@ const exportedMethods = {
                 search.employees[i].paidFlag = updated.paidFlag
             }
         }
-
-            //console.log(search.employees)
-
         const something = await managerCollection.updateOne({ firstName: updated.manager_name }, { $set: { employees: search.employees } })
         return this.getEmployeeById(updated._id);;
 
-    //    return("works")
-
-   //     const updatedData = await this.getEmployeeById(id.toString());
-   //     return updatedData;
     },
 
 };
