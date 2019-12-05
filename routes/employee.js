@@ -14,6 +14,10 @@ router.get('/', async(req, res) => {
 
 router.get('/empprof/:id', async(req, res) => {
     try {
+<<<<<<< HEAD
+=======
+        //console.log('this')
+>>>>>>> 7d402e06be613d85ebba5209879511f9d00e7b8f
         console.log(req.params.id)
         if (!req.params.id) {
             res.status(400).render("error", { errorMsg: "Something wrong with parameters" })
@@ -33,10 +37,10 @@ router.get('/empprof/:id', async(req, res) => {
 
 
 router.get('/employeehours', async(req, res) => {
-    try {
+    try{
         res.render('templates/employee_hours');
         res.status(200);
-    } catch (e) {
+    }catch (e) {
         res.status(500).json({ error: e });
     }
 });
@@ -65,7 +69,7 @@ router.get('/successhours', async(req, res) => {
         console.log
         res.render('templates/hours_success');
         res.status(200);
-    } catch (e) {
+    } catch (e){
         res.status(500).json({ error: e });
     }
 });
