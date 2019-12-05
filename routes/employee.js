@@ -14,10 +14,7 @@ router.get('/', async(req, res) => {
 
 router.get('/empprof/:id', async(req, res) => {
     try {
-<<<<<<< HEAD
-=======
         //console.log('this')
->>>>>>> 7d402e06be613d85ebba5209879511f9d00e7b8f
         console.log(req.params.id)
         if (!req.params.id) {
             res.status(400).render("error", { errorMsg: "Something wrong with parameters" })
