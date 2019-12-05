@@ -71,4 +71,20 @@ router.get('/successhours', async(req, res) => {
 });
 
 
+router.post('/emphours', async(req, res) => {
+    console.log(req.body)
+    console.log(req.body.id);
+    console.log(req.body.Workinghours);
+    console.log(req.body.names)
+    const data = await emp.updateHours(req.body.id, req.body.Workinghours)
+    console.log(data)
+    if (!data) {
+        res.status(400).render("error", { errorMsg: "Something wrong with the paramenters" })
+    } else {
+        res.render('templates/success', { searchDetail: data });
+    }
+
+});
+
+
 module.exports = router;
