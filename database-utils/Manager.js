@@ -73,7 +73,7 @@ const exportedMethods = {
             managerdata.employees[x] = val;
             x++;
         }
-        return ( managerdata);
+        return (managerdata);
 
     },
 
@@ -110,47 +110,24 @@ const exportedMethods = {
 
     async addEmptoManager(manager_name, empId, empName, total_salary, paidFlag) {
 
-<<<<<<< HEAD
         if (!manager_name || typeof manager_name !== "string" || manager_name === undefined || manager_name === null) throw 'Invalid Entry1';
 
         if (!empId || empId === undefined || empId === null) throw 'Invalid Entry2';
 
         if (!empName || typeof empName !== "string" || empName === undefined || empName === null) throw 'Invalid Entry3';
-
+        if (!total_salary || typeof total_salary !== "number" || total_salary === undefined || total_salary === null) throw 'Invalid Entry4';
+        if (!paidFlag || typeof paidFlag !== "string" || paidFlag === undefined || paidFlag === null) throw 'Invalid Entry5';
 
         let currentUser = await this.getManagerByName(manager_name);
         console.log(currentUser);
 
         const managerCollection = await manager();
-        const updateInfo = await managerCollection.updateOne({ firstName: manager_name }, { $addToSet: { employees: { id: empId, Name: empName } } });
+        const updateInfo = await managerCollection.updateOne({ firstName: manager_name }, { $addToSet: { employees: { id: empId, Name: empName, total_salary: total_salary, paidFlag: paidFlag } } });
 
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
 
         return ("added to manager");
     },
-=======
-        if (!manager_name || typeof manager_name!== "string" || manager_name === undefined || manager_name=== null) throw 'Invalid Entry1';
-      
-        if (!empId || empId === undefined || empId=== null) throw 'Invalid Entry2';
-      
-        if (!empName || typeof empName!== "string" || empName === undefined || empName=== null) throw 'Invalid Entry3';
-        if (!total_salary || typeof total_salary!== "number" || total_salary === undefined || total_salary=== null) throw 'Invalid Entry4';
-        if (!paidFlag || typeof paidFlag!== "string" || paidFlag === undefined || paidFlag=== null) throw 'Invalid Entry5';
-
-          let currentUser = await this.getManagerByName(manager_name);
-          console.log(currentUser);
-      
-          const managerCollection = await manager();
-          const updateInfo = await managerCollection.updateOne(
-            {firstName: manager_name},
-            {$addToSet: {employees: {id: empId, Name: empName, total_salary: total_salary, paidFlag: paidFlag}}}
-          );
-      
-          if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
-      
-          return ("added to manager");
-        },
->>>>>>> 875240c112aa33436d8d0a3d197be930957dfe1a
 
     async renameManager(id, firstName, lastName) {
         if (!id) throw "You must provide an id to search for";
@@ -197,9 +174,8 @@ const exportedMethods = {
         return removecontent
     },
 
-    async isPaid(empId)
-    {
-        if (!empId || empId === undefined || empId=== null) throw 'Invalid Entry';
+    async isPaid(empId) {
+        if (!empId || empId === undefined || empId === null) throw 'Invalid Entry';
         const employeeCollection = await emp();
         const managerCollection = await manager();
         const updated = await employee.getEmployeeById(empId.toString());
