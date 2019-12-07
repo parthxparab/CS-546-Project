@@ -8,21 +8,22 @@ const router = express.Router();
 app.use('/', router);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-module.exports = function(app){
+module.exports = function(app) {
 
-    app.get('/', function(req, res){
+    app.get('/', function(req, res) {
         res.render("templates/index");
     });
 
-    app.get('/login', function(req, res){
-       res.render("templates/login");
+    app.get('/login', function(req, res) {
+        res.render("templates/login");
     });
 
-    app.get('/signup', function(req, res){
+    app.get('/signup', function(req, res) {
         res.render("templates/signup");
 
 
     });
+
 
     app.post('/login', async function(req, res){
         const username = req.body.username;
@@ -39,9 +40,10 @@ module.exports = function(app){
         }
 
 
+
     });
 
-    app.post('/createacc', async function(req, res){
+    app.post('/createacc', async function(req, res) {
         let firstname = req.body.firstname;
         let lastname = req.body.lastname;
         let email = req.body.email;
@@ -59,6 +61,7 @@ module.exports = function(app){
 
                res.render("templates/signup", {error: result});
            }
+
 
     });
 
