@@ -2,6 +2,7 @@ const signup = require("../login-signup-utils/signup");
 const login = require("../login-signup-utils/login");
 const express = require('express');
 const bodyParser = require('body-parser');
+const xss=require('xss')
 
 const app = express();
 const router = express.Router();
@@ -44,11 +45,11 @@ module.exports = function(app) {
     });
 
     app.post('/createacc', async function(req, res) {
-        let firstname = req.body.firstname;
-        let lastname = req.body.lastname;
-        let email = req.body.email;
-        let username = req.body.username;
-        let password = req.body.password;
+        let firstname = xss(req.body.firstname);
+        let lastname = xss(req.body.lastname);
+        let email = xss(req.body.email);
+        let username = xss(req.body.username);
+        let password = xss(req.body.password);
             console.log("Test 1");
            let result = await signup.createAcc(firstname, lastname, email, username, password);
             console.log(result);

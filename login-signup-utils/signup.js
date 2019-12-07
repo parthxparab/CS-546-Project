@@ -62,7 +62,8 @@ async function createAcc(firstname, lastname, email, username, password) {
                 lastName: lastname,
                 email: email,
                 username: username.toLowerCase(),
-                hash: hash
+                hash: hash,
+                employee:true
             };
 
             const insert = await usersCollection.insertOne(usersObj);
@@ -81,6 +82,7 @@ async function createAcc(firstname, lastname, email, username, password) {
 return "Success"
 }
 module.exports = {createAcc};
+
 
 
 
