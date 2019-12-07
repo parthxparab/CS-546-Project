@@ -1,0 +1,30 @@
+<h1>Manager Details</h1>
+<p>This website is used to display the details of the person based on their name and identifcation number</p>
+<form action="/details" method="POST"  >
+<h2><a href="/manager/">Want to search again?</a></h2>
+<ul>
+
+    <li>ID: {{searchDetail._id}}</li>
+    
+    <li>FirstName: {{searchDetail.firstName}}</li>
+
+    <li>LastName: {{searchDetail.lastName}}</li>
+    
+    <li>Email: {{searchDetail.email}}</li>
+  
+    <li>Total Budget: {{searchDetail.budget}}</li>
+
+    <li>Employees:
+    
+        {{#each searchDetail.employees}}  
+          <ul>
+              <li>
+                  <a href="/employee/empprof/{{id}}">{{id}}<li>{{name}}</li></a>
+              </li>
+          </ul>
+               
+             {{/each}}
+    </li>
+    
+</ul>
+</form>
