@@ -1,11 +1,12 @@
 const signup = require("../login-signup-utils/signup");
+const login = require("../login-signup-utils/login");
 const express = require('express');
 const bodyParser = require('body-parser');
+const xss=require('xss')
 
 const app = express();
 const router = express.Router();
 app.use('/', router);
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 module.exports = function(app) {
@@ -24,30 +25,47 @@ module.exports = function(app) {
 
     });
 
-    app.post('/login', function(req, res) {
-        res.send("Successfully logged in!");
-    });
 
-    app.post('/createacc', function(req, res) {
-        let firstname = req.body.firstname;
-        let lastname = req.body.lastname;
-        let email = req.body.email;
-        let username = req.body.username;
-        let password = req.body.password;
-        let signupSuccessful = signup.createAcc(firstname, lastname, email, username, password);
+    app.post('/login', async function(req, res){
+        const username = req.body.username;
+        const password = req.body.password;
 
-        res.render("templates/success", { successful: signupSuccessful });
+        let result = await login.loginUser(username, password);
+        console.log("Result: " + result);
+
+        if (result === "Success"){
+            res.render("templates/success");
+
+        }else{
+            res.render("templates/login", {error: result});
+        }
+
+
+
     });
 
     app.post('/createacc', async function(req, res) {
-        let firstname = req.body.firstname;
-        let lastname = req.body.lastname;
-        let email = req.body.email;
-        let username = req.body.username;
-        let password = req.body.password;
-        await signup.createAcc(firstname, lastname, email, username, password);
+        let firstname = xss(req.body.firstname);
+        let lastname = xss(req.body.lastname);
+        let email = xss(req.body.email);
+        let username = xss(req.body.username);
+        let password = xss(req.body.password);
+            console.log("Test 1");
+           let result = await signup.createAcc(firstname, lastname, email, username, password);
+            console.log(result);
+           if (result === "Success"){
+                res.render("templates/success");
+               console.log("Test 2");
 
-        res.render("templates/success", { successful: signupSuccessful });
+           }else{
+               console.log("Test 3");
+
+               res.render("templates/signup", {error: result});
+           }
+
+
     });
 
+
 };
+
