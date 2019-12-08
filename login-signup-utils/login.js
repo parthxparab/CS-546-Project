@@ -10,21 +10,26 @@ async function loginUser(username, password){
         //TODO: display message to user saying that username field is empty
     }
 
-    if (!await utils.usernameExists(username)){
-        console.log("Username does not exist in database!");
-        return "Username does not exist in database!"
+    //if (!await utils.usernameExists(username)){
+      //  console.log("Username does not exist in database!");
+        //return "Username does not exist in database!"
         //TODO: display message to user saying that username does not exist in database
-    }
+    //}
+    //console.log(typeof(username))
+    //console.log(typeof(password))
 
     const hash = await getHash(username);
-    console.log(hash);
+    console.log(typeof(hash));
+    if(typeof(hash)==="undefined"){
+        return "The given credentials do not match"; 
+    }
 
-    let passwordCorrect = bcrypt.compareSync(password, hash);
+    let passwordCorrect =await bcrypt.compare(password, hash);
 
    if (passwordCorrect){
        return passwordCorrect;
    }else{
-       return "Password is Incorrect";
+       return "The given credentials do not match";
    }
 
 

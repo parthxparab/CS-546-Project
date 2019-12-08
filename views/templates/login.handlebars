@@ -5,10 +5,7 @@
     <link rel="stylesheet" href="/assets/css/main.css"/>
     <title>Login Managers</title>
 </head>
-
-{{#if error}}
-    <h3>{{error}}</h3>
-{{/if}}
+<body>
 <form action="/login" method="post">
     <label for="username">Username</label>
     <input type="text" id="username" name="username">
@@ -18,3 +15,7 @@
     <br>
     <input type="submit" id="login"  value="Login" name="login">
 </form>
+{{#if error}}
+    <h3>{{error}}</h3>
+{{/if}}
+</body>

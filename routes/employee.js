@@ -73,6 +73,7 @@ router.get('/successhours', async(req, res) => {
 
 
 router.post('/emphours', async(req, res) => {
+    try{
     console.log(req.body)
     console.log(req.body.id);
     console.log(req.body.Workinghours);
@@ -83,6 +84,9 @@ router.post('/emphours', async(req, res) => {
         res.status(400).render("error", { errorMsg: "Something wrong with the paramenters" })
     } else {
         res.render('templates/success', { searchDetail: data });
+    }
+    }catch (e) {
+    res.status(500).json({error: e});
     }
 
 });
