@@ -4,7 +4,7 @@
         "description": "",
         "main": "app.js",
         "scripts": {
-                "seed": "node ./database-utils/seed.js",
+                "seed": "node test.js",
                 "test": "echo \"Error: no test specified\" && exit 1",
                 "start": "node app.js"
         },

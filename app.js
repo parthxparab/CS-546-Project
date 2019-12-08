@@ -11,9 +11,8 @@ const session = require('express-session')
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-require('./routes/users')(app);
 const configRoutes = require('./routes');
-configRoutes(app);
+
 //app.use("/public", staticFiles);
 
 app.engine("handlebars", handlebars({ defaultLayout: "main" }));
@@ -26,6 +25,6 @@ app.use(session({
     saveUninitialized: true
   }))
 
-
+  configRoutes(app);
 
 app.listen(port, () => console.log(`Final project app listening on ${port}!`));
