@@ -6,6 +6,10 @@ const xss=require('xss')
 
 const app = express();
 const router = express.Router();
+const staticFiles = express.static(__dirname + "/public");
+app.use("/public", staticFiles);
+
+
 app.use('/', router);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
