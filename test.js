@@ -5,6 +5,11 @@ const emp = require("./database-utils/employee");
 const connection = require('./database-utils/mongoConnection');
 
 async function main() {
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+    console.log(dateTime)
     // try {
     //     var pxp = await manager.addManager("Parth", "Parab", "parthsai@gmail.com", 1000, "pxp", "123");
     //     console.log(pxp);
@@ -82,14 +87,14 @@ async function main() {
 
     //      }
 
-    try {
-        var pay = await manager.isPaid("5dee9377241a37626f13cb63");
-        console.log(pay);
-    } catch (e) {
-        console.log("Error occured: ")
-        console.log(e);
+    // try {
+    //     var pay = await manager.isPaid("5dee9377241a37626f13cb63");
+    //     console.log(pay);
+    // } catch (e) {
+    //     console.log("Error occured: ")
+    //     console.log(e);
 
-    }
+    // }
 // =======
 //      try {
 //         var dharika = await emp.updateHours("5de2e5a7f7fd930507fc7645", 1);

@@ -231,6 +231,11 @@ const exportedMethods = {
         //adding transaction
         const transactionCollection = await transaction();
 
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+
         const newTransaction = {
             by: updated.manager_ID,
             byPosition: "Manager",
@@ -238,7 +243,8 @@ const exportedMethods = {
             toPosition: "Employee",
             typeOfTransaction: "Paying Salary",
             amount: updated.total_salary,
-            hours: "not required"
+            hours: "not required",
+            timestamp: dateTime
         };
 
         const newTransactionInformation = await transactionCollection.insertOne(newTransaction);
