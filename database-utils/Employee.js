@@ -2,7 +2,7 @@ const mongoCollections = require('./mongoCollections');
 const employee = mongoCollections.employee;
 const managerCollect = mongoCollections.manager;
 const ObjectId = require('mongodb').ObjectId
-const manager = require("./manager");
+const manager = require("./Manager");
 const transaction = mongoCollections.transaction;
 
 
@@ -21,20 +21,19 @@ const exportedMethods = {
 
     },
 
-    async addEmployee(firstName, lastName, email, total_hours, basic_salary, manager_name, payDate, job_title, user_login_id, hashed_password) {
+    async addEmployee(firstName, lastName, username, email, total_hours, basic_salary, manager_ID, payDate, job_title) {
         var mailformat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if ((!firstName) || (!lastName) || (!email) || (!total_hours) || (!basic_salary) || (!manager_name) || (!payDate) || (!job_title) || (!user_login_id) || (!hashed_password)) throw 'Please provide all the feilds'
+        if ((!firstName) || (!lastName) ||(!username) ||(!email) || (!total_hours) || (!basic_salary) || (!manager_ID) || (!payDate) || (!job_title) ) throw 'Please provide all the feilds'
         if (typeof firstName !== 'string') throw 'No title provided';
         if (typeof lastName !== 'string') throw 'I aint got nobody!';
+        if (typeof username !== 'string') throw 'I aint got nobody!';
         if (mailformat.test(email) == false) throw 'Please provide proper  mailid';
         if (typeof email !== 'string') throw 'I aint got nobody!';
         if (isNaN(total_hours)) throw 'I aint got nobody!';
         if (isNaN(basic_salary)) throw 'I aint got nobody!';
-        if (typeof manager_name !== 'string') throw 'I aint got nobody!';
+        if (typeof manager_ID !== 'string') throw 'I aint got nobody!';
         if (typeof payDate !== "string") throw 'I aint got nobody!';
         if (typeof job_title !== 'string') throw 'I aint got nobody!';
-        if (typeof user_login_id !== 'string') throw 'I aint got nobody!'
-        if (typeof hashed_password !== 'string') throw 'I aint got nobody!';
         const employeeCollection = await employee();
 
         // const userThatPosted = await users.getUserById(posterId);
@@ -42,23 +41,22 @@ const exportedMethods = {
         const newEmployee = {
             firstName: firstName,
             lastName: lastName,
+            username: username,
             email: email,
             total_hours: total_hours,
             basic_salary: basic_salary,
             total_salary: total_hours * basic_salary,
             paidFlag: "Not Paid",
-            manager_name: manager_name,
+            manager_ID: manager_ID,
             payDate: payDate,
-            job_title: job_title,
-            user_login_id: user_login_id,
-            hashed_password: hashed_password
+            job_title: job_title
         };
 
         const newInsertInformation = await employeeCollection.insertOne(newEmployee);
         const newId = newInsertInformation.insertedId;
-
-        await manager.addEmptoManager(manager_name, newId, firstName, newEmployee.total_salary, newEmployee.paidFlag);
-
+        console.log("reached here1")
+        await manager.addEmptoManager(manager_ID, newId, username, newEmployee.total_salary, newEmployee.paidFlag);
+        console.log("reached here2")
 
         const newEmployeeDetails = await this.getEmployeeById(newId);
         return newEmployeeDetails;
@@ -95,15 +93,14 @@ const exportedMethods = {
         const updatedData = {
             firstName: firstName,
             lastName: lastName,
+            username: renamecontent.username,
             email: renamecontent.email,
             total_hours: renamecontent.total_hours,
-            office: renamecontent.office,
             basic_salary: renamecontent.basic_salary,
-            manager_name: renamecontent.manager_name,
+            manager_ID: renamecontent.manager_ID,
             payDate: renamecontent.payDate,
-            job_title: renamecontent.job_title,
-            user_login_id: renamecontent.user_login_id,
-            hashed_password: renamecontent.hashed_password
+            job_title: renamecontent.job_title
+  
         };
         const updatedInfo = await employeeCollection.replaceOne({ _id: ObjectId(id) }, updatedData);
         if (updatedInfo.modifiedCount === 0) {
@@ -127,16 +124,16 @@ const exportedMethods = {
         const updatedHours = {
             firstName: updated.firstName,
             lastName: updated.lastName,
+            username: updated.username,
             email: updated.email,
             total_hours: updated.total_hours + total_hour_new,
             basic_salary: updated.basic_salary,
             total_salary: updated.basic_salary * (updated.total_hours + total_hour_new),
             paidFlag: updated.paidFlag,
-            manager_name: updated.manager_name,
+            manager_ID: updated.manager_ID,
             payDate: updated.payDate,
             job_title: updated.job_title,
-            user_login_id: updated.user_login_id,
-            hashed_password: updated.hashed_password
+
         };
         const updatedInfo = await employeeCollection.replaceOne({ _id: ObjectId(id) }, updatedHours);
         if (updatedInfo.modifiedCount === 0) {
@@ -150,7 +147,7 @@ const exportedMethods = {
         const newTransaction = {
             by: updated.firstName,
             byPosition: "Employee",
-            to: updated.manager_name,
+            to: updated.manager_ID,
             toPosition: "Manager",
             typeOfTransaction: "Adding Hours",
             amount: "not required",
@@ -163,7 +160,7 @@ const exportedMethods = {
 
 
         const managerCollection = await managerCollect();
-        const search = await managerCollection.findOne({ firstName: updated.manager_name });
+        const search = await managerCollection.findOne({ user_login_id: updated.manager_ID });
         if (search === null) throw 'cannnnnnnooot be null. dungoofed'
 
         let i = 0;
@@ -175,7 +172,7 @@ const exportedMethods = {
                 search.employees[i].paidFlag = updated.paidFlag
             }
         }
-        const something = await managerCollection.updateOne({ firstName: updated.manager_name }, { $set: { employees: search.employees } })
+        const something = await managerCollection.updateOne({ user_login_id: updated.manager_ID }, { $set: { employees: search.employees } })
         return this.getEmployeeById(updated._id);;
 
     },
