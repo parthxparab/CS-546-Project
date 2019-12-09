@@ -144,6 +144,11 @@ const exportedMethods = {
         //adding transaction
         const transactionCollection = await transaction();
 
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+
         const newTransaction = {
             by: updated.firstName,
             byPosition: "Employee",
@@ -151,7 +156,8 @@ const exportedMethods = {
             toPosition: "Manager",
             typeOfTransaction: "Adding Hours",
             amount: "not required",
-            hours: updated.total_hours + total_hour_new
+            hours: updated.total_hours + total_hour_new,
+            timestamp: dateTime
         };
 
         const newTransactionInformation = await transactionCollection.insertOne(newTransaction);
