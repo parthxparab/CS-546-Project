@@ -44,7 +44,6 @@ async function main() {
     }
 
 
-<<<<<<< HEAD
     //  try {
     //     var dharika = await emp.updateHours("5de2e5a7f7fd930507fc7645", 1);
     //     console.log(dharika);
@@ -64,18 +63,6 @@ async function main() {
         console.log(e);
 
     }
-=======
-     try {
-        var dharika = await emp.updateHours("5de2e5a7f7fd930507fc7645", 1);
-        console.log(dharika);
-        }
-        catch(e)
-        {
-            console.log("Error occured: ")
-            console.log(e);
-    
-         }
->>>>>>> 7d402e06be613d85ebba5209879511f9d00e7b8f
 
     //  try {
     //     var pay = await manager.isPaid("5de2e5a7f7fd930507fc7645");
@@ -85,7 +72,7 @@ async function main() {
     //     {
     //         console.log("Error occured: ")
     //         console.log(e);
-    
+
     //      }
 
 

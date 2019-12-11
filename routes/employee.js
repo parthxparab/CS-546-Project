@@ -17,7 +17,7 @@ router.get('/empprof/:id', async(req, res) => {
         //console.log('this')
         console.log(req.params.id)
         if (!req.params.id) {
-            res.status(400).render("error", { errorMsg: "Something wrong with parameters" })
+            res.status(400).render("templates/error", { errorMsg: "Something wrong with parameters" })
         }
         // if (isNaN(req.params.id)) {
         //     res.status(400).render("error", { errorMsg: "Please provide a proper id" })
@@ -34,10 +34,10 @@ router.get('/empprof/:id', async(req, res) => {
 
 
 router.get('/employeehours', async(req, res) => {
-    try{
+    try {
         res.render('templates/employee_hours');
         res.status(200);
-    }catch (e) {
+    } catch (e) {
         res.status(500).json({ error: e });
     }
 });
@@ -66,24 +66,30 @@ router.get('/successhours', async(req, res) => {
         console.log
         res.render('templates/hours_success');
         res.status(200);
-    } catch (e){
+    } catch (e) {
         res.status(500).json({ error: e });
     }
 });
 
 
 router.post('/emphours', async(req, res) => {
-    console.log(req.body)
-    console.log(req.body.id);
-    console.log(req.body.Workinghours);
-    console.log(req.body.names)
-    const data = await emp.updateHours(req.body.id, req.body.Workinghours)
-    console.log(data)
-    if (!data) {
-        res.status(400).render("error", { errorMsg: "Something wrong with the paramenters" })
-    } else {
-        res.render('templates/success', { searchDetail: data });
+
+    try {
+        if ((!req.body.id) || (!req.body.Workinghours) || (!req.body.name) || (req.body.Workinghours < 0) || (isNaN(req.body.Workinghours) || (typeof(req.body.name) != 'string'))) {
+            res.status(400).render("templates/error", { errorMsg: "Please enter correct parameters" })
+        }
+        const data = await emp.updateHours(req.body.id, req.body.Workinghours)
+        console.log(data)
+        if (!data) {
+            res.status(400).render("templates/error", { errorMsg: "Something wrong with the paramenters" })
+        } else {
+            res.render('templates/successhrs', { searchDetail: data });
+        }
+
+    } catch (e) {
+        res.status(500).json({ error: e });
     }
+
 
 });
 
