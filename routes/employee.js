@@ -49,7 +49,7 @@ router.post('/employeehours', async(req, res) => {
         var start=xss(req.body.start)
         var end=xss(req.body.end)
         var hours=xss(req.body.hours)
-        const updatehours=await emp.updateHours(userName,hours)
+        const updatehours=await emp.updateHours(userName,hours,start,)
         console.log(updatehours)
 
         //res.render('templates/employee_hoursupdate');

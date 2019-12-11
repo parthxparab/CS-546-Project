@@ -125,13 +125,13 @@ const exportedMethods = {
 
     },
 
-    async updateHours(id, total_hour_new, start_date, end_date) {
-        if (!id) throw "You must provide an id to search for";
+    async updateHours(username, total_hour_new, start_date, end_date) {
+        if (!username) throw "You must provide an id to search for";
         // if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
-        if (id.length === 0) throw "Please provide proper legth of the id";
-        if (typeof id !== 'string') throw "Please provide proper id"
-        if (typeof id === 'undefined') throw "Please provide proper type of id"
-        const updated = await this.getEmployeeById(id.toString());
+        if (username.length === 0) throw "Please provide proper legth of the id";
+        if (typeof username !== 'string') throw "Please provide proper id"
+        if (typeof username === 'undefined') throw "Please provide proper type of id"
+        const updated = await this.getEmployeeByUser(username);
         const employeeCollection = await employee();
         total_hours=parseInt(updated.total_hours) + parseInt(total_hour_new)
         console.log(total_hours)
