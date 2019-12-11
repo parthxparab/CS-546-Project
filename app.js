@@ -27,4 +27,4 @@ app.use(session({
 
   configRoutes(app);
 
-app.listen(port, () => console.log(`Final project app listening on ${port}!`));
+app.listen(port, () =>     console.log("Your routes will be running on http://localhost:3000"));
