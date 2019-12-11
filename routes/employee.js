@@ -33,6 +33,14 @@ router.get('/empprof/:id', async(req, res) => {
     }
 });
 
+router.get('/employeedetails', async(req, res) => {
+    try{
+        res.render('templates/employee_details');
+        res.status(200);
+    }catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
 
 router.get('/employeehours', async(req, res) => {
     try{
