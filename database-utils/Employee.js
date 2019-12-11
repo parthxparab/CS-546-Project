@@ -8,14 +8,13 @@ const transaction = mongoCollections.transaction;
 
 const exportedMethods = {
 
-    async getEmployeeById(username) {
-        console.log(username)
-        // if (!username) throw "You must provide an id to search for";
-        // if (username.length == 0) throw "Please provide proper length of the id";
-        // if (typeof username === 'undefined' || username == null) throw "Please provide proper type of id"
+    async getEmployeeById(id) {
+        if (!id) throw "You must provide an id to search for";
+        if (id.length == 0) throw "Please provide proper length of the id";
+        if (typeof id === 'undefined' || id == null) throw "Please provide proper type of id"
 
         const employeeCollection = await employee();
-        const empdata = await employeeCollection.findOne({ username: username });
+        const empdata = await employeeCollection.findOne({ _id: ObjectId(id) });
         if (empdata === null || empdata == undefined) throw "No Manager found of following id";
         return empdata;
 
