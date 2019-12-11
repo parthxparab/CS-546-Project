@@ -5,11 +5,11 @@ const emp = require("./database-utils/employee");
 const connection = require('./database-utils/mongoConnection');
 
 async function main() {
-    var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date+' '+time;
-    console.log(dateTime)
+    // var today = new Date();
+    // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    // var dateTime = date+' '+time;
+    // console.log(dateTime)
     // try {
     //     var pxp = await manager.addManager("Parth", "Parab", "parthsai@gmail.com", 1000, "pxp", "123");
     //     console.log(pxp);
@@ -21,7 +21,7 @@ async function main() {
 
     // try {
     //     var ngt = await manager.addManager("Neil", "Gupte", "neilgupte@gmail.com", 1000, "ngt", "123");
-    //     console.log(pxp);
+    //     console.log(ngt);
     // } catch (e) {
     //     console.log("Error occured: ")
     //     console.log(e);
@@ -29,8 +29,8 @@ async function main() {
     // }
 
     // try {
-    //     var dkp = await manager.addManager("Dharika", "Kapil", "dkapil@gmail.com", 1000, "dkp", "123");
-    //     console.log(pxp);
+    //     var dkp = await manager.addManager("Dharika", "Kapil", "dharikakapil@gmail.com", 1000, "dkp", "123");
+    //     console.log(dkp);
     // } catch (e) {
     //     console.log("Error occured: ")
     //     console.log(e);
@@ -76,16 +76,38 @@ async function main() {
     // }
 
 // <<<<<<< HEAD
-    //  try {
-    //     var manas = await emp.updateHours("5dee9377241a37626f13cb63", 5);
-    //     console.log(manas);
-    //     }
-    //     catch(e)
-    //     {
-    //         console.log("Error occured: ")
-    //         console.log(e);
+     try {
+        var manas = await emp.updateHours("manasmsk", 5, "12/10/2019", "12/11/2019");
+        console.log(manas);
+        }
+        catch(e)
+        {
+            console.log("Error occured: ")
+            console.log(e);
 
-    //      }
+         }
+
+    try {
+        var sagar = await emp.updateHours("sagarst", 5, "12/10/2019", "12/11/2019");
+        console.log(sagar);
+        }
+        catch(e)
+        {
+            console.log("Error occured: ")
+            console.log(e);
+    
+        }
+
+    try {
+        var prathamesh = await emp.updateHours("prathu", 5, "12/10/2019", "12/11/2019");
+        console.log(manas);
+        }
+        catch(e)
+        {
+            console.log("Error occured: ")
+            console.log(e);
+    
+        }
 
     // try {
     //     var pay = await manager.isPaid("5dee9377241a37626f13cb63");
