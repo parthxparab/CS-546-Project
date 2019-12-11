@@ -24,7 +24,7 @@ router.get('/empprof/:id', async(req, res) => {
         //     res.status(400).render("error", { errorMsg: "Please provide a proper id" })
         // }
 
-        const post = await emp.getEmployeeById(req.params.id);
+        const post = await emp.getEmployeeByUser(req.params.id);
         console.log(post)
         res.render('templates/employee_profile', { searchDetail: post });
         res.status(200);
