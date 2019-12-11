@@ -20,15 +20,8 @@ module.exports = {
 
     employee: getCollectionFn("employee"),
     manager: getCollectionFn("manager"),
-<<<<<<< HEAD
 
     transaction: getCollectionFn("transaction"),
     users: getCollectionFn("users")
-=======
-    users:getCollectionFn("users"),
-    transaction:getCollectionFn("transaction")
-
->>>>>>> 22e5ea73b12bb721b62fe08dfe2f064fbd789baa
 
 };
-

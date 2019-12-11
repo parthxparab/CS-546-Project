@@ -1,16 +1,21 @@
 <body>
-<form id="updatehoursform">
+
+<div id="main">
+      <h1 class="headerTag">Employee hours</h1>
+      <p>This website is used to display the details regarding the number inserted by user. </p>
+
+<form id="updatehoursform"  action="/employee/emphours" method="POST">
     <div>
-        <label for="UsernameEmp">Employee Id </label>
+        <label for="UsernameEmp">Employee Username </label>
         <input type= "text" id="UsernameEmp" name="UsernameEmp"  class="text" required="required"/>
     </div>
     <div>
         <label for="Startdate">Startdate </label>
-        <input type= "date" id="Startdate" name="date" placeholder="date" class="text" required="required"/>
+        <input type= "date" id="Startdate" name="startdate" placeholder="date" class="text" required="required"/>
     </div>
     <div>
         <label for="Enddate">Enddate </label>
-        <input type= "date" id="Enddate" name="date" placeholder="date" class="text" required="required"/>
+        <input type= "date" id="Enddate" name="enddate" placeholder="date" class="text" required="required"/>
     </div>
     <div>
         <label for="Hours">Working Hours </label>
@@ -19,5 +24,5 @@
         <button id="hours_button" type="submit" class="submit">Submit</button>
    
     </form>
-    <script src="/js/hours.js"></script>
+   
 </body>
