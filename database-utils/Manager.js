@@ -22,7 +22,7 @@ const exportedMethods = {
             while (x < empName) {
                 authID = managerdata[y].employees[x].id;
                 const empo = await empCollection.findOne({ _id: ObjectId(authID) });
-                const val = { id: authID, username: empo.username };
+                const val = { id: authID, username: empo.username, paid: empo.paidFlag, total_salary: empo.total_salary };
                 managerdata[y].employees[x] = val;
                 x++;
             }
@@ -48,7 +48,7 @@ const exportedMethods = {
         while (x < empName) {
             authID = managerdata.employees[x].id;
             const empo = await empCollection.findOne({ _id: ObjectId(authID) });
-            const val = { id: authID, name: empo.username };
+            const val = { id: authID, username: empo.username, paid: empo.paidFlag, total_salary: empo.total_salary };
             managerdata.employees[x] = val;
             x++;
         }
@@ -70,7 +70,7 @@ const exportedMethods = {
         while (x < empName) {
             authID = managerdata.employees[x].id;
             const empo = await empCollection.findOne({ _id: ObjectId(authID) });
-            const val = { id: authID, name: empo.username };
+            const val = { id: authID, username: empo.username, paid: empo.paidFlag, total_salary: empo.total_salary };
             managerdata.employees[x] = val;
             x++;
         }
@@ -242,6 +242,8 @@ const exportedMethods = {
             to: updated.username,
             toPosition: "Employee",
             typeOfTransaction: "Paying Salary",
+            start_date: "not required",
+            end_date: "not required",
             amount: updated.total_salary,
             hours: "not required",
             timestamp: dateTime

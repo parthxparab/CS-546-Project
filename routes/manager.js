@@ -25,8 +25,7 @@ router.get('/:id', async(req, res) => {
         // if (isNaN(req.params.id)) {
         //     res.status(400).render("error", { errorMsg: "Please provide a proper id" })
         // }
-
-        const man = await manager.getManagerById(req.params.id);
+        const man = await manager.getManagerByUserID(req.params.id);
         if (man.length == 0) {
             res.render('error', { errorMsg: "No manager found for the respective id" });
         } else {

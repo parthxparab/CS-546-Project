@@ -1,7 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
 <h1>Manager Details</h1>
 <p>This website is used to display the details of the person based on their name and identifcation number</p>
-<form action="/details" method="POST"  >
-<h2><a href="/manager/">Want to search again?</a></h2>
+  <main>
+
+<body>
+  <h2><a href="/manager/">Want to search again?</a></h2>
+
+<form method="POST"  id="manager_details" name="manager_details" >
 <ul>
 
     <li>ID: {{searchDetail._id}}</li>
@@ -14,17 +20,27 @@
   
     <li>Total Budget: {{searchDetail.budget}}</li>
 
+    <li>Total Employees: {{searchDetail.employees.length}}</li>
+
     <li>Employees:
     
         {{#each searchDetail.employees}}  
           <ul>
               <li>
-                  <a href="/employee/empprof/{{id}}">{{id}}<li>{{name}}</li></a>
+                <a href="/employee/empprof/{{username}}" id="{{username}}">{{username}} {{total_salary}} {{paid}} </li></a>
+                <button type="button" id="submit" class="button" onclick="functionName();">Pay</button>
+
               </li>
           </ul>
                
              {{/each}}
     </li>
-    
 </ul>
+
 </form>
+<p id="paid"></p>
+</main>
+
+</body>
+
+</html>
