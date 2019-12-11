@@ -179,7 +179,7 @@ const exportedMethods = {
         if (!empId || empId === undefined || empId === null) throw 'Invalid Entry';
         const employeeCollection = await emp();
         const managerCollection = await manager();
-        const updated = await employee.getEmployeeById(empId.toString());
+        const updated = await employee.getEmployeeByUser(empId.toString());
         const managerInfo = await this.getManagerByUserID(updated.manager_ID);
 
         if(managerInfo.budget < (managerInfo.budget - updated.total_salary || managerInfo.budget == 0))
@@ -195,9 +195,9 @@ const exportedMethods = {
             lastName: updated.lastName,
             username: updated.username,
             email: updated.email,
-            total_hours: 0,
+            total_hours: 1,
             basic_salary: updated.basic_salary,
-            total_salary: 0,
+            total_salary: updated.basic_salary,
             paidFlag: "SALARY PAID",
             manager_ID: updated.manager_ID,
             payDate: updated.payDate,
