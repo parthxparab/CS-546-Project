@@ -1,0 +1,20 @@
+<body>
+<main>
+<form id="getDetails">
+    <div>
+        <label for="UsernameEmp1">Employee Username </label>
+        <input type= "text" id="UsernameEmp1" name="UsernameEmp1"  class="text" required="required"/>
+    </div>
+    </div>
+        <button id="details_button" type="button" class="button" >Submit</button>
+
+    </form>
+<script>
+document.getElementById("details_button").onclick = function () {
+
+    x = ("/employee/empprof_two/"+(document.getElementById("UsernameEmp1").value))
+    console.log(x)
+    location.href=x
+    };
+</script></main>
+</body>
