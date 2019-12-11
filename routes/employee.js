@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const emp = require('../database-utils/Employee')
+const xss=require("xss")
 
 
 router.get('/', async(req, res) => {
@@ -35,12 +36,30 @@ router.get('/empprof/:id', async(req, res) => {
 
 router.get('/employeehours', async(req, res) => {
     try{
-        res.render('templates/employee_hours');
+        res.render('templates/employee_hoursupdate');
         res.status(200);
     }catch (e) {
         res.status(500).json({ error: e });
     }
 });
+
+router.post('/employeehours', async(req, res) => {
+    try{
+        var userName=xss(req.body.userName)
+        var start=xss(req.body.start)
+        var end=xss(req.body.end)
+        var hours=xss(req.body.hours)
+        const updatehours=await emp.updateHours(userName,hours)
+        console.log(updatehours)
+
+        //res.render('templates/employee_hoursupdate');
+        //res.status(200);
+    }catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+
 
 router.get('/employeereports', async(req, res) => {
     try {

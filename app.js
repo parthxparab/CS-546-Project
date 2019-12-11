@@ -13,10 +13,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const configRoutes = require('./routes');
 
+
+
 //app.use("/public", staticFiles);
 
 app.engine("handlebars", handlebars({ defaultLayout: "main" }));
 app.set('view engine', 'handlebars');
+
 
 app.use(session({
     name: 'PayDay',
