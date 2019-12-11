@@ -8,15 +8,15 @@ const transaction = mongoCollections.transaction;
 
 const exportedMethods = {
 
-    async getEmployeeById(id) {
-        if (!id) throw "You must provide an id to search for";
-        if (id.length == 0) throw "Please provide proper length of the id";
-        if (typeof id === 'undefined' || id == null) throw "Please provide proper type of id"
+    async getEmployeeById(username) {
+        console.log(username)
+        // if (!username) throw "You must provide an id to search for";
+        // if (username.length == 0) throw "Please provide proper length of the id";
+        // if (typeof username === 'undefined' || username == null) throw "Please provide proper type of id"
 
         const employeeCollection = await employee();
-        const empdata = await employeeCollection.findOne({ _id: ObjectId(id) });
+        const empdata = await employeeCollection.findOne({ username: username });
         if (empdata === null || empdata == undefined) throw "No Manager found of following id";
-
         return empdata;
 
     },
@@ -134,21 +134,26 @@ const exportedMethods = {
         if (typeof id === 'undefined') throw "Please provide proper type of id"
         const updated = await this.getEmployeeById(id.toString());
         const employeeCollection = await employee();
+        total_hours=parseInt(updated.total_hours) + parseInt(total_hour_new)
+        console.log(total_hours)
+        total_hours=total_hours.toString()
+        total_salary=parseInt((updated.basic_salary) * (parseInt(updated.total_hours) + parseInt(total_hour_new)))
+        total_salary=total_salary.toString()
         const updatedHours = {
             firstName: updated.firstName,
             lastName: updated.lastName,
             username: updated.username,
             email: updated.email,
-            total_hours: updated.total_hours + total_hour_new,
+            total_hours: total_hours,
             basic_salary: updated.basic_salary,
-            total_salary: updated.basic_salary * (updated.total_hours + total_hour_new),
+            total_salary: total_salary,
             paidFlag: updated.paidFlag,
             manager_ID: updated.manager_ID,
             payDate: updated.payDate,
             job_title: updated.job_title,
 
         };
-        const updatedInfo = await employeeCollection.replaceOne({ _id: ObjectId(id) }, updatedHours);
+        const updatedInfo = await employeeCollection.replaceOne({ username: username }, updatedHours);
         if (updatedInfo.modifiedCount === 0) {
             throw "could not update dog successfully";
         }

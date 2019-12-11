@@ -4,21 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/public/css/site.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
     <title> New Employee</title>
 </head>
 <body>
     <header class="head">
-                    <nav>
-                      <ul class="empheadlist">
-                        <li class="sinlist"><a href="/employee/empprof" target="_blank">Update Profile</a></li>
-                        <li class="sinlist"><a href="/employee/employeehours" target="_blank">Update Working Hours</a></li>
-                        <li class="sinlist"><a href="/employee/employeereports" target="_blank">Reports</a></li>
-                        <li class="sinlist"><a href="/employee/employeeconman" target="_blank">Contact Manager</a></li>
-                      </ul>
-                    </nav>
-            </header>
-    <h1>New Employee</h1>
+                        <h1>New Employee</h1>
+<form action="/login" method="post">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username">
+    <br>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password">
+    <br>
+    <input type="submit" id="login"  value="Login" name="login">
+</form>
+
+
     
 </body>
 </html>
