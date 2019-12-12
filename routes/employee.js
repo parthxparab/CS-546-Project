@@ -24,7 +24,7 @@ router.get('/empprof/:id', async(req, res) => {
         //     res.status(400).render("error", { errorMsg: "Please provide a proper id" })
         // }
 
-        const post = await emp.getEmployeeById(req.params.id);
+        const post = await emp.getEmployeeByUser(req.params.id);
         console.log(post)
         res.render('templates/employee_profile', { searchDetail: post });
         res.status(200);
@@ -33,6 +33,34 @@ router.get('/empprof/:id', async(req, res) => {
     }
 });
 
+router.get('/empprof_two/:id', async(req, res) => {
+    try {
+        //console.log('this')
+        console.log(req.params.id)
+        if (!req.params.id) {
+            res.status(400).render("error", { errorMsg: "Something wrong with parameters" })
+        }
+        // if (isNaN(req.params.id)) {
+        //     res.status(400).render("error", { errorMsg: "Please provide a proper id" })
+        // }
+
+        const post = await emp.getEmployeeByUser(req.params.id);
+        console.log(post)
+        res.render('templates/employee_profile_two', { searchDetail: post });
+        res.status(200);
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+router.get('/employeedetails', async(req, res) => {
+    try{
+        res.render('templates/employee_details');
+        res.status(200);
+    }catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
 
 router.get('/employeehours', async(req, res) => {
     try{
@@ -49,7 +77,7 @@ router.post('/employeehours', async(req, res) => {
         var start=xss(req.body.start)
         var end=xss(req.body.end)
         var hours=xss(req.body.hours)
-        const updatehours=await emp.updateHours(userName,hours)
+        const updatehours=await emp.updateHours(userName,hours,start,)
         console.log(updatehours)
 
         //res.render('templates/employee_hoursupdate');

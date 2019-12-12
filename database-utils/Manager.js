@@ -22,7 +22,7 @@ const exportedMethods = {
             while (x < empName) {
                 authID = managerdata[y].employees[x].id;
                 const empo = await empCollection.findOne({ _id: ObjectId(authID) });
-                const val = { id: authID, username: empo.username };
+                const val = { id: authID, username: empo.username, paid: empo.paidFlag, total_salary: empo.total_salary };
                 managerdata[y].employees[x] = val;
                 x++;
             }
@@ -48,7 +48,7 @@ const exportedMethods = {
         while (x < empName) {
             authID = managerdata.employees[x].id;
             const empo = await empCollection.findOne({ _id: ObjectId(authID) });
-            const val = { id: authID, name: empo.username };
+            const val = { id: authID, username: empo.username, paid: empo.paidFlag, total_salary: empo.total_salary };
             managerdata.employees[x] = val;
             x++;
         }
@@ -70,7 +70,7 @@ const exportedMethods = {
         while (x < empName) {
             authID = managerdata.employees[x].id;
             const empo = await empCollection.findOne({ _id: ObjectId(authID) });
-            const val = { id: authID, name: empo.username };
+            const val = { id: authID, username: empo.username, paid: empo.paidFlag, total_salary: empo.total_salary };
             managerdata.employees[x] = val;
             x++;
         }
@@ -179,7 +179,7 @@ const exportedMethods = {
         if (!empId || empId === undefined || empId === null) throw 'Invalid Entry';
         const employeeCollection = await emp();
         const managerCollection = await manager();
-        const updated = await employee.getEmployeeById(empId.toString());
+        const updated = await employee.getEmployeeByUser(empId.toString());
         const managerInfo = await this.getManagerByUserID(updated.manager_ID);
 
         if(managerInfo.budget < (managerInfo.budget - updated.total_salary || managerInfo.budget == 0))
@@ -195,9 +195,9 @@ const exportedMethods = {
             lastName: updated.lastName,
             username: updated.username,
             email: updated.email,
-            total_hours: 0,
+            total_hours: 1,
             basic_salary: updated.basic_salary,
-            total_salary: 0,
+            total_salary: updated.basic_salary,
             paidFlag: "SALARY PAID",
             manager_ID: updated.manager_ID,
             payDate: updated.payDate,
@@ -242,6 +242,8 @@ const exportedMethods = {
             to: updated.username,
             toPosition: "Employee",
             typeOfTransaction: "Paying Salary",
+            start_date: "not required",
+            end_date: "not required",
             amount: updated.total_salary,
             hours: "not required",
             timestamp: dateTime

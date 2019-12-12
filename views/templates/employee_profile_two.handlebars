@@ -1,7 +1,9 @@
 <h1>Employee Info</h1>
+
+    <body>
 <p>This website is used to display the details of the person based on their name and identifcation number</p>
-<form action="/details" method="GET"  >
-<h2><a href="/manager/{{searchDetail.manager_ID}}">Want to search again?</a></h2>
+<form method="GET"  >
+<h2><a href="/employee/employeedetails">Want to search again?</a></h2>
 <ul>
     <li>ID: {{searchDetail._id}}</li>
     <li>FirstName: {{searchDetail.firstName}}</li>
@@ -17,4 +19,16 @@
     <li>JobTitle: {{searchDetail.job_title}}</li>
     
 </ul>
+<button id="trans" type="button" class="button" >Last 10 Transactions</button>
+
 </form>
+
+    
+    <ol id="transactions"></ol>
+    <p id="demo"></p>
+
+ 
+    </body>
+       <script type="text/javascript" src="transaction.js"> 
+
+    </script>  
