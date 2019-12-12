@@ -162,7 +162,6 @@ router.get('/employeeconman', async(req, res) => {
 
 router.get('/successhours', async(req, res) => {
     try {
-        console.log
         res.render('templates/hours_success');
         res.status(200);
     } catch (e) {
