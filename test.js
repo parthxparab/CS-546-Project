@@ -75,7 +75,6 @@ async function main() {
 
     // }
 
-<<<<<<< HEAD
     // // <<<<<<< HEAD
     // try {
     //     var manas = await emp.updateHours("manasmsk", 5, "12/10/2019", "12/11/2019");
@@ -85,57 +84,24 @@ async function main() {
     //     console.log(e);
 
     // }
-=======
-// <<<<<<< HEAD
-     try {
-        var manas = await emp.updateHours("manasmsk", 5, "12/10/2019", "12/11/2019");
-        console.log(manas);
-        }
-        catch(e)
-        {
-            console.log("Error occured: ")
-            console.log(e);
-
-         }
->>>>>>> ce03288bedcbffcebf1fba8ddd2e9684cedf0711
 
     // try {
     //     var sagar = await emp.updateHours("sagarst", 5, "12/10/2019", "12/11/2019");
     //     console.log(sagar);
-<<<<<<< HEAD
     // } catch (e) {
     //     console.log("Error occured: ")
     //     console.log(e);
 
     // }
-=======
-    //     }
-    //     catch(e)
-    //     {
-    //         console.log("Error occured: ")
-    //         console.log(e);
-    
-    //     }
->>>>>>> ce03288bedcbffcebf1fba8ddd2e9684cedf0711
 
     // try {
     //     var prathamesh = await emp.updateHours("prathu", 5, "12/10/2019", "12/11/2019");
     //     console.log(manas);
-<<<<<<< HEAD
     // } catch (e) {
     //     console.log("Error occured: ")
     //     console.log(e);
 
     // }
-=======
-    //     }
-    //     catch(e)
-    //     {
-    //         console.log("Error occured: ")
-    //         console.log(e);
-    
-    //     }
->>>>>>> ce03288bedcbffcebf1fba8ddd2e9684cedf0711
 
     // try {
     //     var pay = await manager.isPaid("5dee9377241a37626f13cb63");

@@ -71,26 +71,6 @@ router.get('/employeehours', async(req, res) => {
     }
 });
 
-<<<<<<< HEAD
-router.post('/emphours', async(req, res) => {
-    try {
-
-        var userName = xss(req.body.UsernameEmp)
-        var start = xss(req.body.startdate)
-        var end = xss(req.body.enddate)
-        var hours = xss(req.body.Workinghours)
-        if ((!userName) || (!start) || (!end) || (!hours)) throw "Please enter the details"
-        if ((typeof(userName) != 'string') || (typeof(start) != "string") || (typeof(end) != 'string') || (isNaN(hours))) throw 'Please enter correct values'
-        const updatehours = await emp.updateHours(userName, hours, start, end)
-        console.log("NAN Below")
-        console.log(updatehours)
-        if (!updatehours) {
-            res.status(400).render("templates/error", { errorMsg: "Something wrong with the paramenters" })
-        } else {
-            res.render('templates/successhrs', { searchDetail: updatehours });
-        }
-
-=======
 router.get('/employeehours/success', async(req, res) => {
     try{
         res.render('templates/employee_hourssuccess');
@@ -131,7 +111,6 @@ router.post('/employeehours', async(req, res) => {
         //res.redirect('/employeehours/success')
         //res.render("templates/newemployee_main", {error: "Working hours updated successfuly"});
         //res.json({suc: true});
->>>>>>> ce03288bedcbffcebf1fba8ddd2e9684cedf0711
         //res.render('templates/employee_hoursupdate');
         res.status(200);
     } catch (e) {

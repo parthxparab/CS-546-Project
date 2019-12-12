@@ -4,14 +4,14 @@
         <main>
 <div>       
 <p>This website is used to display the details of the person based on their name and identifcation number</p>
-    <script src="/js/transaction.js">  </script>  
+    <script src="/js/transaction_output.js">  </script>  
 
 <h2><a href="/employee/employeedetails">Want to search again?</a></h2>
 <ul>
     <li>ID: {{searchDetail._id}}</li>
     <li>FirstName: {{searchDetail.firstName}}</li>
     <li>LastName: {{searchDetail.lastName}}</li>
-    <li>Username: {{searchDetail.username}}</li>
+    <li >Username: <span id="usernamedetail">{{searchDetail.username}}</span>  </li>
     <li>Email: {{searchDetail.email}}</li>
     <li>Total Hours: {{searchDetail.total_hours}}</li>
     <li>BasicSalary: {{searchDetail.basic_salary}}</li>
@@ -21,7 +21,9 @@
     <li>payDate: {{searchDetail.payDate}}</li>
     <li>JobTitle: {{searchDetail.job_title}}</li>
 </ul>
-<button id="button" type="button" class="button" >Last 10 Transactions</button>
+{{!-- <button id="button" type="button" class="button" >Last 10 Transactions</button> --}}
+<input type="button" value="Last 10 Transaction"  id="button" onclick="update()">
+
 </div> 
 
 <div id="main2">
