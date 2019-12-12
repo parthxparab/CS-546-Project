@@ -54,10 +54,10 @@ router.get('/empprof_two/:id', async(req, res) => {
 });
 
 router.get('/employeedetails', async(req, res) => {
-    try{
+    try {
         res.render('templates/employee_details');
         res.status(200);
-    }catch (e) {
+    } catch (e) {
         res.status(500).json({ error: e });
     }
 });
