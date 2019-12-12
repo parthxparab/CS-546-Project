@@ -1,13 +1,6 @@
 $(document).ready(function() {
     document.getElementById('button').addEventListener('click', (event) => {
         event.preventDefault();
-<<<<<<< HEAD
-        var list = document.getElementById("attempts");
-        list.innerHTML += '<span > ' + 'Successfully submitted' + '</span>'
-        event.preventDefault();
-    });
-
-=======
         var userName = userNameInput.val();
         var start = startInput.val();
         var end = endInput.val();
@@ -37,5 +30,4 @@ $(document).ready(function() {
             
   
     
->>>>>>> ce03288bedcbffcebf1fba8ddd2e9684cedf0711
 });
