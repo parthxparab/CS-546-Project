@@ -22,7 +22,14 @@ $(document).ready(function(){
               start: start,
               end: end,
               hours:hours
-            })
+            }),
+            error: function(response){
+                //alert('Working Hours NOT updated,please check the information');
+                alert("failed to update")
+            },
+            success: function(response){
+                alert('Working Hours Updated Successfuly');
+               }
         };
         $.ajax(requestConfig).then(function(responseMessage) {
             console.log(responseMessage);
