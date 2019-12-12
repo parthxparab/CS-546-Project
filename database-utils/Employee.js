@@ -15,7 +15,7 @@ const exportedMethods = {
 
         const employeeCollection = await employee();
         const empdata = await employeeCollection.findOne({ _id: ObjectId(id) });
-        if (empdata === null || empdata == undefined) throw "No Manager found of following id";
+        //if (empdata === null || empdata == undefined) throw "No Manager found of following id";
         return empdata;
 
     },
@@ -27,11 +27,10 @@ const exportedMethods = {
 
         const employeeCollection = await employee();
         const empdata = await employeeCollection.findOne({ username: username });
-        if (empdata === null || empdata == undefined) throw "No Manager found of following id";
+        //if (empdata === null || empdata == undefined) throw " NO employee found of following id";
 
         return empdata;
-
-    },
+        },
 
     async addEmployee(firstName, lastName, username, email, total_hours, basic_salary, manager_ID, payDate, job_title) {
         var mailformat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -132,6 +131,9 @@ const exportedMethods = {
         if (typeof username !== 'string') throw "Please provide proper id"
         if (typeof username === 'undefined') throw "Please provide proper type of id"
         const updated = await this.getEmployeeByUser(username);
+        if(updated===null){
+            return
+        }
         const employeeCollection = await employee();
         total_hours=parseInt(updated.total_hours) + parseInt(total_hour_new)
         console.log(total_hours)
@@ -175,7 +177,8 @@ const exportedMethods = {
             start_date: start_date,
             end_date: end_date,
             amount: "not required",
-            hours: total_hour_new,
+            hours: total_hours,
+
             timestamp: dateTime
         };
 
@@ -187,13 +190,13 @@ const exportedMethods = {
         const managerCollection = await managerCollect();
         const search = await managerCollection.findOne({ user_login_id: updated.manager_ID });
         if (search === null) throw 'cannnnnnnooot be null. dungoofed'
-
+        console.log(search)
         let i = 0;
         newSal = (updated.basic_salary * (updated.total_hours + total_hour_new))
         for (i; i < search.employees.length; i++) {
             if (search.employees[i].id.toString() == updated._id.toString()) {
                 search.employees[i].Name = updated.firstName;
-                search.employees[i].total_salary = newSal
+                search.employees[i].total_salary = total_salary
                 search.employees[i].paidFlag = updated.paidFlag
             }
         }

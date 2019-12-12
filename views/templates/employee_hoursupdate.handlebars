@@ -14,10 +14,11 @@
     </div>
     <div>
         <label for="Hours">Working Hours </label>
-        <input type= "number" id="Hours" name="Workinghours" placeholder="hours" class="number" required="required"/>
+        <input type= "number" min="0" id="Hours" name="Workinghours" placeholder="hours" class="number" required="required" oninput="validity.valid||(value='');"/>
     </div>
         <button id="hours_button" type="submit" class="submit">Submit</button>
    
     </form>
     <script src="/js/hours.js"></script>
+
 </body>
