@@ -87,27 +87,27 @@ async function main() {
 
          }
 
-    try {
-        var sagar = await emp.updateHours("sagarst", 5, "12/10/2019", "12/11/2019");
-        console.log(sagar);
-        }
-        catch(e)
-        {
-            console.log("Error occured: ")
-            console.log(e);
+    // try {
+    //     var sagar = await emp.updateHours("sagarst", 5, "12/10/2019", "12/11/2019");
+    //     console.log(sagar);
+    //     }
+    //     catch(e)
+    //     {
+    //         console.log("Error occured: ")
+    //         console.log(e);
     
-        }
+    //     }
 
-    try {
-        var prathamesh = await emp.updateHours("prathu", 5, "12/10/2019", "12/11/2019");
-        console.log(manas);
-        }
-        catch(e)
-        {
-            console.log("Error occured: ")
-            console.log(e);
+    // try {
+    //     var prathamesh = await emp.updateHours("prathu", 5, "12/10/2019", "12/11/2019");
+    //     console.log(manas);
+    //     }
+    //     catch(e)
+    //     {
+    //         console.log("Error occured: ")
+    //         console.log(e);
     
-        }
+    //     }
 
     // try {
     //     var pay = await manager.isPaid("5dee9377241a37626f13cb63");
