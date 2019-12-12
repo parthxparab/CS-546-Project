@@ -178,6 +178,7 @@ const exportedMethods = {
             end_date: end_date,
             amount: "not required",
             hours: total_hours,
+
             timestamp: dateTime
         };
 
