@@ -10,17 +10,54 @@
 <body>
     <header class="head">
                         <h1>New Employee</h1>
-<form action="/login" method="post">
-    <label for="username">Username</label>
-    <input type="text" id="username" name="username">
-    <br>
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password">
-    <br>
-    <input type="submit" id="login"  value="Login" name="login">
-</form>
+<body>
+<form id="newempform" action="/newemployee" method="post" >
+    <div>
+        <label for="firstName">First Name</label>
+        <input type= "text" id="firstName" name="firstName"  class="text" required="required"/>
+    </div>
+    <div>
+        <label for="lastName">Last Name </label>
+        <input type= "text" id="lastName" name="lastName"  class="text" required="required"/>
+    </div>
+    <div>
+        <label for="newusername">Username</label>
+        <input type= "text" id="newusername" name="newusername"  class="text" required="required"/>
+    </div>
+    
+    <div>
+        <label for="empemail">Email Id</label>
+        <input type= "email" id="empemail" name="empemail"  class="text" required="required"/>
+    </div>
+    
+    <div>
+        <label for="emphours">Total Work Hours</label>
+        <input type= "number" min="0" id="emphours" name="emphours"  class="text" required="required" oninput="validity.valid||(value='');"/>
+    </div>
+    
+    <div>
+        <label for="empsalary">Basic Salary</label>
+<input type= "number" min="0" id="empsalary" name="empsalary"  class="text" required="required" oninput="validity.valid||(value='');"/>    </div>
+    <div>
+        <label for="managerID">Manager ID</label>
+        <input type= "text" id="managerID" name="managerID"  class="text" required="required"/>
+    </div>
+    <div>
+        <label for="payDate">Pay Date</label>
+        <input type= "date" id="payDate" name="date" placeholder="date" class="text" required="required"/>
+    </div>
+    <div>
+        <label for="jobtitle">Job Title</label>
+        <input type= "text" id="jobtitle" name="jobtitle"  class="number" required="required"/>
+    </div>
+        <button id="emp_button" type="submit" class="submit">Submit</button>
+   
+    </form>
 
 
     
 </body>
+
+
+    
 </html>
