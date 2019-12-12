@@ -1,0 +1,65 @@
+<<<<<<< HEAD
+  
+  <main>
+      <div id="main">
+      <h1 class="headerTag">Employee hours</h1>
+      <p>This website is used to display the details regarding the number inserted by user. </p>
+      <form method="POST" action="/employee/emphours"> 
+        <label for="ID" id="Number">Identification number: </label>
+        <input type= "id" id="id" name="id" placeholder="id" class="id" required="required"/>   
+        <label for="Hours">Working Hours: </label>
+        <input type= "number" id="Hours" name="Workinghours" placeholder="hours" class="number" required="required"/>   
+=======
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Working Hours</title>
+    <h1>Working Hours</h1>
+  <link rel="stylesheet" href="/public/site.css"  type="text/css" >
+</head>
+<body>    
+
+    <form  action="/employee/successhours" class="form" id="form" method="GET" >
+    <div>
+        <label for="Startdate">Startdate </label>
+        <input type= "date" id="Startdate" name="date" placeholder="date" class="text" required="required"/>
+    </div>
+    <div>
+        <label for="Enddate">Enddate </label>
+        <input type= "date" id="Enddate" name="date" placeholder="date" class="text" required="required"/>
+    </div>
+    <div>
+        <label for="Hours">Working Hours </label>
+        <input type= "number" id="Hours" name="Workinghours" placeholder="hours" class="number" required="required"/>
+    </div>
+    <div>
+>>>>>>> 7d402e06be613d85ebba5209879511f9d00e7b8f
+        <label for="Hours">Manager</label>
+        <select  name="names" class="text" placeholder="names" id="managerhours" required="required">
+          <option >Manager 1</option>
+          <option>Manager 2</option>
+          <option>Manager 3</option>
+        </select>        
+        <button id="button" type="submit" class="submit">Submit</button>
+   
+    </form>
+    <div id="main">
+        <ol id="attempts"></ol>
+        <label  class="error" id="errortext" ></label>   
+    </div>
+     <footer class="Footer-Section">
+        <p>
+            <span class="Name-Details">Name: DHARIKA KAPIL</span><br>
+            <span class="Student-Details">CWID: 10453441</span><br>
+            <span class="Class-Details">CS-546</span><br>          
+        </p>
+    </footer>
+    
+     <script src="../layouts/emphours.js"></script>
+     </main>
+
+
+
+
+
