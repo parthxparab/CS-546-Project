@@ -1,8 +1,26 @@
 const express = require('express');
 const router = express.Router();
+const tran = require('../database-utils/transaction')
 const emp = require('../database-utils/Employee')
 const xss = require("xss")
 
+
+router.get('/transaction', async(req, res) => {
+    try {
+        console.log('hellovsdjhvfsdhjvs')
+        x = Object.keys(req.query).toString()
+        const tra = await tran.getTransactionByUsername(x)
+        const post = await emp.getEmployeeByUser(x);
+        post["firstName"] = "Lmao"
+        console.log(post)
+        res.render('templates/employee_profile_two', { searchDetail: post });
+        res.status(200);
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+
+
+});
 
 router.get('/', async(req, res) => {
     try {

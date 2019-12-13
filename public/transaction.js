@@ -1,9 +1,24 @@
 //const tran = require('../database-utils/mongoConnection')
 // import { abc } from '../database-utils/mongoConnection';
-
-
-
+let va = document.getElementById("usernamedetail").innerHTML
 $(document).ready(function() {
+
+    $('#button').click(() => {
+        console.log('code  here')
+            //let va = document.getElementById("usernamedetail").innerHTML
+        console.log(va)
+        $.ajax({
+            url: '/employee/transaction',
+            type: 'GET',
+            data: va,
+            datatype: 'json',
+            success: (data) => {
+                console.log("success")
+            }
+        })
+    });
+
+
 
     document.getElementById('button').addEventListener("click", (event) => {
         event.preventDefault();
@@ -13,25 +28,17 @@ $(document).ready(function() {
 
         // Values come from inputs as strings, no matter what :(
 
-        let va = document.getElementById("usernamedetail").innerHTML
-            //const FirstNumberValue = searchDetail.username;
-            // let result = tran.getTransactionByUsername(searchDetail.username)
+        //    va = document.getElementById("usernamedetail").innerHTML
+        //const FirstNumberValue = searchDetail.username;
+        // let result = tran.getTransactionByUsername(searchDetail.username)
+        //  console.log('here')
+        //  console.log(va)
+        document.getElementById("demo").innerHTML = "1";
 
-        console.log(va)
-        var list = document.getElementById("attempts");
-        list.innerHTML += '<li><span> ' + va + '</span></li>'
 
         //document.getElementById("Primenumber").value = ""
         //document.getElementById("errortext").textContent = ""
 
     });
-
-
-
-
-
-
-
-
 
 });
