@@ -24,7 +24,9 @@ const exportedMethods = {
 
         if(count == transData.length)
         {
-            return("No transactions reported yet")
+            arr.length = 0
+            arr.push("No transactions reported yet")
+            return(arr)
         }
         else
         {
