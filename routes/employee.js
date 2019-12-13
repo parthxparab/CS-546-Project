@@ -71,67 +71,46 @@ router.get('/employeehours', async(req, res) => {
     }
 });
 
-<<<<<<< HEAD
-router.post('/emphours', async(req, res) => {
-    try {
-
-        var userName = xss(req.body.UsernameEmp)
-        var start = xss(req.body.startdate)
-        var end = xss(req.body.enddate)
-        var hours = xss(req.body.Workinghours)
-        if ((!userName) || (!start) || (!end) || (!hours)) throw "Please enter the details"
-        if ((typeof(userName) != 'string') || (typeof(start) != "string") || (typeof(end) != 'string') || (isNaN(hours))) throw 'Please enter correct values'
-        const updatehours = await emp.updateHours(userName, hours, start, end)
-        console.log("NAN Below")
-        console.log(updatehours)
-        if (!updatehours) {
-            res.status(400).render("templates/error", { errorMsg: "Something wrong with the paramenters" })
-        } else {
-            res.render('templates/successhrs', { searchDetail: updatehours });
-        }
-
-=======
 router.get('/employeehours/success', async(req, res) => {
-    try{
+    try {
         res.render('templates/employee_hourssuccess');
         res.status(200);
-    }catch (e) {
+    } catch (e) {
         res.status(500).json({ error: e });
     }
 });
 
 
 router.get('/employeehours/failure', async(req, res) => {
-    try{
+    try {
         res.render('templates/employee_hoursfailed');
         res.status(200);
-    }catch (e) {
+    } catch (e) {
         res.status(500).json({ error: e });
     }
 });
 
 router.post('/employeehours', async(req, res) => {
-    try{
-        var userName=xss(req.body.userName)
-        var start=xss(req.body.start)
-        var end=xss(req.body.end)
-        var hours=xss(req.body.hours)
-        const updatehours=await emp.updateHours(userName,hours,start,end)
+    try {
+        var userName = xss(req.body.userName)
+        var start = xss(req.body.start)
+        var end = xss(req.body.end)
+        var hours = xss(req.body.hours)
+        const updatehours = await emp.updateHours(userName, hours, start, end)
         console.log(updatehours)
-        if(typeof(updatehours)==="undefined"){
+        if (typeof(updatehours) === "undefined") {
             console.log("test")
-            //res.render("templates/employee_hoursupdate", {error: "Update failed please check the information"});
-         //res.redirect('/employee/employeehours/failure')
-            //return
-            //httpsMsgs.send500(req,res,"Update Not successful")
+                //res.render("templates/employee_hoursupdate", {error: "Update failed please check the information"});
+                //res.redirect('/employee/employeehours/failure')
+                //return
+                //httpsMsgs.send500(req,res,"Update Not successful")
             res.sendStatus(403)
             return
         }
-        res.json({success: true});
+        res.json({ success: true });
         //res.redirect('/employeehours/success')
         //res.render("templates/newemployee_main", {error: "Working hours updated successfuly"});
         //res.json({suc: true});
->>>>>>> ce03288bedcbffcebf1fba8ddd2e9684cedf0711
         //res.render('templates/employee_hoursupdate');
         res.status(200);
     } catch (e) {
