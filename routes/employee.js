@@ -1,8 +1,26 @@
 const express = require('express');
 const router = express.Router();
+const tran = require('../database-utils/transaction')
 const emp = require('../database-utils/Employee')
-const xss=require("xss")
+const xss = require("xss")
 
+
+router.get('/transaction', async(req, res) => {
+    try {
+        console.log('hellovsdjhvfsdhjvs')
+        x = Object.keys(req.query).toString()
+        const tra = await tran.getTransactionByUsername(x)
+        const post = await emp.getEmployeeByUser(x);
+        post["firstName"] = "Lmao"
+        console.log(post)
+        res.render('templates/employee_profile_two', { searchDetail: post });
+        res.status(200);
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+
+
+});
 
 router.get('/', async(req, res) => {
     try {
@@ -18,7 +36,7 @@ router.get('/empprof/:id', async(req, res) => {
         //console.log('this')
         console.log(req.params.id)
         if (!req.params.id) {
-            res.status(400).render("error", { errorMsg: "Something wrong with parameters" })
+            res.status(400).render("templates/error", { errorMsg: "Something wrong with parameters" })
         }
         // if (isNaN(req.params.id)) {
         //     res.status(400).render("error", { errorMsg: "Please provide a proper id" })
@@ -54,69 +72,92 @@ router.get('/empprof_two/:id', async(req, res) => {
 });
 
 router.get('/employeedetails', async(req, res) => {
-    try{
+    try {
         res.render('templates/employee_details');
         res.status(200);
-    }catch (e) {
+    } catch (e) {
         res.status(500).json({ error: e });
     }
 });
 
-router.get('/employeehours', async(req, res) => {
-    try{
-        res.render('templates/employee_hoursupdate');
-        res.status(200);
-    }catch (e) {
-        res.status(500).json({ error: e });
-    }
-});
 
 router.get('/employeehours/success', async(req, res) => {
-    try{
+    try {
         res.render('templates/employee_hourssuccess');
         res.status(200);
-    }catch (e) {
+    } catch (e) {
         res.status(500).json({ error: e });
     }
 });
 
 
 router.get('/employeehours/failure', async(req, res) => {
-    try{
+    try {
         res.render('templates/employee_hoursfailed');
         res.status(200);
-    }catch (e) {
+    } catch (e) {
         res.status(500).json({ error: e });
     }
 });
 
-router.post('/employeehours', async(req, res) => {
-    try{
-        var userName=xss(req.body.userName)
-        var start=xss(req.body.start)
-        var end=xss(req.body.end)
-        var hours=xss(req.body.hours)
-        const updatehours=await emp.updateHours(userName,hours,start,end)
+router.post('/employeehrs', async(req, res) => {
+    try {
+        var userName = xss(req.body.UsernameEmp)
+        var start = xss(req.body.startdate)
+        var end = xss(req.body.enddate)
+        var hours = xss(req.body.Workinghours)
+        const updatehours = await emp.updateHours(userName, hours, start, end)
         console.log(updatehours)
-        if(typeof(updatehours)==="undefined"){
+        if (typeof(updatehours) === "undefined") {
             console.log("test")
-            //res.render("templates/employee_hoursupdate", {error: "Update failed please check the information"});
-         //res.redirect('/employee/employeehours/failure')
-            //return
-            //httpsMsgs.send500(req,res,"Update Not successful")
+                //res.render("templates/employee_hoursupdate", {error: "Update failed please check the information"});
+                //res.redirect('/employee/employeehours/failure')
+                //return
+                //httpsMsgs.send500(req,res,"Update Not successful")
             res.sendStatus(403)
             return
         }
-        res.json({success: true});
+        res.json({ success: true });
         //res.redirect('/employeehours/success')
         //res.render("templates/newemployee_main", {error: "Working hours updated successfuly"});
         //res.json({suc: true});
         //res.render('templates/employee_hoursupdate');
-        //res.status(200);
-    }catch (e) {
+        res.status(200);
+    } catch (e) {
         res.status(500).json({ error: e });
     }
 });
+
+
+router.get('/employeehours', async(req, res) => {
+    try {
+        res.render('templates/employee_hoursupdate');
+        res.status(200);
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+// router.post('/emphours', async(req, res) => {
+
+//     try {
+//         if ((!req.body.id) || (!req.body.Workinghours) || (!req.body.name) || (req.body.Workinghours < 0) || (isNaN(req.body.Workinghours) || (typeof(req.body.name) != 'string'))) {
+//             res.status(400).render("templates/error", { errorMsg: "Please enter correct parameters" })
+//         }
+//         const data = await emp.updateHours(req.body.id, req.body.Workinghours)
+//         console.log(data)
+//         if (!data) {
+//             res.status(400).render("templates/error", { errorMsg: "Something wrong with the paramenters" })
+//         } else {
+//             res.render('templates/successhrs', { searchDetail: data });
+//         }
+
+//     } catch (e) {
+//         res.status(500).json({ error: e });
+//     }
+
+
+// });
 
 
 
@@ -141,33 +182,15 @@ router.get('/employeeconman', async(req, res) => {
 
 router.get('/successhours', async(req, res) => {
     try {
-        console.log
         res.render('templates/hours_success');
         res.status(200);
-    } catch (e){
+    } catch (e) {
         res.status(500).json({ error: e });
     }
 });
 
 
-router.post('/emphours', async(req, res) => {
-    try{
-    console.log(req.body)
-    console.log(req.body.id);
-    console.log(req.body.Workinghours);
-    console.log(req.body.names)
-    const data = await emp.updateHours(req.body.id, req.body.Workinghours)
-    console.log(data)
-    if (!data) {
-        res.status(400).render("error", { errorMsg: "Something wrong with the paramenters" })
-    } else {
-        res.render('templates/success', { searchDetail: data });
-    }
-    }catch (e) {
-    res.status(500).json({error: e});
-    }
 
-});
 
 
 module.exports = router;

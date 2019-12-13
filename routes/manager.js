@@ -17,6 +17,7 @@ router.get('/', async(req, res) => {
     }
 });
 
+
 router.get('/:id', async(req, res) => {
     try {
         if (!req.params.id) {
@@ -36,6 +37,27 @@ router.get('/:id', async(req, res) => {
         res.status(500).json({ error: e });
     }
 });
+
+
+router.post('/manager_details', async(req, res) => {
+    try {
+        console.log('starthere')
+        console.log(req.body.payinput)
+        const man = await manager.isPaid(req.body.payinput);
+        console.log("MAN BELOW")
+        console.log(man)
+        if (man.length == 0) {
+            res.render('error', { errorMsg: "No data to display" });
+        } else {
+            res.redirect('back');
+        }
+        res.status(200);
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+
 
 
 
