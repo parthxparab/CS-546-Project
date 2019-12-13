@@ -7,7 +7,7 @@ var path = require('path')
     //app.use(express.static(publicPath))
 const handlebars = require('express-handlebars');
 const port = 3000;
-const session = require('express-session')
+const session = require('express-session');
 const static = express.static(__dirname + "/public");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

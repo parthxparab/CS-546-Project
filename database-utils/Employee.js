@@ -30,7 +30,7 @@ const exportedMethods = {
         //if (empdata === null || empdata == undefined) throw " NO employee found of following id";
 
         return empdata;
-        },
+    },
 
     async addEmployee(firstName, lastName, username, email, total_hours, basic_salary, manager_ID, payDate, job_title) {
         var mailformat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -132,7 +132,7 @@ const exportedMethods = {
         if (typeof username !== 'string') throw "Please provide proper id"
         if (typeof username === 'undefined') throw "Please provide proper type of id"
         const updated = await this.getEmployeeByUser(username);
-        if(updated===null){
+        if (updated === null) {
             return
         }
         const employeeCollection = await employee();

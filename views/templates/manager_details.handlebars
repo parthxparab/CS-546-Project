@@ -4,43 +4,54 @@
 <p>This website is used to display the details of the person based on their name and identifcation number</p>
   <main>
 
+<head>
+<style>
+#overflowTest {
+max-height: 100px; overflow: scroll; 
+padding-top: 1%;
+}
+</style>
+</head>
 <body>
   <h2><a href="/manager/">Want to search again?</a></h2>
 
-<form method="POST"  id="manager_details" name="manager_details" >
+<form   id="manager_details" action="/manager/manager_details"  name="manager_details"  method='POST' >
 <ul>
 
-    <li>ID: {{searchDetail._id}}</li>
-    
+
+    <li>Username: <span id="usernamedetail">{{searchDetail.user_login_id}}</span></li>  
     <li>FirstName: {{searchDetail.firstName}}</li>
-
-    <li>LastName: {{searchDetail.lastName}}</li>
-    
-    <li>Email: {{searchDetail.email}}</li>
-  
+    <li>LastName: {{searchDetail.lastName}}</li>   
+    <li>Email: {{searchDetail.email}}</li> 
     <li>Total Budget: {{searchDetail.budget}}</li>
-
     <li>Total Employees: {{searchDetail.employees.length}}</li>
-
-    <li>Employees:
+    <li >Employees:
     
+    <div id="overflowTest">
         {{#each searchDetail.employees}}  
-          <ul>
+          <ul >
               <li>
-                <a href="/employee/empprof/{{username}}" id="{{username}}">{{username}} {{total_salary}} {{paid}} </li></a>
-                <button type="button" id="{{username}}" class="button" onclick="functionName();">Pay</button>
-
+                <a  href="/employee/empprof/{{username}}" id="{{username}}">{{username}} {{total_salary}} {{paidFlag}} </li></a>
+                  <button type="submit"   id={{username}} class="button">Pay</button>  
+                  <input id="payinput" name="payinput" value="{{username}}" type="text" style="width:50px; font-size: xx-small; visibility:hidden">
               </li>
           </ul>
                
-             {{/each}}
+             {{/each}}    
+          
     </li>
 </ul>
-
+</div>
 </form>
-<p id="paid"></p>
+<input type="button" value="Last 10 Transaction"  id="button" >
+</div> 
+<ul id="demo">
+    
+</ul>
+     <script src="/transaction.js"> </script>  
+
 </main>
-  <script  src="/js/pay.js"></script>
+  
 </body>
 
 </html>
