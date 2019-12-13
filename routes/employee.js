@@ -62,14 +62,7 @@ router.get('/employeedetails', async(req, res) => {
     }
 });
 
-router.get('/employeehours', async(req, res) => {
-    try {
-        res.render('templates/employee_hoursupdate');
-        res.status(200);
-    } catch (e) {
-        res.status(500).json({ error: e });
-    }
-});
+
 
 router.get('/employeehours/success', async(req, res) => {
     try {
@@ -90,12 +83,12 @@ router.get('/employeehours/failure', async(req, res) => {
     }
 });
 
-router.post('/employeehours', async(req, res) => {
+router.post('/employeehrs', async(req, res) => {
     try {
-        var userName = xss(req.body.userName)
-        var start = xss(req.body.start)
-        var end = xss(req.body.end)
-        var hours = xss(req.body.hours)
+        var userName = xss(req.body.UsernameEmp)
+        var start = xss(req.body.startdate)
+        var end = xss(req.body.enddate)
+        var hours = xss(req.body.Workinghours)
         const updatehours = await emp.updateHours(userName, hours, start, end)
         console.log(updatehours)
         if (typeof(updatehours) === "undefined") {
@@ -112,6 +105,16 @@ router.post('/employeehours', async(req, res) => {
         //res.render("templates/newemployee_main", {error: "Working hours updated successfuly"});
         //res.json({suc: true});
         //res.render('templates/employee_hoursupdate');
+        res.status(200);
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+
+router.get('/employeehours', async(req, res) => {
+    try {
+        res.render('templates/employee_hoursupdate');
         res.status(200);
     } catch (e) {
         res.status(500).json({ error: e });
