@@ -16,17 +16,15 @@ const router = express.Router();
     });
 
     router.post('/submit-help', async function(req, res){
-        console.log(req.body.employeeID)
         var employeeName = req.body.employeeID;
         var managerName = req.body.managerID;
         var issue = req.body.issue;
         let employeeData = await employee.getEmployeeByUser(employeeName)
         let managerExists = await manager.managerExists(managerName)
-        console.log(employeeData)
-        console.log(managerExists)
+
         if (!employeeData){
             console.log("Invalid employee!");
-            res.render("templates/employee_profile_two", {message: "Invalid employee name!"})
+            res.render("templates/employee_profile_two", {message: "Invalid employee name!"});
             return;
         }
 
@@ -37,15 +35,15 @@ const router = express.Router();
         }
 
         if (employeeData.manager_ID !== managerName){
-            console.log("Not your manager!")
+            console.log("Not your manager!");
             res.render("templates/employee_profile_two", {message: "Not your manager!"});
-            return
+            return;
         }
 
 
 
 
-        await help.addDataToHelp(employeeName, managerName, issue)
+        await help.addDataToHelp(employeeName, managerName, issue);
         res.render("templates/employee_profile_two", {message: "Help request submitted!"})
     });
 

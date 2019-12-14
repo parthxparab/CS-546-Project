@@ -19,4 +19,17 @@ async function addDataToHelp(employeeID, managerID, issue){
 
 }
 
-module.exports = {addDataToHelp}
+async function getHelpData(user_login_id){
+
+    let helpCollection = await help()
+
+    let result = await helpCollection.find({ "managerID" : { $eq: user_login_id } } ).toArray();
+
+    return result
+
+
+
+
+}
+
+module.exports = {addDataToHelp, getHelpData}
