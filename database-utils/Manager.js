@@ -56,6 +56,17 @@ const exportedMethods = {
 
     },
 
+    async managerExists(user_login_id){
+
+        let mCollection = await manager();
+
+        let results = await mCollection.findOne({user_login_id: user_login_id});
+
+        console.log(results)
+
+        return results !== null
+    },
+
     async getManagerByUserID(user_login_id) {
         if (!user_login_id) throw "You must provide an id to search for";
         if (user_login_id.length == 0) throw "Please provide proper length of the id";
