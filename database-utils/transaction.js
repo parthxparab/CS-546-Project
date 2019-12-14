@@ -10,7 +10,7 @@ const exportedMethods = {
        if (typeof username === 'undefined' || username == null) throw "Please provide proper type of id"
 
         const transactionCollection = await transaction();
-        const transData = await transactionCollection.find({}).toArray();;
+        const transData = await transactionCollection.find({}).toArray();
         if (transData === null || transData == undefined) throw "No Transaction found of following id";
         var count = 0
         for (let i = transData.length-1; i >= 0; i--)
@@ -24,14 +24,48 @@ const exportedMethods = {
 
         if(count == transData.length)
         {
-            return("No transactions reported yet")
+            arr.length = 0
+            arr.push("No transactions reported yet")
+            return(arr)
         }
         else
         {
             return arr;
         }
 
-    }
+    },
+
+    async getTransactionByUsernameMan(username) {
+        var arr = []
+        if (!username) throw "You must provide an id to search for";
+        if (username.length == 0) throw "Please provide proper length of the id";
+        if (typeof username === 'undefined' || username == null) throw "Please provide proper type of id"
+ 
+         const transactionCollection = await transaction();
+         const transData = await transactionCollection.find({}).toArray();
+         if (transData === null || transData == undefined) throw "No Transaction found of following id";
+         var count = 0
+         for (let i = transData.length-1; i >= 0; i--)
+         {
+             if(transData[i]["by"] == username && transData[i]["byPosition"] == "Manager")
+             {
+                 let x = (transData[i]["by"]+" Paid "+ transData[i]["amount"]+" to "+transData[i]["to"]+" at "+transData[i]["timestamp"]).toString();
+                 arr.push(x)}
+             else(count = count + 1)
+         }
+ 
+         if(count == transData.length)
+         {
+             arr.length = 0
+             arr.push("No transactions reported yet")
+             return(arr)
+         }
+         else
+         {
+             return arr;
+         }
+ 
+     }
 };
 
 module.exports = exportedMethods;

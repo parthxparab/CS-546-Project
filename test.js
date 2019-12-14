@@ -135,7 +135,14 @@ async function main() {
 
     //      }
 
+    try {
+        var temp = await emp.getEmployeeByPay("pxp");
+        console.log(temp);
+    } catch (e) {
+        console.log("Error occured: ")
+        console.log(e);
 
+    }
 
 
 

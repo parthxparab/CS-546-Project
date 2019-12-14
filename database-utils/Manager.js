@@ -183,7 +183,7 @@ const exportedMethods = {
     async isPaid(empId) {
 
         //  const employee = require("./employee");
-        console.log(empId)
+        //console.log(empId)
         if (!empId || empId === undefined || empId === null) throw 'Invalid Entry';
         const employeeCollection = await emp();
         const managerCollection = await manager();

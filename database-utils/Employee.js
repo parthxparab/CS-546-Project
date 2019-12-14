@@ -32,6 +32,31 @@ const exportedMethods = {
         return empdata;
     },
 
+    async getEmployeeByPay(manager_ID)
+    {
+        var arr = []
+        if (!manager_ID) throw "You must provide an id to search for";
+        if (manager_ID.length == 0) throw "Please provide proper length of the id";
+        if (typeof manager_ID === 'undefined' || manager_ID == null) throw "Please provide proper type of id"
+
+        const employeeCollection = await employee();
+        const empdata = await employeeCollection.find({}).toArray();
+
+        for (let i = 0; i< empdata.length; i++)
+        {
+            if(empdata[i]["manager_ID"] == manager_ID && empdata[i]["paidFlag"] == "Not Paid" )
+            {
+                let x = "Pending Payment to "+empdata[i]["username"]+" of amount "+empdata[i]["total_salary"]+" before "+empdata[i]["payDate"]
+                arr.push(x)
+            }
+        }
+        if(arr.length ==0)
+        {
+            arr.push("No Pending Tasks")
+        }
+        return arr
+    },
+
     async addEmployee(firstName, lastName, username, email, total_hours, basic_salary, manager_ID, payDate, job_title) {
         var mailformat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if ((!firstName) || (!lastName) || (!username) || (!email) || (!total_hours) || (!basic_salary) || (!manager_ID) || (!payDate) || (!job_title)) throw 'Please provide all the feilds'
