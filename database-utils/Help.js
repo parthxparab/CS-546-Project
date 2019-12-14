@@ -14,7 +14,6 @@ async function addDataToHelp(employeeID, managerID, issue){
 
     let result = await helpCollection.insertOne(helpObj)
 
-    console.log(result)
 
 
 

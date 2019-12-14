@@ -1,6 +1,7 @@
 const signup = require("../login-signup-utils/signup");
 const login = require("../login-signup-utils/login");
 const employee = require("../database-utils/Employee");
+const manager = require("../database-utils/Manager");
 const help = require("../database-utils/Help")
 const xss=require('xss')
 const express = require('express');
@@ -20,7 +21,26 @@ const router = express.Router();
         var managerName = req.body.managerID;
         var issue = req.body.issue;
         let employeeData = await employee.getEmployeeByUser(employeeName)
+        let managerExists = await manager.managerExists(managerName)
+        console.log(employeeData)
+        console.log(managerExists)
+        if (!employeeData){
+            console.log("Invalid employee!");
+            res.render("templates/employee_profile_two", {message: "Invalid employee name!"})
+            return;
+        }
+
+        if (!managerExists){
+            console.log("Wrong manager");
+            res.render("templates/employee_profile_two", {message: "Invalid manager!"})
+            return;
+        }
+
+
+
+
         await help.addDataToHelp(employeeName, managerName, issue)
+        res.render("templates/employee_profile_two", {message: "Help request submitted!"})
     });
 
     router.get('/login', function(req, res) {
