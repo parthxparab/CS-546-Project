@@ -10,12 +10,12 @@ async function main() {
     // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     // var dateTime = date+' '+time;
     // console.log(dateTime)
-    // try {
-    //     var pxp = await manager.addManager("Parth", "Parab", "parthsai@gmail.com", 1000, "pxp", "123");
-    //     console.log(pxp);
-    // } catch (e) {
-    //     console.log("Error occured: ")
-    //     console.log(e);
+    try {
+        var pxp = await manager.addManager("Parth", "Parab", "parthsai@gmail.com", 1000, "partho", "123");
+        console.log(pxp);
+    } catch (e) {
+        console.log("Error occured: ")
+        console.log(e);
 
     // }
 
@@ -75,6 +75,19 @@ async function main() {
 
     // }
 
+<<<<<<< HEAD
+// <<<<<<< HEAD
+    //  try {
+    //     var manas = await emp.updateHours("manasmsk", 5, "12/10/2019", "12/11/2019");
+    //     console.log(manas);
+    //     }
+    //     catch(e)
+    //     {
+    //         console.log("Error occured: ")
+    //         console.log(e);
+
+    //      }
+=======
     // // <<<<<<< HEAD
     // try {
     //     var manas = await emp.updateHours("manasmsk", 5, "12/10/2019", "12/11/2019");
@@ -84,10 +97,31 @@ async function main() {
     //     console.log(e);
 
     // }
+>>>>>>> b370dc486a36d5b43cae130dbfeb85160cd64cfb
 
     // try {
     //     var sagar = await emp.updateHours("sagarst", 5, "12/10/2019", "12/11/2019");
     //     console.log(sagar);
+<<<<<<< HEAD
+    //     }
+    //     catch(e)
+    //     {
+    //         console.log("Error occured: ")
+    //         console.log(e);
+    
+    //     }
+
+    // try {
+    //     var prathamesh = await emp.updateHours("prathu", 5, "12/10/2019", "12/11/2019");
+    //     console.log(manas);
+    //     }
+    //     catch(e)
+    //     {
+    //         console.log("Error occured: ")
+    //         console.log(e);
+    
+    //     }
+=======
     // } catch (e) {
     //     console.log("Error occured: ")
     //     console.log(e);
@@ -102,6 +136,7 @@ async function main() {
     //     console.log(e);
 
     // }
+>>>>>>> b370dc486a36d5b43cae130dbfeb85160cd64cfb
 
     // try {
     //     var pay = await manager.isPaid("5dee9377241a37626f13cb63");
@@ -159,5 +194,5 @@ async function main() {
     await db.serverConfig.close();
 
 }
-
+}
 main();
