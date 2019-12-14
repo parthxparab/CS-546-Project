@@ -36,6 +36,12 @@ const router = express.Router();
             return;
         }
 
+        if (employeeData.manager_ID !== managerName){
+            console.log("Not your manager!")
+            res.render("templates/employee_profile_two", {message: "Not your manager!"});
+            return
+        }
+
 
 
 
