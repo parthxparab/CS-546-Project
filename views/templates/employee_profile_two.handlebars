@@ -6,13 +6,18 @@ padding-top: 1%;
 }
 </style>
 </head>
+<link rel="stylesheet" type="text/css" href="/css/employee.css">
+
 <h1>Employee Info</h1>
 
     <body>
         <main>
 <div>       
 <p>This website is used to display the details of the person based on their name and identifcation number</p>
-  
+
+    {{#if message}}
+        <h3>{{message}}</h3>
+    {{/if}}
 
 <h2><a href="/employee/employeedetails">Want to search again?</a></h2>
 <ul>
@@ -31,13 +36,29 @@ padding-top: 1%;
 </ul>
 {{!-- <button id="button" type="button" class="button" >Last 10 Transactions</button> --}}
 <input type="button" value="Last 10 Transaction"  id="button" >
+<input type="button" value="Help" id="button" onclick="showForm()">
+
+<form id="helpForm" method="post" action="/submit-help">
+    <label for="employeeID">Employee ID:</label>
+    <input type="text" name="employeeID" id="employeeID" value="{{searchDetail.username}}">
+    <br>
+    <label for="managerID">Manager ID:</label>
+    <input type="text"  name="managerID" id="managerID" value="{{searchDetail.manager_ID}}">
+    <br>
+    <label for="issue">Issue:</label>
+    <input type="text" name="issue" id="issue">
+    <br>
+    <input type="submit" name="submit" id="submit" value="Submit">
+
+</form>
 </div> 
 <ul id="demo">
     
 </ul>
 
 </div>
-     <script src="/transaction.js"> </script>  
+     <script src="/transaction.js"> </script>
+    <script src="/employee.js"></script>
  </main>
  
 </body>
