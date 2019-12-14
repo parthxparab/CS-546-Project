@@ -13,7 +13,8 @@ router.get('/transaction', async(req, res) => {
         const post = await emp.getEmployeeByUser(x);
         post["firstName"] = "Lmao"
         console.log(post)
-        res.render('templates/employee_profile_two', { searchDetail: post });
+        console.log(tra)
+        res.render('templates/employee_transactions', { allTransactions: tra });
         res.status(200);
     } catch (e) {
         res.status(500).json({ error: e });

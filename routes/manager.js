@@ -42,7 +42,7 @@ router.get('/:id', async(req, res) => {
 router.post('/manager_details', async(req, res) => {
     try {
         console.log('starthere')
-        console.log(req.body.payinput)
+        console.log(req.body)
         const man = await manager.isPaid(req.body.payinput);
         console.log("MAN BELOW")
         console.log(man)
@@ -56,6 +56,47 @@ router.post('/manager_details', async(req, res) => {
         res.status(500).json({ error: e });
     }
 });
+
+router.post('/update', async(req, res) => {
+    try {
+        const firstName = res.body.FirstNameMan;
+        const man = await manager.getManagerByUserID()
+        console.log(man)
+        if (man.length == 0) {
+            res.render('error', { errorMsg: "No data to display" });
+        } else {
+            res.render('templates/manager_update', { searchDetail: man });
+            res.status(200);
+        }
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+
+router.post('/updated', async(req, res) => {
+    try {
+        const firstName = res.body.FirstNameMan;
+        const lastName = res.body.LastNameEmp;
+        const email = res.body.EmailEmp;
+        const budget = res.body.BudgetEmp;
+
+        const man = await manager.updatedManager(firstName, lastName, email, budget)
+        console.log(man)
+        if (man.length == 0) {
+            res.render('error', { errorMsg: "No data to display" });
+        } else {
+            res.render(, { searchDetail: man });
+            res.status(200);
+        }
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+
+
+
 
 
 

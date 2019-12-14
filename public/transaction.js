@@ -13,7 +13,9 @@ $(document).ready(function() {
             data: va,
             datatype: 'json',
             success: (data) => {
+
                 console.log("success")
+
             }
         })
     });
