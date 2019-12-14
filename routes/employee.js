@@ -3,7 +3,7 @@ const router = express.Router();
 const tran = require('../database-utils/transaction')
 const emp = require('../database-utils/Employee')
 const xss = require("xss")
-
+const alert = require('alert-node')
 
 router.get('/transaction', async(req, res) => {
     try {
@@ -51,19 +51,32 @@ router.get('/empprof/:id', async(req, res) => {
 
 router.get('/empprof_two/:id', async(req, res) => {
     try {
-        //console.log('this')
-   //     console.log(req.params.id)
+        console.log(req.params.id)
         if (!req.params.id) {
             res.status(400).render("error", { errorMsg: "Something wrong with parameters" })
         }
-        // if (isNaN(req.params.id)) {
-        //     res.status(400).render("error", { errorMsg: "Please provide a proper id" })
-        // }
-
         const post = await emp.getEmployeeByUser(req.params.id);
-     //   console.log(post)
+        console.log(post)
+        if(post == null)
+        {
+        alert("Invalid employee name!");
+        res.redirect('back');
+        }
+        else
+        {
         res.render('templates/employee_profile_two', { searchDetail: post });
-        res.status(200);
+        res.status(200);}
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+router.get('/empprof_two', async(req, res) => {
+    try {
+       
+        alert("No employee name!");
+        res.redirect('back');
+        
     } catch (e) {
         res.status(500).json({ error: e });
     }
@@ -164,24 +177,14 @@ router.get('/employeehours', async(req, res) => {
 
 
 
-router.get('/employeereports', async(req, res) => {
-    try {
-        res.render('templates/employee_reports');
-        res.status(200);
-    } catch (e) {
-        res.status(500).json({ error: e });
-    }
-});
-
-
-router.get('/employeeconman', async(req, res) => {
-    try {
-        res.render('templates/employee_con_man');
-        res.status(200);
-    } catch (e) {
-        res.status(500).json({ error: e });
-    }
-});
+// router.get('/employeereports', async(req, res) => {
+//     try {
+//         res.render('templates/employee_reports');
+//         res.status(200);
+//     } catch (e) {
+//         res.status(500).json({ error: e });
+//     }
+// });
 
 router.get('/successhours', async(req, res) => {
     try {
