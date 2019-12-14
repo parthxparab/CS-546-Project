@@ -20,6 +20,15 @@ const exportedMethods = {
 
     },
 
+    async getEmployeesByManager(managerName){
+
+        const employeeCollection = await employee();
+
+        return await employeeCollection.find({ "manager_ID" : { $eq: managerName } } ).toArray();
+
+
+    },
+
     async getEmployeeByUser(username) {
         if (!username) throw "You must provide an id to search for";
         if (username.length == 0) throw "Please provide proper length of the id";

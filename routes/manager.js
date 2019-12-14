@@ -75,12 +75,15 @@ router.get('/pending/:id', async(req, res) => {
 router.get('/users/:id', async(req, res) => {
 
 
-
     if (req.session.user !== req.params.id){
         res.status(403).send("Forbidden")
         return
     }
-    var ticketArray = await help.getHelpData(req.params.id)
+    const ticketArray = await help.getHelpData(req.params.id)
+    const employeeList = await emp.getEmployeesByManager(req.params.id)
+
+    console.log(employeeList)
+
 
 
     try {
@@ -97,7 +100,7 @@ router.get('/users/:id', async(req, res) => {
 
 
 
-            res.render('templates/manager_details', { searchDetail: man, tickets: ticketArray });
+            res.render('templates/manager_details', { searchDetail: man, tickets: ticketArray, employees: employeeList });
         }
         res.status(200);
     } catch (e) {
