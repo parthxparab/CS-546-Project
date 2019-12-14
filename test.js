@@ -148,6 +148,16 @@ async function main() {
 
     // }
 
+
+    try {
+        var dharika = await manager.updatedManager("pxp", "jfshgj", "gsdjhv");
+        console.log(dharika);
+    } catch (e) {
+        console.log("Error occured: ")
+        console.log(e);
+
+    }
+
     const db = await connection();
     await db.serverConfig.close();
 
