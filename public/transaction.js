@@ -13,17 +13,18 @@ $(document).ready(function() {
             data: va,
             datatype: 'json',
             success: (data) => {
+
                 console.log("success")
-                
+
                 const target = document.getElementById('demo')
                 target.innerHTML = ''
-                
-                data.forEach( (k,i,a) => {
+
+                data.forEach((k, i, a) => {
                     var temp = document.createElement('li')
                     temp.textContent = k
-                    
+
                     target.appendChild(temp)
-                } )
+                })
             }
         })
     });

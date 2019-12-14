@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const tran = require('../database-utils/transaction')
 const emp = require('../database-utils/Employee')
+const man = require('../database-utils/Manager')
 const xss = require("xss")
 const alert = require('alert-node')
 
@@ -10,7 +11,7 @@ router.get('/transaction', async(req, res) => {
         x = Object.keys(req.query).toString()
         const tra = await tran.getTransactionByUsername(x)
         console.log("transaction: ", tra)
-        
+
         //res.render('templates/employee_profile_two', { searchDetail: post });
         res.status(200).json(tra);
     } catch (e) {
@@ -57,15 +58,13 @@ router.get('/empprof_two/:id', async(req, res) => {
         }
         const post = await emp.getEmployeeByUser(req.params.id);
         console.log(post)
-        if(post == null)
-        {
-        alert("Invalid employee name!");
-        res.redirect('back');
+        if (post == null) {
+            alert("Invalid employee name!");
+            res.redirect('back');
+        } else {
+            res.render('templates/employee_profile_two', { searchDetail: post });
+            res.status(200);
         }
-        else
-        {
-        res.render('templates/employee_profile_two', { searchDetail: post });
-        res.status(200);}
     } catch (e) {
         res.status(500).json({ error: e });
     }
@@ -73,10 +72,10 @@ router.get('/empprof_two/:id', async(req, res) => {
 
 router.get('/empprof_two', async(req, res) => {
     try {
-       
+
         alert("No employee name!");
         res.redirect('back');
-        
+
     } catch (e) {
         res.status(500).json({ error: e });
     }
@@ -115,9 +114,9 @@ router.post('/employeehrs', async(req, res) => {
     try {
         console.log(req.body)
         console.log("ASD")
- 
+
         var userName = xss(req.body.userName)
-        
+
         var start = xss(req.body.start)
         console.log(start)
         var end = xss(req.body.end)
@@ -195,7 +194,63 @@ router.get('/successhours', async(req, res) => {
     }
 });
 
+router.post('/update', async(req, res) => {
+    try {
+        console.log(req.body.updateMag)
+        const firstName = req.body.updateMag;
+        console.log(firstName)
+        const man = await emp.getEmployeeByUser(firstName)
+        console.log(man)
+        if (man.length == 0) {
+            res.render('error', { errorMsg: "No data to display" });
+        } else {
+            res.render('templates/employee_updated', { searchDetail: man, idreq: firstName });
+            res.status(200);
+        }
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
 
+router.post('/updated', async(req, res) => {
+    try {
+        const tra = req.body.updateMan;
+        const firstName = req.body.FirstNameEmp;
+        const lastName = req.body.LastNameEmp;
+        const email = req.body.EmailEmp;
+        const hours = req.body.HoursEmp;
+        const tsalary = req.body.TotalSalaryEmp;
+        const bsalary = req.body.BasicSalaryEmp;
+        const job = req.body.JobEmp;
+        const man = await emp.updateEmployee(tra, firstName, lastName, email, hours, bsalary, tsalary, job)
+        console.log(man)
+        if (man.length == 0) {
+            res.render('error', { errorMsg: "No data to display" });
+        } else {
+            //res.render()
+            //res.status(200);
+        }
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+
+router.post('/search', async(req, res) => {
+    try {
+        console.log(req.body.SearchEmp)
+        const post = await emp.getEmployeeByUser(req.body.SearchEmp);
+        console.log("Post below")
+        console.log(post)
+        post["total_salary"] = post["total_salary"].toString();
+        const dat = await man.getManagerByUserID(post.manager_ID)
+        console.log(dat)
+        res.render('templates/manager_details', { searchDetail: dat, userdata: post });
+        res.status(200);
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
 
 
 

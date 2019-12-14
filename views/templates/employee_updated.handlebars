@@ -1,0 +1,52 @@
+<body>
+
+<div id="main">
+      <h1 class="headerTag">Employee Details</h1>
+      <p>This page is for updating the content of the employee </p>
+                   
+   <form id="updatemanagerdetailsform" action="/employee/updated" method="POST">
+    <div>
+        <label for="FirstName">Employee FirstName:</label>
+        <input type= "text" id="UsernameEmp" name="FirstNameEmp" placeholder="{{searchDetail.firstName}}" class="text" />
+    </div>
+    <div>
+        <label for="LastName">Employee LastName:</label>
+        <input type= "text" id="UsernameEmp" name="LastNameEmp" placeholder="{{searchDetail.lastName}}" class="text" />
+    </div>
+    <div>
+        <label for="Email">Employee Email </label>
+        <input type= "text" id="Startdate" name="EmailEmp" placeholder="{{searchDetail.email}}" class="text" />
+    </div>
+    <div>
+        <label for="Budget">Employee Hours </label>
+        <input type= "Number" id="Enddate" name="HoursEmp" placeholder="{{searchDetail.total_hours}}" class="text" />
+    </div>
+      <div>
+        <label for="Budget">Employee Total Salary</label>
+        <input type= "Number" id="Enddate" name="TotalSalaryEmp" placeholder="{{searchDetail.total_salary}}" class="text" />
+    </div>
+      <div>
+        <label for="Budget">Employee Basic Salary </label>
+        <input type= "Number" id="Enddate" name="BasicSalaryEmp" placeholder="{{searchDetail.basic_salary}}" class="text" />
+    </div>
+      <div>
+        <label for="Budget">Employee Job Title </label>
+        <input type= "text" id="Enddate" name="JobEmp" placeholder="{{searchDetail.job_title}}" class="text" />
+    </div>
+    <input id="{{idreq}}" name="updateMan" value="{{idreq}}" type="text" style="width:50px; font-size: xx-small; visibility:hidden ">
+   
+        <button id="hours_button" type="submit" class="submit" onclick="myfunction()">Submit</button>
+        <p id='demo'></p>
+         
+    </form>
+  
+         
+               
+                
+                
+    <script>
+        function myfunction(){
+          document.getElementById('demo').innerHTML='Successufully updated';
+        }
+    </script>
+</body>
