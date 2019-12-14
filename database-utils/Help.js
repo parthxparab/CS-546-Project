@@ -1,5 +1,6 @@
 const mongoCollections = require('./mongoCollections');
 const help = mongoCollections.help;
+const ObjectId = require('mongodb').ObjectID;
 
 async function addDataToHelp(employeeID, managerID, issue){
     let resolved = false
@@ -30,4 +31,39 @@ async function getHelpData(user_login_id){
 
 }
 
-module.exports = {addDataToHelp, getHelpData}
+async function getManagerByTicketID(id){
+    if (typeof id == "string"){
+        id = ObjectId.createFromHexString(id)
+
+    }
+
+
+    const helpCollection = await help();
+
+    const managerResult = await helpCollection.findOne({ _id: id })
+
+    return managerResult
+
+
+}
+
+async function markResolved(id){
+    if (typeof id == "string"){
+        id = ObjectId.createFromHexString(id)
+
+    }
+    let data = await this.getManagerByTicketID(id)
+    let helpObj = {
+        employeeID: data.employeeID,
+        managerID:  data.managerID,
+        issue: data.issue,
+        resolved: true
+    }
+    const helpCollection = await help();
+    const result = await helpCollection.replaceOne({ _id: id }, {$set: helpObj});
+    const result2 = await helpCollection.findOne({_id: id});
+
+
+}
+
+module.exports = {addDataToHelp, getHelpData, getManagerByTicketID, markResolved}

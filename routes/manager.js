@@ -33,6 +33,24 @@ router.get('/', async(req, res) => {
     }
 });
 
+router.get('/resolve/:id', async(req, res)=> {
+
+    let id = req.params.id
+    let managerName = await help.getManagerByTicketID(id)
+
+    if (req.session.user !== managerName.managerID){
+        res.status(403).send("Forbidden")
+        return
+    }
+
+   await help.markResolved(id)
+
+    res.redirect("/manager/" + managerName.managerID)
+
+
+
+});
+
 router.get('/pending/:id', async(req, res) => {
 
 
