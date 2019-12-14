@@ -32,8 +32,7 @@ const exportedMethods = {
         return empdata;
     },
 
-    async getEmployeeByPay(manager_ID)
-    {
+    async getEmployeeByPay(manager_ID) {
         var arr = []
         if (!manager_ID) throw "You must provide an id to search for";
         if (manager_ID.length == 0) throw "Please provide proper length of the id";
@@ -42,16 +41,13 @@ const exportedMethods = {
         const employeeCollection = await employee();
         const empdata = await employeeCollection.find({}).toArray();
 
-        for (let i = 0; i< empdata.length; i++)
-        {
-            if(empdata[i]["manager_ID"] == manager_ID && empdata[i]["paidFlag"] == "Not Paid" )
-            {
-                let x = "Pending Payment to "+empdata[i]["username"]+" of amount "+empdata[i]["total_salary"]+" before "+empdata[i]["payDate"]
+        for (let i = 0; i < empdata.length; i++) {
+            if (empdata[i]["manager_ID"] == manager_ID && empdata[i]["paidFlag"] == "Not Paid") {
+                let x = "Pending Payment to " + empdata[i]["username"] + " of amount " + empdata[i]["total_salary"] + " before " + empdata[i]["payDate"]
                 arr.push(x)
             }
         }
-        if(arr.length ==0)
-        {
+        if (arr.length == 0) {
             arr.push("No Pending Tasks")
         }
         return arr
@@ -118,33 +114,30 @@ const exportedMethods = {
 
     },
 
-    async renameEmployee(id, firstName, lastName) {
-        if (!id) throw "You must provide an id to search for";
-        // if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
-        if (id.length === 0) throw "Please provide proper legth of the id";
-        if (typeof id !== 'string') throw "Please provide proper id"
-        if (typeof id === 'undefined') throw "Please provide proper type of id"
-        const renamecontent = await this.getEmployeeById(id.toString());
+    async updateEmployee(user_login_id, firstName, lastName, email, total_hours, basic_salary, total_salary, job_title) {
+        var mailformat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const renamecontent = await this.getEmployeeByUser(user_login_id);
+        //console.log(renamecontent)
         const employeeCollection = await employee();
         const updatedData = {
             firstName: firstName,
             lastName: lastName,
-            username: renamecontent.username,
-            email: renamecontent.email,
-            total_hours: renamecontent.total_hours,
-            basic_salary: renamecontent.basic_salary,
+            username: user_login_id,
+            email: email,
+            total_hours: total_hours,
+            basic_salary: basic_salary,
+            total_salary: total_salary,
             manager_ID: renamecontent.manager_ID,
             payDate: renamecontent.payDate,
-            job_title: renamecontent.job_title
+            job_title: job_title
 
         };
-        const updatedInfo = await employeeCollection.replaceOne({ _id: ObjectId(id) }, updatedData);
+        const updatedInfo = await employeeCollection.replaceOne({ username: (user_login_id) }, updatedData);
         if (updatedInfo.modifiedCount === 0) {
-            throw "could not update dog successfully";
+            throw "could not update Employee successfully";
         }
-
         const upID = updatedInfo.updatedID;
-        const updatedDat = await this.getEmployeeById(id.toString());
+        const updatedDat = await this.getEmployeeByUser(user_login_id);
         return updatedDat;
 
     },

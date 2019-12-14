@@ -1,34 +1,40 @@
 <body>
 
 <div id="main">
-      <h1 class="headerTag">Employee hours</h1>
+      <h1 class="headerTag">Manager Details</h1>
       <p>This page is for updating the content of the manager </p>
-        
+                   
    <form id="updatemanagerdetailsform" action="/manager/updated" method="POST">
     <div>
         <label for="FirstName">Manager FirstName:</label>
-        <input type= "text" id="UsernameEmp" name="FirstNameMan" placeholder="{{searchDetail.firstName}}" class="text" required="required"/>
+        <input type= "text" id="UsernameEmp" name="FirstNameMan" placeholder="{{searchDetail.firstName}}" class="text" />
     </div>
     <div>
         <label for="LastName">Manager LastName:</label>
-        <input type= "text" id="UsernameEmp" name="LastNameEmp" placeholder="{{searchDetail.lastName}}" class="text" required="required"/>
+        <input type= "text" id="UsernameEmp" name="LastNameEmp" placeholder="{{searchDetail.lastName}}" class="text" />
     </div>
     <div>
         <label for="Email">Manager Email </label>
-        <input type= "text" id="Startdate" name="EmailEmp" placeholder="{{searchDetail.email}}" class="text" required="required"/>
+        <input type= "text" id="Startdate" name="EmailEmp" placeholder="{{searchDetail.email}}" class="text" />
     </div>
     <div>
         <label for="Budget">Manager Budget </label>
-        <input type= "Number" id="Enddate" name="BudgetEmp" placeholder="{{searchDetail.budget}}" class="text" required="required"/>
+        <input type= "Number" id="Enddate" name="BudgetEmp" placeholder="{{searchDetail.budget}}" class="text" />
     </div>
+    <input id="{{idreq}}" name="updateMan" value="{{idreq}}" type="text" style="width:50px; font-size: xx-small;visibility:hidden ">
    
         <button id="hours_button" type="submit" class="submit" onclick="myfunction()">Submit</button>
         <p id='demo'></p>
+         
     </form>
   
+         
+               
+                
+                
     <script>
-        fucntion myfunction(){
-          document.getElementById('demo').innerHTML={'Successufully updated'}
+        function myfunction(){
+          document.getElementById('demo').innerHTML='Successufully updated';
         }
     </script>
 </body>

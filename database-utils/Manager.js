@@ -131,6 +131,7 @@ const exportedMethods = {
     },
 
     async updatedManager(user_login_id, firstName, lastName, email, budget) {
+
         var mailformat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         //if ((!user_login_id)) throw "You must provide an id to search for";
         // if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
@@ -141,7 +142,7 @@ const exportedMethods = {
         console.log(renamecontent)
         if ((!firstName) && (!lastName) && (!email) && (!budget)) throw "You must provide atleast one value to update"
 
-        if ((typeof(firstName) != 'string') || (typeof(lastName) != 'string') || (mailformat.test(email) == false) || (isNaN(budget)) || (budget < 1)) throw 'Please enter correct values'
+        //   if ((typeof(firstName) != 'string') || (typeof(lastName) != 'string') || (mailformat.test(email) == false) || (isNaN(budget)) || (budget < 1)) throw 'Please enter correct values'
 
         const postCollection = await manager();
         const updatedData = {
@@ -155,11 +156,12 @@ const exportedMethods = {
         };
         const updatedInfo = await postCollection.replaceOne({ user_login_id: (user_login_id) }, updatedData);
         if (updatedInfo.modifiedCount === 0) {
-            throw "could not update dog successfully";
+            throw "could not update Manager successfully";
         }
 
         const upID = updatedInfo.updatedID;
         const updatedDat = await this.getManagerByUserID(user_login_id);
+        console.log(updatedDat)
         return updatedDat;
     },
 

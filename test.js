@@ -135,14 +135,14 @@ async function main() {
 
     //      }
 
-    try {
-        var temp = await emp.getEmployeeByPay("pxp");
-        console.log(temp);
-    } catch (e) {
-        console.log("Error occured: ")
-        console.log(e);
+    // try {
+    //     var temp = await emp.getEmployeeByPay("pxp");
+    //     console.log(temp);
+    // } catch (e) {
+    //     console.log("Error occured: ")
+    //     console.log(e);
 
-    }
+    // }
 
 
 
@@ -156,8 +156,10 @@ async function main() {
     // }
 
 
+
+
     try {
-        var dharika = await manager.updatedManager("pxp", "jfshgj", "gsdjhv");
+        var dharika = await emp.updateEmployee('prathu', 'Prath', 'Shelke', 'psh@gmail.com', 100, 10, 1000, 'ngt', '12/12/2019', 'Software developer');
         console.log(dharika);
     } catch (e) {
         console.log("Error occured: ")

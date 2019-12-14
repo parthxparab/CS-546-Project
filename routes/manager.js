@@ -3,6 +3,7 @@ const manager = require('../database-utils/Manager')
 const router = express.Router();
 const tran = require('../database-utils/transaction')
 const emp = require('../database-utils/Employee')
+const tra = null;
 
 router.get('/transaction', async(req, res) => {
     try {
@@ -91,15 +92,16 @@ router.post('/manager_details', async(req, res) => {
 
 router.post('/update', async(req, res) => {
     try {
-        console.log('f')
-        const firstName = res.body.username;
+        console.log(req.body.updateMag)
+            // tra = req.body.updateMag;
+        const firstName = req.body.updateMag;
         console.log(firstName)
-        const man = await manager.getManagerByUserID("pxp")
+        const man = await manager.getManagerByUserID(firstName)
         console.log(man)
         if (man.length == 0) {
             res.render('error', { errorMsg: "No data to display" });
         } else {
-            res.render('templates/manager_update', { searchDetail: man });
+            res.render('templates/manager_update', { searchDetail: man, idreq: firstName });
             res.status(200);
         }
     } catch (e) {
@@ -110,18 +112,19 @@ router.post('/update', async(req, res) => {
 
 router.post('/updated', async(req, res) => {
     try {
-        const firstName = res.body.FirstNameMan;
-        const lastName = res.body.LastNameEmp;
-        const email = res.body.EmailEmp;
-        const budget = res.body.BudgetEmp;
 
-        const man = await manager.updatedManager(firstName, lastName, email, budget)
+        const tra = req.body.updateMan;
+        const firstName = req.body.FirstNameMan;
+        const lastName = req.body.LastNameEmp;
+        const email = req.body.EmailEmp;
+        const budget = req.body.BudgetEmp;
+        const man = await manager.updatedManager(tra, firstName, lastName, email, budget)
         console.log(man)
         if (man.length == 0) {
             res.render('error', { errorMsg: "No data to display" });
         } else {
             //res.render()
-            res.status(200);
+            //res.status(200);
         }
     } catch (e) {
         res.status(500).json({ error: e });
