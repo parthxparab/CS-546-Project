@@ -3,62 +3,58 @@
 <h1>Manager Details</h1>
 <p>This website is used to display the details of the person based on their name and identifcation number</p>
   <main>
-<script>
 
-  document.getElementById("some").style.visibility = "hidden";
-}
-</script>
 <head>
 <style>
 #overflowTest {
-  padding-left: 40px;
-  padding-top: 20px;
-  width: 80%;
-  height: 50px;
-  overflow: scroll;
-  border: 1px solid #ccc;
+max-height: 100px; overflow: scroll; 
+padding-top: 1%;
 }
 </style>
 </head>
 <body>
   <h2><a href="/manager/">Want to search again?</a></h2>
 
-<form   id="manager_details" action="/manager/manager_details"  name="manager_details"  method='POST' >
 <ul>
 
 
-    <li>ID: {{searchDetail._id}}</li>  
+    <li>Username: <span id="usernamedetail">{{searchDetail.user_login_id}}</span></li>  
     <li>FirstName: {{searchDetail.firstName}}</li>
     <li>LastName: {{searchDetail.lastName}}</li>   
     <li>Email: {{searchDetail.email}}</li> 
     <li>Total Budget: {{searchDetail.budget}}</li>
     <li>Total Employees: {{searchDetail.employees.length}}</li>
     <li >Employees:
-    
+
+    <div id="overflowTest">
         {{#each searchDetail.employees}}  
-          <ul id="overflowTest">
+          <ul >
               <li>
+                <form   id="manager_details" action="/manager/manager_details"  name="manager_details"  method='POST' >
+
                 <a  href="/employee/empprof/{{username}}" id="{{username}}">{{username}} {{total_salary}} {{paidFlag}} </li></a>
                   <button type="submit"   id={{username}} class="button">Pay</button>  
-                  <input id="payinput" name="payinput" value="{{username}}" type="text" style="width:50px; font-size: xx-small; visibility:hidden">
+                  <input id="{{username}}" name="payinput" value="{{username}}" type="text" style="width:50px; font-size: xx-small; visibility:hidden">
+                  </form>
+
               </li>
           </ul>
                
              {{/each}}    
-
-
-
-
-         
           
     </li>
 </ul>
+</div>
+<input type="button" value="Last 10 Transaction"  id="button" >
+</div> 
+<ul id="demo">
 
+</ul>
+    <input type="button" value="Pending Tasks"  id="pending" onclick="location.href='/manager/pending/{{searchDetail.user_login_id}}'">
 
+    <p id="{{username}}">Update Details</p>
 
-
-
-</form>
+     <script src="/transaction_man.js"> </script>  
 
 </main>
   

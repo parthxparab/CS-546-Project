@@ -7,14 +7,12 @@ const xss = require("xss")
 
 router.get('/transaction', async(req, res) => {
     try {
-        console.log('hellovsdjhvfsdhjvs')
         x = Object.keys(req.query).toString()
         const tra = await tran.getTransactionByUsername(x)
-        const post = await emp.getEmployeeByUser(x);
-        post["firstName"] = "Lmao"
-        console.log(post)
-        res.render('templates/employee_profile_two', { searchDetail: post });
-        res.status(200);
+        console.log("transaction: ", tra)
+        
+        //res.render('templates/employee_profile_two', { searchDetail: post });
+        res.status(200).json(tra);
     } catch (e) {
         res.status(500).json({ error: e });
     }
@@ -54,7 +52,7 @@ router.get('/empprof/:id', async(req, res) => {
 router.get('/empprof_two/:id', async(req, res) => {
     try {
         //console.log('this')
-        console.log(req.params.id)
+   //     console.log(req.params.id)
         if (!req.params.id) {
             res.status(400).render("error", { errorMsg: "Something wrong with parameters" })
         }
@@ -63,7 +61,7 @@ router.get('/empprof_two/:id', async(req, res) => {
         // }
 
         const post = await emp.getEmployeeByUser(req.params.id);
-        console.log(post)
+     //   console.log(post)
         res.render('templates/employee_profile_two', { searchDetail: post });
         res.status(200);
     } catch (e) {
