@@ -17,6 +17,9 @@
 
             // Set a callback to run when the Google Visualization API is loaded.
             google.charts.setOnLoadCallback(drawChart);
+            google.charts.setOnLoadCallback(drawBarChart);
+
+
 
             // Callback that creates and populates a data table,
             // instantiates the pie chart, passes in the data and
@@ -31,6 +34,10 @@
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
                 chart.draw(data, null);
+            }
+            function drawBarChart(){
+
+              
             }
 </script>
             <link rel="stylesheet" type="text/css" href="/css/manager.css">
