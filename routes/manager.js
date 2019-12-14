@@ -4,13 +4,14 @@ const help = require('../database-utils/Help')
 const router = express.Router();
 const tran = require('../database-utils/transaction')
 const emp = require('../database-utils/Employee')
+const tra = null;
 
 router.get('/transaction', async(req, res) => {
     try {
         x = Object.keys(req.query).toString()
         const tra = await tran.getTransactionByUsernameMan(x)
         console.log("transaction: ", tra)
-        
+
         //res.render('templates/employee_profile_two', { searchDetail: post });
         res.status(200).json(tra);
     } catch (e) {
@@ -56,7 +57,7 @@ router.get('/pending/:id', async(req, res) => {
 
 
     try {
-       // console.log(req.params.id)
+        // console.log(req.params.id)
         if (!req.params.id) {
             res.status(400).render("error", { errorMsg: "Something wrong with parameters" })
         }
@@ -112,7 +113,7 @@ router.get('/users/:id', async(req, res) => {
 router.post('/manager_details', async(req, res) => {
     try {
         console.log('starthere')
-        console.log(req.body.payinput)
+        console.log(req.body)
         const man = await manager.isPaid(req.body.payinput);
         console.log("MAN BELOW")
         console.log(man)
@@ -126,6 +127,51 @@ router.post('/manager_details', async(req, res) => {
         res.status(500).json({ error: e });
     }
 });
+
+router.post('/update', async(req, res) => {
+    try {
+        console.log(req.body.updateMag)
+            // tra = req.body.updateMag;
+        const firstName = req.body.updateMag;
+        console.log(firstName)
+        const man = await manager.getManagerByUserID(firstName)
+        console.log(man)
+        if (man.length == 0) {
+            res.render('error', { errorMsg: "No data to display" });
+        } else {
+            res.render('templates/manager_update', { searchDetail: man, idreq: firstName });
+            res.status(200);
+        }
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+
+router.post('/updated', async(req, res) => {
+    try {
+
+        const tra = req.body.updateMan;
+        const firstName = req.body.FirstNameMan;
+        const lastName = req.body.LastNameEmp;
+        const email = req.body.EmailEmp;
+        const budget = req.body.BudgetEmp;
+        const man = await manager.updatedManager(tra, firstName, lastName, email, budget)
+        console.log(man)
+        if (man.length == 0) {
+            res.render('error', { errorMsg: "No data to display" });
+        } else {
+            //res.render()
+            //res.status(200);
+        }
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+
+
+
 
 
 

@@ -142,32 +142,41 @@ const exportedMethods = {
         return ("added to manager");
     },
 
-    async renameManager(id, firstName, lastName) {
-        if (!id) throw "You must provide an id to search for";
+    async updatedManager(user_login_id, firstName, lastName, email, budget) {
+
+        var mailformat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        //if ((!user_login_id)) throw "You must provide an id to search for";
         // if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
-        if (id.length === 0) throw "Please provide proper legth of the id";
-        if (typeof id !== 'string') throw "Please provide proper id"
-        if (typeof id === 'undefined') throw "Please provide proper type of id"
-        const renamecontent = await this.getManagerById(id.toString());
+        // if (user_login_id.length === 0) throw "Please provide proper legth of the id";
+        // if (typeof user_login_id !== 'string') throw "Please provide proper id"
+        // if (typeof user_login_id === 'undefined') throw "Please provide proper type of id"
+        const renamecontent = await this.getManagerByUserID(user_login_id);
+        console.log(renamecontent)
+        if ((!firstName) && (!lastName) && (!email) && (!budget)) throw "You must provide atleast one value to update"
+
+        //   if ((typeof(firstName) != 'string') || (typeof(lastName) != 'string') || (mailformat.test(email) == false) || (isNaN(budget)) || (budget < 1)) throw 'Please enter correct values'
+
         const postCollection = await manager();
         const updatedData = {
             firstName: firstName,
             lastName: lastName,
-            email: renamecontent.email,
-            budget: renamecontent.budget,
+            email: email,
+            budget: budget,
             user_login_id: renamecontent.user_login_id,
             hashed_password: renamecontent.hashed_password,
             employees: renamecontent.employees
         };
-        const updatedInfo = await postCollection.replaceOne({ _id: ObjectId(id) }, updatedData);
+        const updatedInfo = await postCollection.replaceOne({ user_login_id: (user_login_id) }, updatedData);
         if (updatedInfo.modifiedCount === 0) {
-            throw "could not update dog successfully";
+            throw "could not update Manager successfully";
         }
 
         const upID = updatedInfo.updatedID;
-        const updatedDat = await this.getManagerById(id.toString());
+        const updatedDat = await this.getManagerByUserID(user_login_id);
+        console.log(updatedDat)
         return updatedDat;
     },
+
 
     async removeManager(id) {
         if (!id) throw "You must provide an id to search for";
@@ -283,4 +292,4 @@ const exportedMethods = {
 
 };
 
-module.exports = exportedMethods;
+module.exports = exportedMethods

@@ -52,13 +52,20 @@
 
 </form>
 </div> 
-<ul id="demo">
-    
+<ul id="demo">   
 </ul>
-</div>  
-</main>
-<script src="/transaction.js"></script>
-<script src="/employee.js"></script>
- 
+</div>
+
+ <div>
+                <form   id="employee_update" action="/employee/update"  name="employee_update"  method='POST' >
+                  <button type="submit"   id="{{searchDetail.username}}" class="button">Update Employee</button>  
+                  <input id="{{searchDetail.username}}" name="updateMag" value="{{searchDetail.username}}" type="text" style="width:50px; font-size: xx-small; visibility:hidden">
+                  </form>
+</div>
+
+     <script src="/transaction.js"> </script>  
+     <script src="/employee.js"></script>
+ </main>
+
 </body>
        
