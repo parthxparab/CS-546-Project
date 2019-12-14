@@ -10,12 +10,12 @@ async function main() {
     // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     // var dateTime = date+' '+time;
     // console.log(dateTime)
-    // try {
-    //     var pxp = await manager.addManager("Parth", "Parab", "parthsai@gmail.com", 1000, "pxp", "123");
-    //     console.log(pxp);
-    // } catch (e) {
-    //     console.log("Error occured: ")
-    //     console.log(e);
+    try {
+        var pxp = await manager.addManager("Parth", "Parab", "parthsai@gmail.com", 1000, "lemon123", "123");
+        console.log(pxp);
+    } catch (e) {
+        console.log("Error occured: ")
+        console.log(e);
 
     // }
 
@@ -75,6 +75,7 @@ async function main() {
 
     // }
 
+<<<<<<< HEAD
     // // <<<<<<< HEAD
     // try {
     //     var manas = await emp.updateHours("manasmsk", 5, "12/10/2019", "12/11/2019");
@@ -154,6 +155,122 @@ async function main() {
     //     console.log(e);
 
     // }
+=======
+// <<<<<<< HEAD
+// // <<<<<<< HEAD
+//     //  try {
+//     //     var manas = await emp.updateHours("manasmsk", 5, "12/10/2019", "12/11/2019");
+//     //     console.log(manas);
+//     //     }
+//     //     catch(e)
+//     //     {
+//     //         console.log("Error occured: ")
+//     //         console.log(e);
+
+//     //      }
+// =======
+//     // // <<<<<<< HEAD
+//     // try {
+//     //     var manas = await emp.updateHours("manasmsk", 5, "12/10/2019", "12/11/2019");
+//     //     console.log(manas);
+//     // } catch (e) {
+//     //     console.log("Error occured: ")
+//     //     console.log(e);
+
+//     // }
+// >>>>>>> b370dc486a36d5b43cae130dbfeb85160cd64cfb
+
+//     // try {
+//     //     var sagar = await emp.updateHours("sagarst", 5, "12/10/2019", "12/11/2019");
+//     //     console.log(sagar);
+// <<<<<<< HEAD
+//     //     }
+//     //     catch(e)
+//     //     {
+//     //         console.log("Error occured: ")
+//     //         console.log(e);
+    
+//     //     }
+
+//     // try {
+//     //     var prathamesh = await emp.updateHours("prathu", 5, "12/10/2019", "12/11/2019");
+//     //     console.log(manas);
+//     //     }
+//     //     catch(e)
+//     //     {
+//     //         console.log("Error occured: ")
+//     //         console.log(e);
+    
+//     //     }
+// =======
+//     // } catch (e) {
+//     //     console.log("Error occured: ")
+//     //     console.log(e);
+
+//     // }
+
+//     // try {
+//     //     var prathamesh = await emp.updateHours("prathu", 5, "12/10/2019", "12/11/2019");
+//     //     console.log(manas);
+//     // } catch (e) {
+//     //     console.log("Error occured: ")
+//     //     console.log(e);
+
+//     // }
+// >>>>>>> b370dc486a36d5b43cae130dbfeb85160cd64cfb
+
+//     // try {
+//     //     var pay = await manager.isPaid("5dee9377241a37626f13cb63");
+//     //     console.log(pay);
+//     // } catch (e) {
+//     //     console.log("Error occured: ")
+//     //     console.log(e);
+
+//     // }
+//     // =======
+//     //      try {
+//     //         var dharika = await emp.updateHours("5de2e5a7f7fd930507fc7645", 1);
+//     //         console.log(dharika);
+//     //         }
+//     //         catch(e)
+//     //         {
+//     //             console.log("Error occured: ")
+//     //             console.log(e);
+
+//     //          }
+//     // >>>>>>> 7d402e06be613d85ebba5209879511f9d00e7b8f
+
+//     //  try {
+//     //     var pay = await manager.isPaid("5de2e5a7f7fd930507fc7645");
+//     //     console.log(pay);
+//     //     }
+//     //     catch(e)
+//     //     {
+//     //         console.log("Error occured: ")
+//     //         console.log(e);
+
+//     //      }
+
+//     try {
+//         var temp = await emp.getEmployeeByPay("pxp");
+//         console.log(temp);
+//     } catch (e) {
+//         console.log("Error occured: ")
+//         console.log(e);
+
+//     }
+
+
+
+//     // try {
+//     //     var dharika = await manager.getManagerById("5de210f47cdd6e1043578764");
+//     //     console.log(dharika);
+//     // } catch (e) {
+//     //     console.log("Error occured: ")
+//     //     console.log(e);
+
+//     // }
+>>>>>>> 265e68f76e2a549582db0b29e64c9c719735ac52
 
 
 
@@ -171,5 +288,5 @@ async function main() {
     await db.serverConfig.close();
 
 }
-
+}
 main();

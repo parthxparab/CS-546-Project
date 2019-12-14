@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +10,10 @@
     <header class="head">
                         <h1>New Employee</h1>
 <body>
+
+{{#if error}}
+<p class="not-found">{{error}}</p>
+{{/if}}    
 <form id="newempform" action="/newemployee" method="post" >
     <div>
         <label for="firstName">First Name</label>
@@ -59,5 +62,4 @@
 </body>
 
 
-    
-</html>
+ 

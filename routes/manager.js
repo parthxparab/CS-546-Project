@@ -1,5 +1,6 @@
 const express = require('express');
 const manager = require('../database-utils/Manager')
+const help = require('../database-utils/Help')
 const router = express.Router();
 const tran = require('../database-utils/transaction')
 const emp = require('../database-utils/Employee')
@@ -33,7 +34,28 @@ router.get('/', async(req, res) => {
     }
 });
 
+router.get('/resolve/:id', async(req, res)=> {
+
+    let id = req.params.id
+    let managerName = await help.getManagerByTicketID(id)
+
+    if (req.session.user !== managerName.managerID){
+        res.status(403).send("Forbidden")
+        return
+    }
+
+   await help.markResolved(id)
+
+    //res.redirect("/manager/" + managerName.managerID)
+    res.redirect('back')
+
+
+
+});
+
 router.get('/pending/:id', async(req, res) => {
+
+
     try {
         // console.log(req.params.id)
         if (!req.params.id) {
@@ -52,6 +74,19 @@ router.get('/pending/:id', async(req, res) => {
 });
 
 router.get('/users/:id', async(req, res) => {
+
+
+    if (req.session.user !== req.params.id){
+        res.status(403).send("Forbidden")
+        return
+    }
+    const ticketArray = await help.getHelpData(req.params.id)
+    const employeeList = await emp.getEmployeesByManager(req.params.id)
+
+    console.log(employeeList)
+
+
+
     try {
         if (!req.params.id) {
             res.status(400).render("error", { errorMsg: "Something wrong with parameters" })
@@ -63,7 +98,10 @@ router.get('/users/:id', async(req, res) => {
         if (man.length == 0) {
             res.render('error', { errorMsg: "No manager found for the respective id" });
         } else {
-            res.render('templates/manager_details', { searchDetail: man });
+
+
+
+            res.render('templates/manager_details', { searchDetail: man, tickets: ticketArray, employees: employeeList });
         }
         res.status(200);
     } catch (e) {

@@ -1,28 +1,38 @@
+<head>
+<title> Login Page </title>
+<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
 <body>
 
 <div id="main">
       <h1 class="headerTag">Employee hours</h1>
       <p>This website is used to display the details regarding the number inserted by user. </p>
-         <script src="/js/hours.js" >  </script>  
-   <form id="updatehoursform" action="/employee/employeehrs" method="POST">
+           
+   <form id="updatehoursform">
     <div>
         <label for="UsernameEmp">Employee Username </label>
         <input type= "text" id="UsernameEmp" name="UsernameEmp"  class="text" required="required"/>
     </div>
     <div>
         <label for="Startdate">Startdate </label>
-        <input type= "date" id="Startdate" name="startdate" placeholder="date" class="text" required="required"/>
+        <input type= "date" id="Startdate" name="startdate"  class="text" required="required"/>
     </div>
     <div>
         <label for="Enddate">Enddate </label>
-        <input type= "date" id="Enddate" name="enddate" placeholder="date" class="text" required="required"/>
+        <input type= "date" id="Enddate" name="enddate" class="text" required="required"/>
     </div>
     <div>
         <label for="Hours">Working Hours </label>
         <input type= "number" min="0" id="Hours" name="Workinghours" placeholder="hours" class="number" required="required" oninput="validity.valid||(value='');"/>
     </div>
         <button id="hours_button" type="submit" class="submit">Submit</button>
-   
+     
+     
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+  
+    <script src="/js/hours.js" ></script>
     </form>
   
 

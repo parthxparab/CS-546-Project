@@ -1,23 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-<h1>Manager Details</h1>
+
+    <head>
+      <link rel="stylesheet" href="/assets/semantic/semantic.min.css"/>
+		  <script src="/assets/semantic/semantic.min.js"></script>
+      <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            var salaryArray = [['Person', 'Salary']];
+            var hoursArray = [['Person', 'Hours']];
+                {{#each searchDetail.employees}}
+                salaryArray.push(["{{username}}", {{total_salary}}]);
+                {{/each}}
+
+            google.charts.load('current', {'packages':['corechart']});
+
+            // Set a callback to run when the Google Visualization API is loaded.
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Callback that creates and populates a data table,
+            // instantiates the pie chart, passes in the data and
+            // draws it.
+
+            function drawChart() {
+
+                // Create the data table.
+                var data = google.visualization.arrayToDataTable(salaryArray);
+                // Set chart options
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
+                chart.draw(data, null);
+            }
+</script>
+            <link rel="stylesheet" type="text/css" href="/css/manager.css">
+        <style>
+            #overflowTest {
+                max-height: 100px;
+                overflow: scroll;
+                padding-top: 1%;
+            }
+            #nobull{
+              list-style-type:none;
+              text-align: left;
+              margin-left: 40%;
+            }
+        </style>
+    </head>
+
+    <body>
+    <main>
+      <div class="ui one column stackable center aligned page grid">
+   <div class="column twelve wide">
+       <h1>{{searchDetail.firstName}} {{searchDetail.lastName}} </h1>
 <p>This website is used to display the details of the person based on their name and identifcation number</p>
-  <main>
-<head>
-<style>
-#overflowTest {
-max-height: 100px; overflow: scroll; 
-padding-top: 1%;
-}
-</style>
-</head>
-<div>
- 
-  <h2><a href="/manager/">Want to search again?</a></h2>
+     <i class="money bill alternate outline" size="large"></i>
+  </div>
+  
+  </div>  
 
-<ul>
+    {{!-- <h2><a href="/manager/">Want to search again?</a></h2> --}}
+    <div class="ui grid">
+    <div class="four wide column">
+    <div class="ui labeled button" tabindex="0">
+    <div class="ui blue button">
+    <i class="address card"></i> Total Employees
+  </div>
+  <a class="ui basic blue left pointing label">
+    {{searchDetail.employees.length}}
+  </a>
+  </div>
+  </div>
+  <div class="four wide column">
+  <div class="ui labeled button" tabindex="0">
+    <div class="ui blue button">
+    <i class="money bill alternate outline"></i> Total Budget
+  </div>
+  <a class="ui basic blue left pointing label">
+    {{searchDetail.budget}}
+  </a>
+  </div>
+  </div>
 
+  <div class="four wide column"></div>
+  <div class="four wide column">
+  <div class="ui labeled button" tabindex="0">
+    <div class="ui blue button">
+    <i class="money bill alternate outline"></i> Logout
+  </div>
+  <a class="ui basic blue left pointing label">
+   <input type="button" value="Log out" id="button" onclick="location.href = '/logout'">
+  </a>
+  </div>
+  </div>
+  </div>
+  
+  <div class="ui one column stackable center aligned page grid">
+   <div class="column twelve wide">
+  <div id="pieChart"/>
+   </div>
+  </div>
+  <div class="ui one column stackable center aligned page grid">
+  <div class="column fourteen wide">
+   
+  <ul id="nobull">
 
+    
     <li >Username: <span id="usernamedetail">{{searchDetail.user_login_id}}</span></li>  
     <li>FirstName: {{searchDetail.firstName}}</li>
     <li>LastName: {{searchDetail.lastName}}</li>   
@@ -55,12 +143,9 @@ padding-top: 1%;
         </ul>
   </div>
 
+  {{else}}
 
-   {{/if}}
-
-   
-    
- <div id="overflowTest">
+  <div id="overflowTest">
         {{#each searchDetail.employees}}
           <ul >
               <li>
@@ -79,19 +164,15 @@ padding-top: 1%;
         </ul>
   </div>
 
+
+   {{/if}}
+
+   
+    
  
 
 
-
-
-
-
-<input type="button" value="Last 10 Transaction"  id="button" >
-</div> 
-<ul id="demo">
-
 </ul>
-    <input type="button" value="Pending Tasks"  id="pending" onclick="location.href='/manager/pending/{{searchDetail.user_login_id}}'">
      
            {{!-- <form id="update" name="update"  action="/manager/update"  method="POST">
 
@@ -104,11 +185,38 @@ padding-top: 1%;
                   <input id="{{searchDetail.user_login_id}}" name="updateMag" value="{{searchDetail.user_login_id}}" type="text" style="width:50px; font-size: xx-small; visibility:hidden">
                   </form>
 </div>
-
-     <script src="/transaction_man.js"> </script>  
      </form>
+
+<a></a>
+
+
+    <input type="button" value="Last 10 Transaction" id="button_man">
+    <div>
+    <ul id="demo">
+      <script src="/transaction_man.js"></script>
+    </ul>
+    </div>
+    {{!-- <input type="button" value="Log out" id="button" onclick="location.href = '/logout'"> --}}
+    
+    <input type="button" value="Pending Tasks" id="pending"
+           onclick="location.href='/manager/pending/{{searchDetail.user_login_id}}'">
+    <input type="button" value="Tickets" id="tickets" onclick="showTickets()">
+    <script src="/manager.js"></script>
+    <ol id="ticketList">
+        {{#if tickets}}
+            {{#each tickets}}
+                <li>Employee: {{this.employeeID}}, Issue: {{this.issue}}</li>
+                <button id="{{this._id}}" onclick='resolveHelp("{{{this._id}}}")'>Resolve</button>
+            {{/each}}
+        {{else}}
+            No tickets to show.
+        {{/if}}
+
+    </ol>
+    </ul>
+  </div>
 </main>
+<script src="/employee.js"></script>
   
 </body>
 
-</html>

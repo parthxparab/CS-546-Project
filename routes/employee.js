@@ -4,7 +4,7 @@ const tran = require('../database-utils/transaction')
 const emp = require('../database-utils/Employee')
 const man = require('../database-utils/Manager')
 const xss = require("xss")
-
+const alert = require('alert-node')
 
 router.get('/transaction', async(req, res) => {
     try {
@@ -52,19 +52,30 @@ router.get('/empprof/:id', async(req, res) => {
 
 router.get('/empprof_two/:id', async(req, res) => {
     try {
-        //console.log('this')
-        //     console.log(req.params.id)
+        console.log(req.params.id)
         if (!req.params.id) {
             res.status(400).render("error", { errorMsg: "Something wrong with parameters" })
         }
-        // if (isNaN(req.params.id)) {
-        //     res.status(400).render("error", { errorMsg: "Please provide a proper id" })
-        // }
-
         const post = await emp.getEmployeeByUser(req.params.id);
-        //   console.log(post)
-        res.render('templates/employee_profile_two', { searchDetail: post });
-        res.status(200);
+        console.log(post)
+        if (post == null) {
+            alert("Invalid employee name!");
+            res.redirect('back');
+        } else {
+            res.render('templates/employee_profile_two', { searchDetail: post });
+            res.status(200);
+        }
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+router.get('/empprof_two', async(req, res) => {
+    try {
+
+        alert("No employee name!");
+        res.redirect('back');
+
     } catch (e) {
         res.status(500).json({ error: e });
     }
@@ -101,10 +112,15 @@ router.get('/employeehours/failure', async(req, res) => {
 
 router.post('/employeehrs', async(req, res) => {
     try {
-        var userName = xss(req.body.UsernameEmp)
-        var start = xss(req.body.startdate)
-        var end = xss(req.body.enddate)
-        var hours = xss(req.body.Workinghours)
+        console.log(req.body)
+        console.log("ASD")
+
+        var userName = xss(req.body.userName)
+
+        var start = xss(req.body.start)
+        console.log(start)
+        var end = xss(req.body.end)
+        var hours = xss(req.body.hours)
         const updatehours = await emp.updateHours(userName, hours, start, end)
         console.log(updatehours)
         if (typeof(updatehours) === "undefined") {
@@ -121,7 +137,7 @@ router.post('/employeehrs', async(req, res) => {
         //res.render("templates/newemployee_main", {error: "Working hours updated successfuly"});
         //res.json({suc: true});
         //res.render('templates/employee_hoursupdate');
-        res.status(200);
+        //res.status(200);
     } catch (e) {
         res.status(500).json({ error: e });
     }
@@ -160,24 +176,14 @@ router.get('/employeehours', async(req, res) => {
 
 
 
-router.get('/employeereports', async(req, res) => {
-    try {
-        res.render('templates/employee_reports');
-        res.status(200);
-    } catch (e) {
-        res.status(500).json({ error: e });
-    }
-});
-
-
-router.get('/employeeconman', async(req, res) => {
-    try {
-        res.render('templates/employee_con_man');
-        res.status(200);
-    } catch (e) {
-        res.status(500).json({ error: e });
-    }
-});
+// router.get('/employeereports', async(req, res) => {
+//     try {
+//         res.render('templates/employee_reports');
+//         res.status(200);
+//     } catch (e) {
+//         res.status(500).json({ error: e });
+//     }
+// });
 
 router.get('/successhours', async(req, res) => {
     try {
@@ -234,7 +240,9 @@ router.post('/search', async(req, res) => {
     try {
         console.log(req.body.SearchEmp)
         const post = await emp.getEmployeeByUser(req.body.SearchEmp);
+        console.log("Post below")
         console.log(post)
+        post["total_salary"] = post["total_salary"].toString();
         const dat = await man.getManagerByUserID(post.manager_ID)
         console.log(dat)
         res.render('templates/manager_details', { searchDetail: dat, userdata: post });
