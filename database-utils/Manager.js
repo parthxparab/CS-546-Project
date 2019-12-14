@@ -2,7 +2,7 @@ const mongoCollections = require('./mongoCollections');
 const manager = mongoCollections.manager;
 const emp = mongoCollections.employee;
 const transaction = mongoCollections.transaction;
-//const employee = require("./employee");
+const employee = require("./employee");
 
 const ObjectId = require('mongodb').ObjectID;
 
@@ -70,7 +70,7 @@ const exportedMethods = {
         while (x < empName) {
             authID = managerdata.employees[x].id;
             const empo = await empCollection.findOne({ _id: ObjectId(authID) });
-            const val = { id: authID, username: empo.username, paid: empo.paidFlag, total_salary: empo.total_salary };
+            const val = { id: authID, username: empo.username, total_salary: empo.total_salary, paidFlag: empo.paidFlag, Name: empo.firstName };
             managerdata.employees[x] = val;
             x++;
         }
@@ -174,101 +174,97 @@ const exportedMethods = {
     },
 
     async isPaid(empId) {
-        const employee = require("./employee");
 
+        //  const employee = require("./employee");
+        //console.log(empId)
         if (!empId || empId === undefined || empId === null) throw 'Invalid Entry';
         const employeeCollection = await emp();
         const managerCollection = await manager();
-        const updated = await employee.getEmployeeByUser(empId.toString());
+        const updated = await employee.getEmployeeByUser(empId);
         const managerInfo = await this.getManagerByUserID(updated.manager_ID);
-
-        if(managerInfo.budget < (managerInfo.budget - updated.total_salary || managerInfo.budget == 0))
-        {
+        console.log(managerInfo.budget)
+        if (managerInfo.budget < (managerInfo.budget - updated.total_salary) || managerInfo.budget == 0) {
             throw `Budget too less to pay salary`;
-        }
+        } else {
 
-        else
-        {
+            const updatedPay = {
+                firstName: updated.firstName,
+                lastName: updated.lastName,
+                username: updated.username,
+                email: updated.email,
+                total_hours: 1,
+                basic_salary: updated.basic_salary,
+                total_salary: updated.basic_salary,
+                paidFlag: "SALARY PAID",
+                manager_ID: updated.manager_ID,
+                payDate: updated.payDate,
+                job_title: updated.job_title,
 
-        const updatedPay = {
-            firstName: updated.firstName,
-            lastName: updated.lastName,
-            username: updated.username,
-            email: updated.email,
-            total_hours: 1,
-            basic_salary: updated.basic_salary,
-            total_salary: updated.basic_salary,
-            paidFlag: "SALARY PAID",
-            manager_ID: updated.manager_ID,
-            payDate: updated.payDate,
-            job_title: updated.job_title,
+            };
 
-        };
-
-        const updatedManager = 
-        {
-            firstName: managerInfo.firstName,
-            lastName: managerInfo.lastName,
-            email: managerInfo.email,
-            budget: managerInfo.budget - updated.total_salary,
-            user_login_id: managerInfo.user_login_id,
-            hashed_password: managerInfo.hashed_password,
-            employees: managerInfo.employees
-        };
+            const updatedManager = {
+                firstName: managerInfo.firstName,
+                lastName: managerInfo.lastName,
+                email: managerInfo.email,
+                budget: managerInfo.budget - updated.total_salary,
+                user_login_id: managerInfo.user_login_id,
+                hashed_password: managerInfo.hashed_password,
+                employees: managerInfo.employees
+            };
 
 
 
-        const updatedBudget = await managerCollection.replaceOne({ user_login_id: updated.manager_ID }, updatedManager);
-        if (updatedBudget.modifiedCount === 0) {
-            throw "could not update value successfully";
-        }
-
-        const updatedInfo = await employeeCollection.replaceOne({ _id: ObjectId(empId) }, updatedPay);
-        if (updatedInfo.modifiedCount === 0) {
-            throw "could not update value successfully";
-        }
-
-        //adding transaction
-        const transactionCollection = await transaction();
-
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var dateTime = date+' '+time;
-
-        const newTransaction = {
-            by: updated.manager_ID,
-            byPosition: "Manager",
-            to: updated.username,
-            toPosition: "Employee",
-            typeOfTransaction: "Paying Salary",
-            start_date: "not required",
-            end_date: "not required",
-            amount: updated.total_salary,
-            hours: "not required",
-            timestamp: dateTime
-        };
-
-        const newTransactionInformation = await transactionCollection.insertOne(newTransaction);
-        
-        //adding transaction
-
-
-        const search = await managerCollection.findOne({ user_login_id: updated.manager_ID });
-        if (search === null) throw 'cannnnnnnooot be null. dungoofed'
-
-        let i = 0;
-        for (i; i < search.employees.length; i++) {
-            if (search.employees[i].id.toString() == updated._id.toString()) {
-                search.employees[i].Name = updated.firstName;
-                search.employees[i].total_salary = 0
-                search.employees[i].paidFlag = "SALARY PAID"
+            const updatedBudget = await managerCollection.replaceOne({ user_login_id: updated.manager_ID }, updatedManager);
+            if (updatedBudget.modifiedCount === 0) {
+                throw "could not update value successfully";
             }
-        }
 
-        const something = await managerCollection.updateOne({ user_login_id: updated.manager_ID }, { $set: { employees: search.employees } })
-        return employee.getEmployeeById(updated._id);;
-    }
+            const updatedInfo = await employeeCollection.replaceOne({ username: empId }, updatedPay);
+            if (updatedInfo.modifiedCount === 0) {
+                throw "could not update value successfully";
+            }
+
+            //adding transaction
+            const transactionCollection = await transaction();
+
+            var today = new Date();
+            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var dateTime = date + ' ' + time;
+
+            const newTransaction = {
+                by: updated.manager_ID,
+                byPosition: "Manager",
+                to: updated.username,
+                toPosition: "Employee",
+                typeOfTransaction: "Paying Salary",
+                start_date: "not required",
+                end_date: "not required",
+                amount: updated.total_salary,
+                hours: "not required",
+                timestamp: dateTime
+            };
+
+            const newTransactionInformation = await transactionCollection.insertOne(newTransaction);
+
+            //adding transaction
+
+
+            const search = await managerCollection.findOne({ user_login_id: updated.manager_ID });
+            if (search === null) throw 'cannnnnnnooot be null. dungoofed'
+
+            let i = 0;
+            for (i; i < search.employees.length; i++) {
+                if (search.employees[i].id.toString() == updated._id.toString()) {
+                    search.employees[i].Name = updated.firstName;
+                    search.employees[i].total_salary = 0
+                    search.employees[i].paidFlag = "SALARY PAID"
+                }
+            }
+
+            const something = await managerCollection.updateOne({ user_login_id: updated.manager_ID }, { $set: { employees: search.employees } })
+            return this.getManagerByUserID(updated.manager_ID);
+        }
     }
 
 

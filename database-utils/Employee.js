@@ -30,11 +30,36 @@ const exportedMethods = {
         //if (empdata === null || empdata == undefined) throw " NO employee found of following id";
 
         return empdata;
-        },
+    },
+
+    async getEmployeeByPay(manager_ID)
+    {
+        var arr = []
+        if (!manager_ID) throw "You must provide an id to search for";
+        if (manager_ID.length == 0) throw "Please provide proper length of the id";
+        if (typeof manager_ID === 'undefined' || manager_ID == null) throw "Please provide proper type of id"
+
+        const employeeCollection = await employee();
+        const empdata = await employeeCollection.find({}).toArray();
+
+        for (let i = 0; i< empdata.length; i++)
+        {
+            if(empdata[i]["manager_ID"] == manager_ID && empdata[i]["paidFlag"] == "Not Paid" )
+            {
+                let x = "Pending Payment to "+empdata[i]["username"]+" of amount "+empdata[i]["total_salary"]+" before "+empdata[i]["payDate"]
+                arr.push(x)
+            }
+        }
+        if(arr.length ==0)
+        {
+            arr.push("No Pending Tasks")
+        }
+        return arr
+    },
 
     async addEmployee(firstName, lastName, username, email, total_hours, basic_salary, manager_ID, payDate, job_title) {
         var mailformat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if ((!firstName) || (!lastName) ||(!username) ||(!email) || (!total_hours) || (!basic_salary) || (!manager_ID) || (!payDate) || (!job_title) ) throw 'Please provide all the feilds'
+        if ((!firstName) || (!lastName) || (!username) || (!email) || (!total_hours) || (!basic_salary) || (!manager_ID) || (!payDate) || (!job_title)) throw 'Please provide all the feilds'
         if (typeof firstName !== 'string') throw 'No title provided';
         if (typeof lastName !== 'string') throw 'I aint got nobody!';
         if (typeof username !== 'string') throw 'I aint got nobody!';
@@ -71,7 +96,7 @@ const exportedMethods = {
 
         const newEmployeeDetails = await this.getEmployeeById(newId);
         return newEmployeeDetails;
-            //return await this.getPostById(newId);
+        //return await this.getPostById(newId);
     },
 
     async removeEmployee(id) {
@@ -111,7 +136,7 @@ const exportedMethods = {
             manager_ID: renamecontent.manager_ID,
             payDate: renamecontent.payDate,
             job_title: renamecontent.job_title
-  
+
         };
         const updatedInfo = await employeeCollection.replaceOne({ _id: ObjectId(id) }, updatedData);
         if (updatedInfo.modifiedCount === 0) {
@@ -125,21 +150,22 @@ const exportedMethods = {
     },
 
     async updateHours(username, total_hour_new, start_date, end_date) {
-        if (!username) throw "You must provide an id to search for";
+
+        if (!username) throw "You must provide an username to search for";
         // if (!id.match("/^[0-9a-fA-f]{24}$")) throw "Please provide proper 12 bytes length of the id";
         if (username.length === 0) throw "Please provide proper legth of the id";
         if (typeof username !== 'string') throw "Please provide proper id"
         if (typeof username === 'undefined') throw "Please provide proper type of id"
         const updated = await this.getEmployeeByUser(username);
-        if(updated===null){
+        if (updated === null) {
             return
         }
         const employeeCollection = await employee();
-        total_hours=parseInt(updated.total_hours) + parseInt(total_hour_new)
+        total_hours = parseInt(updated.total_hours) + parseInt(total_hour_new)
         console.log(total_hours)
-        total_hours=total_hours.toString()
-        total_salary=parseInt((updated.basic_salary) * (parseInt(updated.total_hours) + parseInt(total_hour_new)))
-        total_salary=total_salary.toString()
+        total_hours = total_hours.toString()
+        total_salary = parseInt((updated.basic_salary) * (parseInt(updated.total_hours) + parseInt(total_hour_new)))
+        total_salary = total_salary.toString()
         const updatedHours = {
             firstName: updated.firstName,
             lastName: updated.lastName,
@@ -164,9 +190,9 @@ const exportedMethods = {
         const transactionCollection = await transaction();
 
         var today = new Date();
-        var date = (today.getMonth()+1)+'-'+today.getDate()+'-'+today.getFullYear();
+        var date = (today.getMonth() + 1) + '-' + today.getDate() + '-' + today.getFullYear();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var dateTime = date+' '+time;
+        var dateTime = date + ' ' + time;
 
         const newTransaction = {
             by: updated.username,
@@ -178,6 +204,7 @@ const exportedMethods = {
             end_date: end_date,
             amount: "not required",
             hours: total_hours,
+
             timestamp: dateTime
         };
 
