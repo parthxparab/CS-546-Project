@@ -72,7 +72,7 @@ router.get('/pending/:id', async(req, res) => {
     }
 });
 
-router.get('/:id', async(req, res) => {
+router.get('/users/:id', async(req, res) => {
 
 
 
