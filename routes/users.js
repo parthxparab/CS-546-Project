@@ -1,9 +1,10 @@
 const signup = require("../login-signup-utils/signup");
 const login = require("../login-signup-utils/login");
+const employee = require("../database-utils/Employee");
+const help = require("../database-utils/Help")
 const xss=require('xss')
 const express = require('express');
 const router = express.Router();
-//commit
 
     router.get('/', function(req, res) {
        try{ 
@@ -11,6 +12,15 @@ const router = express.Router();
         }catch (e) {
         res.status(500).json({error: e});
       }
+    });
+
+    router.post('/submit-help', async function(req, res){
+        console.log(req.body.employeeID)
+        var employeeName = req.body.employeeID;
+        var managerName = req.body.managerID;
+        var issue = req.body.issue;
+        let employeeData = await employee.getEmployeeByUser(employeeName)
+        await help.addDataToHelp(employeeName, managerName, issue)
     });
 
     router.get('/login', function(req, res) {

@@ -11,9 +11,9 @@ var salt = bcrypt.genSaltSync(10);
 owasp.config({
     allowPassphrases: true,
     maxLength: 128,
-    minLength: 10,
+    minLength: 7,
     minPhraseLength: 20,
-    minOptionalTestsToPass: 4,
+    minOptionalTestsToPass: 2,
 });
 
 async function createAcc(firstname, lastname, email, username, password) {
