@@ -50,7 +50,7 @@ router.get('/pending/:id', async(req, res) => {
     }
 });
 
-router.get('/:id', async(req, res) => {
+router.get('/users/:id', async(req, res) => {
     try {
         if (!req.params.id) {
             res.status(400).render("error", { errorMsg: "Something wrong with parameters" })
