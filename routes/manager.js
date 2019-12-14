@@ -82,7 +82,7 @@ router.get('/users/:id', async(req, res) => {
     }
     const ticketArray = await help.getHelpData(req.params.id)
     const employeeList = await emp.getEmployeesByManager(req.params.id)
-
+console.log("emp list here below")
     console.log(employeeList)
 
 
