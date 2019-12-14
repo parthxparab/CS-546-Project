@@ -1,3 +1,7 @@
+<head>
+<title> Employee Details </title>
+<link rel="stylesheet" href="/assets/css/main.css">
+</head>
 <body>
 <main>
 <form id="getDetails">
@@ -9,12 +13,13 @@
         <button id="details_button" type="button" class="button" >Submit</button>
 
     </form>
-<script>
-document.getElementById("details_button").onclick = function () {
+    </main>
+ <script>document.getElementById("details_button").onclick = function () {
 
     x = ("/employee/empprof_two/"+(document.getElementById("UsernameEmp1").value))
   //  console.log(x)
     location.href=x
     };
-</script></main>
+</script>
+  
 </body>

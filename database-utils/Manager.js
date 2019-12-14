@@ -64,17 +64,18 @@ const exportedMethods = {
         const managerCollection = await manager();
         const empCollection = await emp();
         const managerdata = await managerCollection.findOne({ user_login_id: user_login_id });
-        if (managerdata === null || managerdata == undefined) throw "No Manager found of following id";
-        var empName = managerdata.employees.length;
-        x = 0;
-        while (x < empName) {
-            authID = managerdata.employees[x].id;
-            const empo = await empCollection.findOne({ _id: ObjectId(authID) });
-            const val = { id: authID, username: empo.username, total_salary: empo.total_salary, paidFlag: empo.paidFlag, Name: empo.firstName };
-            managerdata.employees[x] = val;
-            x++;
-        }
-        return (managerdata);
+        console.log(managerdata)
+        // if (managerdata === null || managerdata == undefined) throw "No Managers found of following id";
+        // var empName = managerdata.employees.length;
+        // x = 0;
+        // while (x < empName) {
+        //     authID = managerdata.employees[x].id;
+        //     const empo = await empCollection.findOne({ _id: ObjectId(authID) });
+        //     const val = { id: authID, username: empo.username, total_salary: empo.total_salary, paidFlag: empo.paidFlag, Name: empo.firstName };
+        //     managerdata.employees[x] = val;
+        //     x++;
+        // }
+         return (managerdata);
 
     },
 

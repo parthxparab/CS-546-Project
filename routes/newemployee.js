@@ -17,6 +17,7 @@ router.get('/', async(req, res) => {
 });
 
 router.post('/',async(req,res)=>{
+
     try {
         console.log(req.body)
         var firstName=xss(req.body.firstName)
@@ -34,25 +35,25 @@ router.post('/',async(req,res)=>{
         const empusercheck=await utils.usernameExists(userName)
         if(empusercheck===true){
             console.log("Username already taken!");
-            res.render('templates/newemployee_fail');
+            res.render('templates/newemployee_main',{error:"Please try different employee username"});
             return
         }
         const usernamecheckemp=await emp.getEmployeeByUser(userName)
         console.log(usernamecheckemp)
         if(usernamecheckemp!==null){
             console.log("Username already taken!");
-            res.render('templates/newemployee_fail')
+            res.render('templates/newemployee_main',{error:"Please try different employee username"});
             return
         }
         const mancheck=await utils.usernameExists(managerid)
         if(mancheck!==true){
             console.log("Wrong employee id");
-            res.render('templates/newemployee_fail')
+            res.render('templates/newemployee_main',{error:"Please check the manager id"});
             return
         }
         const empAdd= await emp.addEmployee(firstName,lastName,userName,email,hours,salary,managerid,paydate,jobtitle)
         console.log(empAdd)
-        res.render('templates/newemployee_success')
+        res.render('templates/newemployee_main',{error:"Employee Added successfuly"})
 
   } catch (e) {
         res.status(500).json({ error: e });

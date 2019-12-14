@@ -14,7 +14,7 @@ $(document).ready(function(){
         var hours = hoursInput.val();
         var requestConfig = {
             method: "POST",
-            url: "/employee/employeehours",
+            url: "/employee/employeehrs",
             contentType: "application/json",
             data: JSON.stringify({
               userName: userName,

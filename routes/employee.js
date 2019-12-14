@@ -100,10 +100,15 @@ router.get('/employeehours/failure', async(req, res) => {
 
 router.post('/employeehrs', async(req, res) => {
     try {
-        var userName = xss(req.body.UsernameEmp)
-        var start = xss(req.body.startdate)
-        var end = xss(req.body.enddate)
-        var hours = xss(req.body.Workinghours)
+        console.log(req.body)
+        console.log("ASD")
+ 
+        var userName = xss(req.body.userName)
+        
+        var start = xss(req.body.start)
+        console.log(start)
+        var end = xss(req.body.end)
+        var hours = xss(req.body.hours)
         const updatehours = await emp.updateHours(userName, hours, start, end)
         console.log(updatehours)
         if (typeof(updatehours) === "undefined") {
@@ -120,7 +125,7 @@ router.post('/employeehrs', async(req, res) => {
         //res.render("templates/newemployee_main", {error: "Working hours updated successfuly"});
         //res.json({suc: true});
         //res.render('templates/employee_hoursupdate');
-        res.status(200);
+        //res.status(200);
     } catch (e) {
         res.status(500).json({ error: e });
     }
