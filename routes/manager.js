@@ -1,5 +1,6 @@
 const express = require('express');
 const manager = require('../database-utils/Manager')
+const help = require('../database-utils/Help')
 const router = express.Router();
 const tran = require('../database-utils/transaction')
 const emp = require('../database-utils/Employee')
@@ -54,10 +55,14 @@ router.get('/pending/:id', async(req, res) => {
 
 router.get('/:id', async(req, res) => {
 
+
+
     if (req.session.user !== req.params.id){
         res.status(403).send("Forbidden")
         return
     }
+    var ticketArray = await help.getHelpData(req.params.id)
+
 
     try {
         if (!req.params.id) {
@@ -70,7 +75,10 @@ router.get('/:id', async(req, res) => {
         if (man.length == 0) {
             res.render('error', { errorMsg: "No manager found for the respective id" });
         } else {
-            res.render('templates/manager_details', { searchDetail: man });
+
+
+
+            res.render('templates/manager_details', { searchDetail: man, tickets: ticketArray });
         }
         res.status(200);
     } catch (e) {

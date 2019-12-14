@@ -22,10 +22,8 @@ async function addDataToHelp(employeeID, managerID, issue){
 async function getHelpData(user_login_id){
 
     let helpCollection = await help()
+   return await helpCollection.find({ "managerID" : { $eq: user_login_id }, "resolved" : {$eq: false} } ).toArray();
 
-    let result = await helpCollection.find({ "managerID" : { $eq: user_login_id } } ).toArray();
-
-    return result
 
 
 

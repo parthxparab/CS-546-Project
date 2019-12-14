@@ -5,9 +5,10 @@
   <main>
 
 <head>
+    <link rel="stylesheet" type="text/css" href="/css/manager.css">
 <style>
 #overflowTest {
-max-height: 100px; overflow: scroll; 
+max-height: 100px; overflow: scroll;
 padding-top: 1%;
 }
 </style>
@@ -52,11 +53,17 @@ padding-top: 1%;
 
 </ul>
     <input type="button" value="Pending Tasks"  id="pending" onclick="location.href='/manager/pending/{{searchDetail.user_login_id}}'">
+  <input type="button" value="Tickets" id="tickets" onclick="showTickets()">
 
     <p id="{{username}}">Update Details</p>
+     <script src="/transaction_man.js"> </script>
+     <script src="/manager.js"></script>
+  <ol id="ticketList">
+      {{#each tickets}}
+<li>Employee: {{this.employeeID}}, Issue: {{this.issue}}</li> <button id="{{this._id}}">Resolve</button>
+{{/each}}
 
-     <script src="/transaction_man.js"> </script>  
-
+  </ol>
 </main>
   
 </body>
