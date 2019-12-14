@@ -8,7 +8,6 @@ const xss = require("xss")
 router.get('/transaction', async(req, res) => {
     try {
         x = Object.keys(req.query).toString()
-        console.log("X "+x)
         const tra = await tran.getTransactionByUsername(x)
         console.log("transaction: ", tra)
         
