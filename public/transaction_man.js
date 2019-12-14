@@ -1,9 +1,10 @@
 //const tran = require('../database-utils/mongoConnection')
 // import { abc } from '../database-utils/mongoConnection';
 let va = document.getElementById("usernamedetail").innerHTML
+console.log("test")
 $(document).ready(function() {
 
-    $('#button').click(() => {
+    $('#button_man').click(() => {
         console.log('code  Value of va is')
             //let va = document.getElementById("usernamedetail").innerHTML
         console.log(va)
