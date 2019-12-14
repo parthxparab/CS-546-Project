@@ -16,6 +16,7 @@ const router = express.Router();
     });
 
     router.post('/submit-help', async function(req, res){
+
         var employeeName = req.body.employeeID;
         var managerName = req.body.managerID;
         var issue = req.body.issue;
@@ -44,7 +45,7 @@ const router = express.Router();
 
 
         await help.addDataToHelp(employeeName, managerName, issue);
-        res.render("templates/employee_profile_two", {message: "Help request submitted!"})
+        res.render("templates/employee_profile_two", {message: "Help request submitted!", searchDetail: employeeData})
     });
 
     router.get('/login', function(req, res) {

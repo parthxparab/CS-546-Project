@@ -45,7 +45,8 @@ router.get('/resolve/:id', async(req, res)=> {
 
    await help.markResolved(id)
 
-    res.redirect("/manager/" + managerName.managerID)
+    //res.redirect("/manager/" + managerName.managerID)
+    res.redirect('back')
 
 
 
