@@ -86,7 +86,7 @@ router.post('/updated', async(req, res) => {
         if (man.length == 0) {
             res.render('error', { errorMsg: "No data to display" });
         } else {
-            res.render(, { searchDetail: man });
+
             res.status(200);
         }
     } catch (e) {
