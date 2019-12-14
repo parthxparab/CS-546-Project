@@ -13,6 +13,14 @@
                 salaryArray.push(["{{username}}", {{total_salary}}]);
                 {{/each}}
 
+                {{#each employees}}
+                hoursArray.push(["{{username}}", {{total_hours}}]);
+                {{/each}}
+
+            console.log(hoursArray)
+                        console.log(salaryArray)
+
+
             google.charts.load('current', {'packages':['corechart']});
 
             // Set a callback to run when the Google Visualization API is loaded.
@@ -33,12 +41,31 @@
 
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
-                chart.draw(data, null);
+                var options = {
+                    width: 600,
+                  height: 400
+                  }
+                  chart.draw(data, options);
             }
-            function drawBarChart(){
 
-              
-            }
+            function drawBarChart(){
+                var data = google.visualization.arrayToDataTable(hoursArray);
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1]);
+
+      var options = {
+        title: "Working Hours",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+      }
+
+
+      
 </script>
             <link rel="stylesheet" type="text/css" href="/css/manager.css">
         <style>
@@ -102,10 +129,12 @@
   </div>
   </div>
   
-  <div class="ui one column stackable center aligned page grid">
-   <div class="column twelve wide">
-  <div id="pieChart"/>
-   </div>
+  <div class="ui grid">
+  <div id="pieChart" class="four wide column"/>
+  </div>
+  
+    <div class="four wide column"></div>
+  <div id="columnchart_values" class="four wide column"></div>
   </div>
   <div class="ui one column stackable center aligned page grid">
   <div class="column fourteen wide">
