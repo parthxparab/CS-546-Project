@@ -130,7 +130,7 @@ const router = express.Router();
            let result = await signup.createAcc(firstname, lastname, email, username, password);
             console.log(result);
            if (result === "Success"){
-                res.render("templates/success");
+                res.render("templates/signup",{error:"Manager Added Successfuly"});
                console.log("Test 2");
 
            }else{

@@ -1,9 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
 <h1>Manager Details</h1>
 <p>This website is used to display the details of the person based on their name and identifcation number</p>
-<main>
+
     <head>
+      <link rel="stylesheet" href="/assets/semantic/semantic.min.css"/>
+		<script src="/assets/semantic/semantic.min.js"></script>
+      <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
             var salaryArray = [['Person', 'Salary']];
@@ -41,11 +44,20 @@
             }
         </style>
     </head>
+
     <body>
+    <main>  
 
     <h2><a href="/manager/">Want to search again?</a></h2>
-
-    <ul>
+    <div class="ui labeled button" tabindex="0">
+    <div class="ui blue button">
+    <i class="heart icon"></i> Total Employees
+  </div>
+  <a class="ui basic red left pointing label">
+    {{searchDetail.employees.length}}
+  </a>
+  </div>
+      <ul>
 
 
         <li>Username: <span id="usernamedetail">{{searchDetail.user_login_id}}</span></li>
@@ -110,7 +122,6 @@
 
 </main>
 <script src="/employee.js"></script>
-
+  
 </body>
 
-</html>
