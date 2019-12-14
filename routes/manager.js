@@ -33,6 +33,8 @@ router.get('/', async(req, res) => {
 });
 
 router.get('/pending/:id', async(req, res) => {
+
+
     try {
        // console.log(req.params.id)
         if (!req.params.id) {
@@ -51,6 +53,12 @@ router.get('/pending/:id', async(req, res) => {
 });
 
 router.get('/:id', async(req, res) => {
+
+    if (req.session.user !== req.params.id){
+        res.status(403).send("Forbidden")
+        return
+    }
+
     try {
         if (!req.params.id) {
             res.status(400).render("error", { errorMsg: "Something wrong with parameters" })

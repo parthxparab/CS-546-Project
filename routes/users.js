@@ -52,7 +52,7 @@ const router = express.Router();
 
         if (result === true){
             req.session.manager=true
-            req.session.username=username
+            req.session.user=username
             res.redirect("/manager/"+username);
             //res.render("templates/success");
 
