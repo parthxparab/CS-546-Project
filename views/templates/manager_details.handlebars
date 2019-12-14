@@ -1,9 +1,7 @@
-<h1>Manager Details</h1>
-<p>This website is used to display the details of the person based on their name and identifcation number</p>
 
     <head>
       <link rel="stylesheet" href="/assets/semantic/semantic.min.css"/>
-		<script src="/assets/semantic/semantic.min.js"></script>
+		  <script src="/assets/semantic/semantic.min.js"></script>
       <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
 
@@ -42,22 +40,70 @@
                 overflow: scroll;
                 padding-top: 1%;
             }
+            #nobull{
+              list-style-type:none;
+              text-align: left;
+              margin-left: 40%;
+            }
         </style>
     </head>
 
     <body>
-    <main>  
+    <main>
+      <div class="ui one column stackable center aligned page grid">
+   <div class="column twelve wide">
+       <h1>{{searchDetail.firstName}} {{searchDetail.lastName}} </h1>
+<p>This website is used to display the details of the person based on their name and identifcation number</p>
+  <i class="money bill alternate outline" size="large"></i>
+  </div>
+  
+  </div>  
 
-    <h2><a href="/manager/">Want to search again?</a></h2>
+    {{!-- <h2><a href="/manager/">Want to search again?</a></h2> --}}
+    <div class="ui grid">
+    <div class="four wide column">
     <div class="ui labeled button" tabindex="0">
     <div class="ui blue button">
-    <i class="heart icon"></i> Total Employees
+    <i class="address card"></i> Total Employees
   </div>
-  <a class="ui basic red left pointing label">
+  <a class="ui basic blue left pointing label">
     {{searchDetail.employees.length}}
   </a>
   </div>
-      <ul>
+  </div>
+  <div class="four wide column">
+  <div class="ui labeled button" tabindex="0">
+    <div class="ui blue button">
+    <i class="money bill alternate outline"></i> Total Budget
+  </div>
+  <a class="ui basic blue left pointing label">
+    {{searchDetail.budget}}
+  </a>
+  </div>
+  </div>
+
+  <div class="four wide column"></div>
+  <div class="four wide column">
+  <div class="ui labeled button" tabindex="0">
+    <div class="ui blue button">
+    <i class="money bill alternate outline"></i> Logout
+  </div>
+  <a class="ui basic blue left pointing label">
+   <input type="button" value="Log out" id="button" onclick="location.href = '/logout'">
+  </a>
+  </div>
+  </div>
+  </div>
+  
+  <div class="ui one column stackable center aligned page grid">
+   <div class="column twelve wide">
+  <div id="pieChart"/>
+   </div>
+  </div>
+  <div class="ui one column stackable center aligned page grid">
+  <div class="column fourteen wide">
+   
+  <ul id="nobull">
 
 
         <li>Username: <span id="usernamedetail">{{searchDetail.user_login_id}}</span></li>
@@ -92,18 +138,21 @@
         </li>
     </ul>
     </div>
-    <input type="button" value="Last 10 Transaction" id="button">
-    <input type="button" value="Log out" id="button" onclick="location.href = '/logout'">
-    </div>
+    <div>
+    
+    <input type="button" value="Last 10 Transaction" id="button_man">
+    <div>
     <ul id="demo">
-
+      <script src="/transaction_man.js"></script>
     </ul>
+    </div>
+    {{!-- <input type="button" value="Log out" id="button" onclick="location.href = '/logout'"> --}}
+    
     <input type="button" value="Pending Tasks" id="pending"
            onclick="location.href='/manager/pending/{{searchDetail.user_login_id}}'">
     <input type="button" value="Tickets" id="tickets" onclick="showTickets()">
 
     <p id="{{username}}">Update Details</p>
-    <script src="/transaction_man.js"></script>
     <script src="/manager.js"></script>
     <ol id="ticketList">
         {{#if tickets}}
@@ -116,9 +165,8 @@
         {{/if}}
 
     </ol>
-    <div id="pieChart"/>
-
-
+    </ul>
+  </div>
 
 </main>
 <script src="/employee.js"></script>
