@@ -21,6 +21,13 @@ const router = express.Router();
         }
     });
 
+    router.get('/logout', function (req, res){
+       if (req.session.user != null){
+           req.session.user = null
+       }
+       res.redirect("/")
+    });
+
     router.get('/signup', function(req, res) {
         try{
         res.render("templates/signup");
