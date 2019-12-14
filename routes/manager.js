@@ -9,7 +9,7 @@ router.get('/transaction', async(req, res) => {
         x = Object.keys(req.query).toString()
         const tra = await tran.getTransactionByUsernameMan(x)
         console.log("transaction: ", tra)
-        
+
         //res.render('templates/employee_profile_two', { searchDetail: post });
         res.status(200).json(tra);
     } catch (e) {
@@ -34,7 +34,7 @@ router.get('/', async(req, res) => {
 
 router.get('/pending/:id', async(req, res) => {
     try {
-       // console.log(req.params.id)
+        // console.log(req.params.id)
         if (!req.params.id) {
             res.status(400).render("error", { errorMsg: "Something wrong with parameters" })
         }
@@ -91,8 +91,10 @@ router.post('/manager_details', async(req, res) => {
 
 router.post('/update', async(req, res) => {
     try {
-        const firstName = res.body.FirstNameMan;
-        const man = await manager.getManagerByUserID()
+        console.log('f')
+        const firstName = res.body.username;
+        console.log(firstName)
+        const man = await manager.getManagerByUserID("pxp")
         console.log(man)
         if (man.length == 0) {
             res.render('error', { errorMsg: "No data to display" });
@@ -118,7 +120,7 @@ router.post('/updated', async(req, res) => {
         if (man.length == 0) {
             res.render('error', { errorMsg: "No data to display" });
         } else {
-
+            //res.render()
             res.status(200);
         }
     } catch (e) {
