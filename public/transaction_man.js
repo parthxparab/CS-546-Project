@@ -23,6 +23,7 @@ $(document).ready(function() {
                     temp.textContent = k
                     
                     target.appendChild(temp)
+                    console.log("test")
                 } )
             }
         })
