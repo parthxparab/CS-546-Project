@@ -246,6 +246,7 @@ router.post('/search', async(req, res) => {
         const dat = await man.getManagerByUserID(post.manager_ID)
         console.log(dat)
         res.render('templates/manager_details', { searchDetail: dat, userdata: post });
+        res.redirect('back')
         res.status(200);
     } catch (e) {
         res.status(500).json({ error: e });
