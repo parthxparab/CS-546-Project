@@ -5,6 +5,8 @@ const manager = require("../database-utils/Manager");
 const help = require("../database-utils/Help")
 const xss=require('xss')
 const express = require('express');
+const alert = require('alert-node')
+
 const router = express.Router();
 
     router.get('/', function(req, res) {
@@ -24,20 +26,27 @@ const router = express.Router();
         let managerExists = await manager.managerExists(managerName)
 
         if (!employeeData){
-            console.log("Invalid employee!");
-            res.render("templates/employee_profile_two", {message: "Invalid employee name!"});
+           // res.render("templates/employee_profile_two", {message: "Invalid employee name!"});
+            res.redirect("back")
+           alert("Invalid employee name!");
             return;
         }
 
         if (!managerExists){
             console.log("Wrong manager");
-            res.render("templates/employee_profile_two", {message: "Invalid manager!"})
+          //  res.render("templates/employee_profile_two", {message: "Invalid manager!"})
+            res.redirect("back")
+            alert("Invalid manager!");
+
             return;
         }
 
         if (employeeData.manager_ID !== managerName){
             console.log("Not your manager!");
-            res.render("templates/employee_profile_two", {message: "Not your manager!"});
+           // res.render("templates/employee_profile_two", {message: "Not your manager!"});
+            res.redirect("back")
+            alert("Not your manager!")
+
             return;
         }
 
@@ -45,7 +54,9 @@ const router = express.Router();
 
 
         await help.addDataToHelp(employeeName, managerName, issue);
-        res.render("templates/employee_profile_two", {message: "Help request submitted!", searchDetail: employeeData})
+        res.redirect("back")
+        alert("Success!")
+       // res.render("templates/employee_profile_two", {message: "Help request submitted!", searchDetail: employeeData})
     });
 
     router.get('/login', function(req, res) {
