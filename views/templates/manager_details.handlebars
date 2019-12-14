@@ -61,7 +61,7 @@
    <div class="column twelve wide">
        <h1>{{searchDetail.firstName}} {{searchDetail.lastName}} </h1>
 <p>This website is used to display the details of the person based on their name and identifcation number</p>
-  <i class="money bill alternate outline" size="large"></i>
+     <i class="money bill alternate outline" size="large"></i>
   </div>
   
   </div>  
@@ -112,41 +112,91 @@
    
   <ul id="nobull">
 
-
-        <li>Username: <span id="usernamedetail">{{searchDetail.user_login_id}}</span></li>
-        <li>FirstName: {{searchDetail.firstName}}</li>
-        <li>LastName: {{searchDetail.lastName}}</li>
-        <li>Email: {{searchDetail.email}}</li>
-        <li>Total Budget: {{searchDetail.budget}}</li>
-        <li>Total Employees: {{searchDetail.employees.length}}</li>
-        <li>Employees:
-
-            <div id="overflowTest">
-                {{#each searchDetail.employees}}
-                    <ul>
-                        <li>
-                            <form id="manager_details" action="/manager/manager_details" name="manager_details"
-                                  method='POST'>
-
-                                <a href="/employee/empprof/{{username}}"
-                                   id="{{username}}">{{username}} {{total_salary}} {{paidFlag}}
-                        </li>
-                        </a>
-                        <button type="submit" id={{username}} class="button">Pay</button>
-                        <input id="{{username}}" name="payinput" value="{{username}}" type="text"
-                               style="width:50px; font-size: xx-small; visibility:hidden">
-                        </form>
-
-                        </li>
-                    </ul>
-
-                {{/each}}
-
-        </li>
-    </ul>
-    </div>
-    <div>
     
+    <li >Username: <span id="usernamedetail">{{searchDetail.user_login_id}}</span></li>  
+    <li>FirstName: {{searchDetail.firstName}}</li>
+    <li>LastName: {{searchDetail.lastName}}</li>   
+    <li>Email: {{searchDetail.email}}</li> 
+    <li>Total Budget: {{searchDetail.budget}}</li>
+    <li>Total Employees: {{searchDetail.employees.length}}</li>
+    <li >Employees:
+      <div>
+                <form   id="search_employee"  action="/employee/search" method="POST" name="search_employee">
+                  <label for="UsernameEmp">Search Username </label>
+                  <input type= "text" id="SearchEmp" name="SearchEmp"  class="text" required="required" flag="False"/>
+                  <button type="submit"   id="{{username}}" class="button"   >Search</button>  
+                  </form>
+     </div>
+
+
+
+   {{#if userdata}}
+
+    <div id="overflowTest">
+  
+          <ul >
+              <li>
+                <form   id="manager_details" action="/manager/manager_details"  name="manager_details"  method='POST' >
+                 <a  href="/employee/empprof/{{userdata.username}}" id="{{userdata.username}}">{{userdata.username}} {{userdata.total_salary}} {{userdata.paidFlag}} </li></a>
+                 <button type="submit"   id={{userdata.username}} class="button">Pay</button>  
+                  <input id="{{userdata.username}}" name="payinput" value="{{userdata.username}}" type="text" style="width:50px; font-size: xx-small; visibility:hidden">
+                  </form>
+
+              </li>
+          </ul>
+               
+          
+             </li>
+        </ul>
+  </div>
+
+  {{else}}
+
+  <div id="overflowTest">
+        {{#each searchDetail.employees}}
+          <ul >
+              <li>
+                <form   id="manager_details" action="/manager/manager_details"  name="manager_details"  method='POST' >
+                 <a  href="/employee/empprof/{{username}}" id="{{username}}">{{username}} {{total_salary}} {{paidFlag}} </li></a>
+                 <button type="submit"   id={{username}} class="button">Pay</button>  
+                  <input id="{{username}}" name="payinput" value="{{username}}" type="text" style="width:50px; font-size: xx-small; visibility:hidden">
+                  </form>
+
+              </li>
+          </ul>
+               
+            {{/each}}
+          
+             </li>
+        </ul>
+  </div>
+
+
+   {{/if}}
+
+   
+    
+ 
+
+
+</ul>
+     
+           {{!-- <form id="update" name="update"  action="/manager/update"  method="POST">
+
+       <button type="submit"   id={{searchDetail.user_login_id}} class="button">Update Details</button>  
+      <input id="{{searchDetail.user_login_id}}" value="{{searchDetail.user_login_id}}" name="updateMag" value="{{searchDetail.user_login_id}}" type="text" style="width:50px; font-size: xx-small; visibility">
+     </form> --}}
+     <div>
+                <form   id="manager_update" action="/manager/update"  name="manager_update"  method='POST' >
+                  <button type="submit"   id="{{searchDetail.user_login_id}}" class="button">Update Manager</button>  
+                  <input id="{{searchDetail.user_login_id}}" name="updateMag" value="{{searchDetail.user_login_id}}" type="text" style="width:50px; font-size: xx-small; visibility:hidden">
+                  </form>
+</div>
+     </form>
+
+<a></a>
+
+
     <input type="button" value="Last 10 Transaction" id="button_man">
     <div>
     <ul id="demo">
@@ -158,8 +208,6 @@
     <input type="button" value="Pending Tasks" id="pending"
            onclick="location.href='/manager/pending/{{searchDetail.user_login_id}}'">
     <input type="button" value="Tickets" id="tickets" onclick="showTickets()">
-
-    <p id="{{username}}">Update Details</p>
     <script src="/manager.js"></script>
     <ol id="ticketList">
         {{#if tickets}}
@@ -174,7 +222,6 @@
     </ol>
     </ul>
   </div>
-
 </main>
 <script src="/employee.js"></script>
   
