@@ -77,6 +77,13 @@
                 overflow: scroll;
                 padding-top: 1%;
             }
+
+             #demo {
+                max-height: 50%;
+                max-width:100%;
+                overflow: scroll;
+                padding-top: 1%;
+            }
         </style>
     </head>
 
@@ -179,7 +186,7 @@
     <div class="column">    
        
           <input class="ui secondary basic button" type="button" value="Last 10 Transaction" id="button_man">
-    <ul id="demo">
+    <ul id="demo"  >
           <a style="visibility: collapse;">Username: <span id="usernamedetail">{{searchDetail.user_login_id}}</span></a>  
 
       <script src="/transaction_man.js"></script>
