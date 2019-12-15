@@ -225,6 +225,7 @@ router.post('/updated', async(req, res) => {
         const tsalary = req.body.TotalSalaryEmp;
         const bsalary = req.body.BasicSalaryEmp;
         const job = req.body.JobEmp;
+        
         const man = await emp.updateEmployee(tra, firstName, lastName, email, hours, bsalary, tsalary, job)
         console.log(man)
         if (man.length == 0) {

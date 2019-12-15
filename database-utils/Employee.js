@@ -136,6 +136,7 @@ const exportedMethods = {
             total_hours: total_hours,
             basic_salary: basic_salary,
             total_salary: total_salary,
+            paidFlag: renamecontent.paidFlag,
             manager_ID: renamecontent.manager_ID,
             payDate: renamecontent.payDate,
             job_title: job_title
@@ -225,7 +226,7 @@ const exportedMethods = {
             if (search.employees[i].id.toString() == updated._id.toString()) {
                 search.employees[i].Name = updated.firstName;
                 search.employees[i].total_salary = total_salary
-                search.employees[i].paidFlag = updated.paidFlag
+                search.employees[i].paidFlag = "Not Paid"
             }
         }
         const something = await managerCollection.updateOne({ user_login_id: updated.manager_ID }, { $set: { employees: search.employees } })
