@@ -1,20 +1,68 @@
-<h1>Employee Info</h1>
-<p>This website is used to display the details of the person based on their name and identifcation number</p>
-<form action="/details" method="GET"  >
-<h2><a href="/manager/{{searchDetail.manager_ID}}">Want to search again?</a></h2>
-<ul>
-    <li>ID: {{searchDetail._id}}</li>
-    <li>FirstName: {{searchDetail.firstName}}</li>
-    <li>LastName: {{searchDetail.lastName}}</li>
-    <li>Username: {{searchDetail.username}}</li>
-    <li>Email: {{searchDetail.email}}</li>
+<head>
+    <title> Login Page </title>
+{{!-- <link rel="stylesheet" href="/assets/css/main.css"> --}}
+<link rel="stylesheet" href="/assets/semantic/semantic.min.css"/>
+		  <script src="/assets/semantic/semantic.min.js"></script>
+          
+</head>
+
+<body>
+<main>
+<div class="ui one column stackable center aligned page grid">
+    <div class="column twelve wide">
+<h1>Employee: {{searchDetail.firstName}} {{searchDetail.lastName}}  </h1>
+  <div class="sub header">Information Below</div>
+</div>
+<div>{{#if message}}
+        <h3>{{message}}</h3>
+    {{/if}}
+</div>
+
+</div>
+
+<div class="ui seven column center aligned grid">
+  <div class="row">
+    <div class="column ui header">
+            <li >Username: <span id="usernamedetail">{{searchDetail.username}}</span>  </li>
+</div>
+    <div class="column ui header">
     <li>Total Hours: {{searchDetail.total_hours}}</li>
-    <li>BasicSalary: {{searchDetail.basic_salary}}</li>
+</div>
+    <div class="column ui header">
+    <li>BasicSalary : ${{searchDetail.basic_salary}}</li>
+</div>
+    <div class="column ui header">
     <li>TotalSalary: {{searchDetail.total_salary}}</li>
+</div>
+    <div class="column ui header">
     <li>ManagerName: {{searchDetail.manager_ID}}</li>
-    <li>Paid: {{searchDetail.paidFlag}}</li>
-    <li>payDate: {{searchDetail.payDate}}</li>
+</div>
+    <div class="column ui header">
     <li>JobTitle: {{searchDetail.job_title}}</li>
-    
-</ul>
+</div>
+   <div class="column ui header">
+    <li>Paid: {{searchDetail.paidFlag}}</li>
+
+    </div>
+
+  </div>
+
+</div>
+<form action="/details" method="GET"  >
 </form>
+
+<div class="ui one column center aligned page grid">
+  <div class="row">
+    <div class="column"></div>
+    <button onclick="window.location.href = '/manager/users/{{searchDetail.manager_ID}}';" class="ui labeled icon button">
+  <i class="angle left icon"></i>
+  Go Back
+</button>
+  </div></div>
+
+ </main>
+
+</body>
+       
+
+
