@@ -13,37 +13,59 @@
 <main>
 <div class="ui one column stackable center aligned page grid">
     <div class="column twelve wide">
-<h1>{{searchDetail.firstName}} {{searchDetail.lastName}}  Info</h1>
-
-    </div>
-<div>       
-<p>This website is used to display the details of the person based on their name and identifcation number</p>
+<h1>Employee: {{searchDetail.firstName}} {{searchDetail.lastName}}  </h1>
+  <div class="sub header">Information Below</div>
 </div>
 <div>{{#if message}}
         <h3>{{message}}</h3>
     {{/if}}
 </div>
-<div>
-<h2><a href="/employee/employeedetails">Want to search again?</a></h2>
+
 </div>
+
+<div class="ui seven column center aligned grid">
+  <div class="row">
+    <div class="column ui header">
+            <li >Username: <span id="usernamedetail">{{searchDetail.username}}</span>  </li>
 </div>
-<ul>
-    <li>ID: {{searchDetail._id}}</li>
-    <li>FirstName: {{searchDetail.firstName}}</li>
-    <li>LastName: {{searchDetail.lastName}}</li>
-    <li >Username: <span id="usernamedetail">{{searchDetail.username}}</span>  </li>
-    <li>Email: {{searchDetail.email}}</li>
+    <div class="column ui header">
     <li>Total Hours: {{searchDetail.total_hours}}</li>
-    <li>BasicSalary: {{searchDetail.basic_salary}}</li>
+</div>
+    <div class="column ui header">
+    <li>BasicSalary : ${{searchDetail.basic_salary}}</li>
+</div>
+    <div class="column ui header">
     <li>TotalSalary: {{searchDetail.total_salary}}</li>
+</div>
+    <div class="column ui header">
     <li>ManagerName: {{searchDetail.manager_ID}}</li>
-    <li>Paid: {{searchDetail.paidFlag}}</li>
-    <li>payDate: {{searchDetail.payDate}}</li>
+</div>
+    <div class="column ui header">
     <li>JobTitle: {{searchDetail.job_title}}</li>
+</div>
+   <div class="column ui header">
+    <li>Paid: {{searchDetail.paidFlag}}</li>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="ui three column center aligned page grid">
+  <div class="row">
+    <div class="column">
+
+<input type="button" value="Last 10 Transaction" class="ui secondary button" id="button" >
+        <li style="visibility: collapse;">Username: <span id="usernamedetail">{{searchDetail.username}}</span>  </li>
+
+<ul id="demo">   
 </ul>
-{{!-- <button id="button" type="button" class="button" >Last 10 Transactions</button> --}}
-<input type="button" value="Last 10 Transaction"  id="button" >
-<input type="button" value="Help" id="button" onclick="showForm()">
+        
+    </div>
+    <div class="column">
+
+<input type="button" value="Help" id="button" class="ui secondary button" onclick="showForm()">
 
 <form id="helpForm" method="post" action="/submit-help" style="display: none;">
     <label for="employeeID">Employee ID:</label>
@@ -55,24 +77,35 @@
     <label for="issue">Issue:</label>
     <input type="text" name="issue" id="issue">
     <br>
-    <input type="submit" name="submit" id="submit" value="Submit">
+    <input type="submit" class="ui mini secondary button" name="submit" id="submit" value="Submit">
 
 </form>
-</div> 
-<ul id="demo">   
-</ul>
-</div>
 
- <div>
-                <form   id="employee_update" action="/employee/update"  name="employee_update"  method='POST' >
-                  <button type="submit"   id="{{searchDetail.username}}" class="button">Update Employee</button>  
+    </div>
+    <div class="column">
+<form   id="employee_update" action="/employee/update"  name="employee_update"  method='POST' >
+                  <button type="submit"  class="ui secondary button" id="{{searchDetail.username}}" class="button">Update Employee</button>  
                   <input id="{{searchDetail.username}}" name="updateMag" value="{{searchDetail.username}}" type="text" style="width:50px; font-size: xx-small; visibility:hidden">
                   </form>
+
+    </div>
+  </div>
 </div>
+
+<div class="ui one column center aligned page grid">
+  <div class="row">
+    <div class="column"></div>
+    <button onclick="window.location.href = '/employee/employeedetails';" class="ui labeled icon button">
+  <i class="angle left
+ icon"></i>
+  Go Back
+</button>
+  </div></div>
 
      <script src="/transaction.js"> </script>  
      <script src="/employee.js"></script>
  </main>
+<div class="ui bottom attached header grid center aligned">Button after grid</div>
 
 </body>
        
