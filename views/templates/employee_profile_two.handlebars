@@ -1,6 +1,9 @@
 <head>
     <title> Login Page </title>
-<link rel="stylesheet" href="/assets/css/main.css">
+{{!-- <link rel="stylesheet" href="/assets/css/main.css"> --}}
+<link rel="stylesheet" href="/assets/semantic/semantic.min.css"/>
+		  <script src="/assets/semantic/semantic.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
 
@@ -8,18 +11,22 @@
 
 <body>
 <main>
+<div class="ui one column stackable center aligned page grid">
+    <div class="column twelve wide">
+<h1>{{searchDetail.firstName}} {{searchDetail.lastName}}  Info</h1>
 
-    <h1>Employee Info</h1>
-
-
+    </div>
 <div>       
 <p>This website is used to display the details of the person based on their name and identifcation number</p>
-
-    {{#if message}}
+</div>
+<div>{{#if message}}
         <h3>{{message}}</h3>
     {{/if}}
-
+</div>
+<div>
 <h2><a href="/employee/employeedetails">Want to search again?</a></h2>
+</div>
+</div>
 <ul>
     <li>ID: {{searchDetail._id}}</li>
     <li>FirstName: {{searchDetail.firstName}}</li>

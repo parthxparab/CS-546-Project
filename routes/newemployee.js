@@ -53,7 +53,7 @@ router.post('/',async(req,res)=>{
         }
         const empAdd= await emp.addEmployee(firstName,lastName,userName,email,hours,salary,managerid,paydate,jobtitle)
         console.log(empAdd)
-        res.render('templates/newemployee_main',{error:"Employee Added successfuly"})
+        res.render('templates/newemployee_main',{success:"Employee Added successfuly"})
 
   } catch (e) {
         res.status(500).json({ error: e });
