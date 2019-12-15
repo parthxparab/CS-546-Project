@@ -6,6 +6,9 @@ const man = require('../database-utils/Manager')
 const xss = require("xss")
 const alert = require('alert-node')
 
+const help = require('../database-utils/Help')
+const tra = null;
+
 router.get('/transaction', async(req, res) => {
     try {
         x = Object.keys(req.query).toString()
@@ -244,9 +247,11 @@ router.post('/search', async(req, res) => {
         console.log(post)
         post["total_salary"] = post["total_salary"].toString();
         const dat = await man.getManagerByUserID(post.manager_ID)
+        const ticketArray = await help.getHelpData(post.manager_ID)
+        const employeeList = await emp.getEmployeesByManager(post.manager_ID)
         console.log(dat)
-        res.render('templates/manager_details', { searchDetail: dat, userdata: post });
-        res.redirect('back')
+        res.render('templates/manager_details', { searchDetail: dat, userdata: post,tickets: ticketArray, employees: employeeList });
+       // res.redirect('back')
         res.status(200);
     } catch (e) {
         res.status(500).json({ error: e });
