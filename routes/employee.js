@@ -200,7 +200,7 @@ router.get('/successhours', async(req, res) => {
 router.post('/update', async(req, res) => {
     try {
         console.log(req.body.updateMag)
-        const firstName = req.body.updateMag;
+        const firstName = xss(req.body.updateMag);
         console.log(firstName)
         const man = await emp.getEmployeeByUser(firstName)
         console.log(man)
@@ -217,14 +217,14 @@ router.post('/update', async(req, res) => {
 
 router.post('/updated', async(req, res) => {
     try {
-        const tra = req.body.updateMan;
-        const firstName = req.body.FirstNameEmp;
-        const lastName = req.body.LastNameEmp;
-        const email = req.body.EmailEmp;
-        const hours = req.body.HoursEmp;
-        const tsalary = req.body.TotalSalaryEmp;
-        const bsalary = req.body.BasicSalaryEmp;
-        const job = req.body.JobEmp;
+        const tra = xss(req.body.updateMan);
+        const firstName = xss(req.body.FirstNameEmp);
+        const lastName = xss(req.body.LastNameEmp);
+        const email = xss(req.body.EmailEmp);
+        const hours = xss(req.body.HoursEmp);
+        const tsalary = xss(req.body.TotalSalaryEmp);
+        const bsalary = xss(req.body.BasicSalaryEmp);
+        const job = xss(req.body.JobEmp);
         
         const man = await emp.updateEmployee(tra, firstName, lastName, email, hours, bsalary, tsalary, job)
         console.log(man)
@@ -243,7 +243,7 @@ router.post('/updated', async(req, res) => {
 router.post('/search', async(req, res) => {
     try {
         console.log(req.body.SearchEmp)
-        const post = await emp.getEmployeeByUser(req.body.SearchEmp);
+        const post = await emp.getEmployeeByUser(xss(req.body.SearchEmp));
         console.log("Post below")
         console.log(post)
         post["total_salary"] = post["total_salary"].toString();

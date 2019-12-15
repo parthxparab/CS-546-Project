@@ -19,9 +19,9 @@ const router = express.Router();
 
     router.post('/submit-help', async function(req, res){
 
-        var employeeName = req.body.employeeID;
-        var managerName = req.body.managerID;
-        var issue = req.body.issue;
+        var employeeName = xss(req.body.employeeID);
+        var managerName = xss(req.body.managerID);
+        var issue = xss(req.body.issue);
         let employeeData = await employee.getEmployeeByUser(employeeName)
         let managerExists = await manager.managerExists(managerName)
 

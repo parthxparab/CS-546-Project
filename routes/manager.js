@@ -5,6 +5,7 @@ const router = express.Router();
 const tran = require('../database-utils/transaction')
 const emp = require('../database-utils/Employee')
 const tra = null;
+const xss=require('xss')
 
 router.get('/transaction', async(req, res) => {
     try {
@@ -114,7 +115,7 @@ router.post('/manager_details', async(req, res) => {
     try {
         console.log('starthere')
         console.log(req.body)
-        const man = await manager.isPaid(req.body.payinput);
+        const man = await manager.isPaid(xss(req.body.payinput));
         console.log("MAN BELOW")
         console.log(man)
         if (man.length == 0) {
@@ -132,7 +133,7 @@ router.post('/update', async(req, res) => {
     try {
         console.log(req.body.updateMag)
             // tra = req.body.updateMag;
-        const firstName = req.body.updateMag;
+        const firstName = xss(req.body.updateMag);
         console.log(firstName)
         const man = await manager.getManagerByUserID(firstName)
         console.log(man)
@@ -151,11 +152,11 @@ router.post('/update', async(req, res) => {
 router.post('/updated', async(req, res) => {
     try {
 
-        const tra = req.body.updateMan;
-        const firstName = req.body.FirstNameMan;
-        const lastName = req.body.LastNameEmp;
-        const email = req.body.EmailEmp;
-        const budget = req.body.BudgetEmp;
+        const tra = xss(req.body.updateMan);
+        const firstName = xss(req.body.FirstNameMan);
+        const lastName = xss(req.body.LastNameEmp);
+        const email = xss(req.body.EmailEmp);
+        const budget = xss(req.body.BudgetEmp);
         const man = await manager.updatedManager(tra, firstName, lastName, email, budget)
         console.log(man)
         if (man.length == 0) {
