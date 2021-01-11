@@ -1,5 +1,9 @@
 # CS546-Final-Project Automatic Payroll for Small Companies
 
+CS 546 Web Programming taught by Professor Patrick Hill at Stevens Institute of Technology for Fall 2019
+
+<br>
+
 Developed a full stack web-based application deploying JavaScript, MongoDB and Machine Learning models for payroll, budget management and ticket-based help system for small business <br>
 Demonstrated a Dashboard layout and secure login utilizing bcrypt and 128 Bit SSL for managers and employees to login hours and make payments along with budget management calendar-based task list to make payments
 
